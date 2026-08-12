@@ -1,0 +1,4 @@
+interface:
+  display_name: "Boot Config Register"
+  short_description: "Procedimentos conservadores para Cisco ASR1001-X"
+  default_prompt: "Use $22-boot-config-register para orientar esta tarefa no Cisco ASR1001-X."

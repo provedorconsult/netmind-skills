@@ -1,4 +1,4 @@
-# Codex Skills — Huawei MA5800-X7
+# Codex Skills ISP — Huawei MA5800-X7 e Cisco ASR1001-X
 
 Pacote reutilizável de Skills operacionais para o Codex trabalhar com Huawei MA5800-X7 sem inventar sintaxe. A evidência primária é uma sessão real na **MA5800V100R018, patch SPH507**. Nenhuma criação deste repositório acessou ou alterou a OLT.
 
@@ -139,3 +139,15 @@ As fontes abaixo apoiam conceitos e procedimentos, mas não promovem sintaxe a `
 - [Huawei: Understanding PPPoE](https://info.support.huawei.com/hedex/api/pages/EDOC1100149308/AEJ0713J/18/resources/admin/sec_admin_network_pppoe_0003.html)
 
 A pesquisa pública não revelou um command reference R018 completo e acessível para todos os comandos. Por isso, nenhum comando novo foi inferido dessas páginas; exemplos de outras releases devem ser marcados `[VERSÃO DIFERENTE]` e redescobertos com `?`.
+
+## Pacote Cisco ASR1001-X
+
+O repositório também contém um pacote independente para Cisco ASR1001-X em ambiente ISP/BNG:
+
+- [README e índice das 31 Skills Cisco](skills/cisco-asr1001x/README.md)
+- [Matriz Cisco](skills/cisco-asr1001x/CISCO-ASR1001X-COMMANDS.md)
+- [Banco de erros Cisco](skills/cisco-asr1001x/CISCO-ASR1001X-ERROR-DATABASE.md)
+- [Decision tree Cisco](skills/cisco-asr1001x/CISCO-ASR1001X-DECISION-TREE.md)
+- [Rollback Cisco](skills/cisco-asr1001x/CISCO-ASR1001X-ROLLBACK.md)
+
+A versão IOS XE real permanece pendente de uma saída sanitizada de `show version`. Nenhum comando Cisco foi promovido a `[CONFIRMADO]` sem evidência da CLI.
