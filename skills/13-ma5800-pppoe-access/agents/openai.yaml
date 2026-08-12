@@ -1,0 +1,4 @@
+interface:
+  display_name: "MA5800 Pppoe Access"
+  short_description: "Procedimentos seguros para Huawei MA5800-X7"
+  default_prompt: "Use $13-ma5800-pppoe-access para orientar esta tarefa na Huawei MA5800-X7."

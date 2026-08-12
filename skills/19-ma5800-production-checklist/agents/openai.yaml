@@ -1,0 +1,4 @@
+interface:
+  display_name: "MA5800 Production Checklist"
+  short_description: "Procedimentos seguros para Huawei MA5800-X7"
+  default_prompt: "Use $19-ma5800-production-checklist para orientar esta tarefa na Huawei MA5800-X7."

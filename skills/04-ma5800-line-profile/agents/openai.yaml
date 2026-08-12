@@ -1,0 +1,4 @@
+interface:
+  display_name: "MA5800 Line Profile"
+  short_description: "Procedimentos seguros para Huawei MA5800-X7"
+  default_prompt: "Use $04-ma5800-line-profile para orientar esta tarefa na Huawei MA5800-X7."
