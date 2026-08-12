@@ -49,10 +49,12 @@ ip route-static 0.0.0.0 0.0.0.0 10.101.0.1
 
 Não executar este bloco como script. Ele é um registro do estado observado.
 
-## Arquitetura
+## Estado de bancada e arquitetura-alvo
+
+A ONT autorizada é uma unidade de bancada. O estado atualmente informado pelo operador é **bridge**; esse é o baseline de rollback, não o objetivo final.
 
 ```text
-EG8145X6-10 (PPPoE client)
+EG8145X6-10 (route mode, PPPoE client, NAT/DHCP/Wi-Fi)
   → GPON 0/1/0
   → T-CONT 0 / DBA 201
   → GEM 1
@@ -63,7 +65,9 @@ EG8145X6-10 (PPPoE client)
   → AAA/RADIUS
 ```
 
-A MA5800 presta acesso GPON/L2. Usuário e senha PPPoE ficam no cliente/CPE e são autenticados no BNG/AAA, nunca armazenados nestas Skills.
+A MA5800 presta acesso GPON/L2 e pode atuar como plano de provisionamento OMCI da WAN da ONT. A sessão PPPoE termina na EG8145X6-10; o ASR1001-X continua sendo o servidor/BNG e o AAA/RADIUS autentica. A credencial pode precisar ser entregue operacionalmente à ONT pela OLT/NMS, mas nunca deve ser armazenada nestas Skills, no Git, em exemplos, PRs ou logs.
+
+A sintaxe para profile de WAN roteada/PPPoE ainda não foi confirmada na R018. Ela deve ser descoberta na CLI e validada contra o firmware exato da ONT de bancada antes de qualquer alteração.
 
 ## Objetos observados
 
@@ -73,6 +77,8 @@ A MA5800 presta acesso GPON/L2. Usuário e senha PPPoE ficam no cliente/CPE e s�
 - Default line profile 0: line-profile_default_0; T-CONT 0 → DBA 2; T-CONT 1 → DBA 0.
 - Service profile 100: SRV-OMCI-VLAN-100; ETH 1–4 em VLAN 100.
 - Service-port 1000: ONT 0/GEM 1 → VLAN 100, translate, up.
+- Modo atual da ONT de bancada: bridge, conforme informação do operador.
+- Objetivo: profile de roteamento com WAN PPPoE na ONT; sintaxe ainda não confirmada.
 
 ## Fluxo seguro
 
@@ -109,7 +115,8 @@ Nunca inventar sintaxe, alterar gestão/rota sem autorização, excluir defaults
 17. [Rollback](skills/17-ma5800-rollback/SKILL.md)
 18. [Cleanup](skills/18-ma5800-cleanup/SKILL.md)
 19. [Production checklist](skills/19-ma5800-production-checklist/SKILL.md)
-20. [Decision tree](skills/ma5800-decision-tree/SKILL.md)
+20. [ONT WAN PPPoE](skills/20-ma5800-ont-wan-pppoe/SKILL.md)
+21. [Decision tree](skills/ma5800-decision-tree/SKILL.md)
 
 ## Entregáveis auxiliares
 
@@ -128,6 +135,7 @@ As fontes abaixo apoiam conceitos e procedimentos, mas não promovem sintaxe a `
 - [Huawei: GPON ONU profile mismatch](https://info.support.huawei.com/network/ptmngsys/Web/tsrev_access/en/content/access/18_gpononu_profile_match_state_is_mismatch/trouble_515303.html)
 - [Huawei: rogue ONT alarm](https://info.support.huawei.com/hedex/api/pages/EDOC1100413634/FEN1022J/03/resources/en-us_alarmref_0000001193617423.html)
 - [Huawei: replacing an ONU and service impact](https://info.support.huawei.com/hedex/api/pages/EDOC1100331202/FEM1012J/06/resources/en-us_topic_0317327751.html)
+- [Huawei Home Network/ONT documentation portal](https://support.huawei.com/enterprise/en/optical-business/home-network-pid-23708797)
+- [Huawei: Understanding PPPoE](https://info.support.huawei.com/hedex/api/pages/EDOC1100149308/AEJ0713J/18/resources/admin/sec_admin_network_pppoe_0003.html)
 
 A pesquisa pública não revelou um command reference R018 completo e acessível para todos os comandos. Por isso, nenhum comando novo foi inferido dessas páginas; exemplos de outras releases devem ser marcados `[VERSÃO DIFERENTE]` e redescobertos com `?`.
-

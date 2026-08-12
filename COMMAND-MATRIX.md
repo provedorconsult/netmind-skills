@@ -24,4 +24,4 @@ Matriz compacta; detalhes e saídas estão em [MA5800-CLI-COMMANDS.md](MA5800-CL
 | `port vlan 100 0/8 0` | Config | VLAN no uplink | [CONFIRMADO][DESTRUTIVO] | Alto |
 | `port vlan 10 0/8 0` | Config | Gestão no uplink | [CONFIRMADO][DESTRUTIVO] | Crítico |
 | Todos os comandos terminados em `?` no catálogo | Contextual | Descobrir sintaxe | [DISCOVERY] | Baixo |
-
+| `?` nos contextos candidatos de WAN/ONT | Contextual | Descobrir profile WAN route/PPPoE | [INFERIDO] até ser executado | Baixo |

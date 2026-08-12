@@ -27,7 +27,7 @@ Baseline, escopo e acessos de leitura.
 
 ## Sintaxe
 
-Sequência fixa de 20 nós documentada em `MA5800-DECISION-TREE.md`.
+Sequência fixa de 20 nós documentada em `MA5800-DECISION-TREE.md`. No nó 18, confirmar primeiro WAN route na ONT e depois PADI/PADO/PADR/PADS, LCP, autenticação e IPCP.
 
 ## Exemplos
 
@@ -70,4 +70,3 @@ Não avançar após NÃO/DESCONHECIDO; não confundir OLT L2 com BNG/AAA.
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-

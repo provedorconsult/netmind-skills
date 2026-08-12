@@ -104,3 +104,6 @@ Nenhum comando de criação GEM foi fornecido como confirmado. O GEM 1 foi obser
 
 Este catálogo documenta evidência; não é um script. Mesmo `[CONFIRMADO]` precisa de validação de versão, modo, alvo, dependências, impacto e autorização. Comandos `[DESTRUTIVO]` nunca são executados automaticamente.
 
+## WAN PPPoE roteada na ONT
+
+O baseline informado da ONT de bancada é bridge. Não há comando confirmado neste pacote para profile de WAN, route mode, PPPoE client, NAT, DHCP ou bindings Wi-Fi. Descobrir a árvore na R018 com `?` e registrar os comandos reais antes de incluí-los nesta matriz. Não copiar sintaxe de AR, firewall, outra OLT ou outra release.

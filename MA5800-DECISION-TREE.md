@@ -23,6 +23,8 @@ Responder **SIM**, **NÃO** ou **DESCONHECIDO** a cada nó. Em **NÃO** ou **DES
 19. AAA/RADIUS autentica?
 20. Cliente recebe IP?
 
+No cenário route, o nó 18 exige antes confirmar que a WAN PPPoE foi aplicada à ONT de bancada. Separar suas fases: PADI, PADO, PADR/PADS, LCP, autenticação PAP/CHAP e IPCP. O nó 20 inclui validar IP/rota/DNS na ONT e, depois, NAT, DHCP e clientes LAN/Wi-Fi.
+
 ## Evidência confirmada disponível
 
 - Nó 4: `display ont autofind all`.
@@ -35,4 +37,3 @@ Responder **SIM**, **NÃO** ou **DESCONHECIDO** a cada nó. Em **NÃO** ou **DES
 - Nó 15: `display port vlan 0/8/0`.
 
 Para os demais nós, descobrir a sintaxe no equipamento responsável ou usar sua ferramenta autorizada. A árvore diagnostica; ela não autoriza mudança.
-

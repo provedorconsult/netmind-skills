@@ -7,7 +7,7 @@ description: Consultar e configurar ONT service profiles GPON e VLANs das portas
 
 ## Objetivo
 
-Aplicar VLAN 100 às ETH 1–4 da ONT pelo service profile.
+Aplicar VLAN 100 às ETH 1–4 da ONT pelo service profile e distinguir esse mapeamento do profile de WAN roteada ainda não descoberto.
 
 ## Quando usar
 
@@ -38,7 +38,7 @@ Configurar cada ETH 1–4 com translation 100/user-vlan 100 e consultar o profil
 
 ## Resultado esperado
 
-Profile 100 mostra as quatro portas ETH na VLAN 100.
+Profile 100 mostra as quatro portas ETH na VLAN 100. Isso confirma o mapeamento Ethernet, não confirma WAN route, PPPoE, NAT ou DHCP.
 
 ## Erros conhecidos
 
@@ -50,7 +50,7 @@ Voltar ao contexto do service profile e descobrir o próximo token com `?`.
 
 ## Dependências
 
-VLAN 100, ONT com quatro ETH, ONT binding.
+VLAN 100, ONT com quatro ETH, ONT binding. Para route/PPPoE, carregar também `20-ma5800-ont-wan-pppoe`.
 
 ## Riscos
 
@@ -66,11 +66,10 @@ Preferir `display`; classificar cada comando; consultar referências e Binding t
 
 ## O que NÃO fazer
 
-Não assumir que faixa 1-4 aceita a mesma sintaxe da configuração por porta.
+Não assumir que faixa 1-4 aceita a mesma sintaxe da configuração por porta nem que este service profile, sozinho, transforma a ONT em roteador.
 
 ## Fonte
 
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-

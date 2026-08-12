@@ -30,3 +30,8 @@ Resposta esperada: exibir profile e bind-times, localizar T-CONT/line profile, m
 
 Resposta esperada: validar release/patch/hardware; tratar todos os comandos não confirmados naquela unidade por discovery com `?`.
 
+## Migrar a ONT de bancada de bridge para route
+
+> Use $20-ma5800-ont-wan-pppoe para preparar uma WAN PPPoE roteada na EG8145X6-10.
+
+Resposta esperada: reconhecer bridge como baseline, descobrir a sintaxe R018 sem inventar comandos, planejar profile/OMCI, VLAN 100, PPPoE, NAT/DHCP e bindings LAN/Wi-Fi, solicitar a credencial de teste somente no momento seguro da execução e preparar rollback para bridge.

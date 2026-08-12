@@ -15,6 +15,10 @@
 - [ ] Criar/validar service-port somente após GEM/ONT.
 - [ ] Confirmar service-port up.
 - [ ] Confirmar VLAN 100 na PON e uplink.
-- [ ] Confirmar chegada ao BNG, PPPoE, AAA e IP.
-- [ ] Não registrar credenciais.
-
+- [ ] Registrar que o baseline atual da ONT de bancada é bridge.
+- [ ] Descobrir na R018/firmware da ONT a sintaxe do profile de WAN; não inventar tokens.
+- [ ] Validar WAN em route, VLAN 100, PPPoE client e bindings LAN/Wi-Fi.
+- [ ] Entregar somente credencial de teste por canal seguro, sem registrá-la.
+- [ ] Confirmar PADI/PADO/PADR/PADS, LCP, autenticação, IPCP e IP no BNG.
+- [ ] Confirmar rota/DNS, NAT, DHCP e acesso LAN/Wi-Fi.
+- [ ] Manter rollback completo para o baseline bridge.

@@ -27,11 +27,11 @@ Mudança autorizada e concluída; dados do assinante tratados fora das Skills.
 
 ## Sintaxe
 
-Checklist completo no README: board/PON, profiles/DBA, ONT, GEM, service-port, VLAN, uplink, BNG, AAA e IP.
+Checklist completo no README: board/PON, profiles/DBA, ONT, WAN route, GEM, service-port, VLAN, uplink, PPPoE no BNG, AAA, IP, NAT/DHCP e LAN/Wi-Fi.
 
 ## Exemplos
 
-Aceite do baseline: ONT online, service-port up, VLAN100 nos dois lados, PPPoE no BNG.
+Aceite do objetivo: ONT de bancada online, WAN route aplicada, service-port up, VLAN100 ponta a ponta, sessão PPPoE da ONT no BNG, IP recebido e LAN/Wi-Fi navegando.
 
 ## Resultado esperado
 
@@ -70,4 +70,3 @@ Não declarar sucesso apenas pelo estado online da ONT.
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-

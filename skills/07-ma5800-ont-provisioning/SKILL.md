@@ -7,7 +7,7 @@ description: Provisionar ONT por SN na MA5800-X7 R018 usando line/service profil
 
 ## Objetivo
 
-Adicionar a EG8145X6-10 de teste com encadeamento correto.
+Adicionar a EG8145X6-10 de bancada com encadeamento GPON correto e separar autorização da ONT da configuração posterior de WAN.
 
 ## Quando usar
 
@@ -35,7 +35,7 @@ Saída observada: `Number of ONTs that can be added: 1, success: 1`; PortID 0, O
 
 ## Resultado esperado
 
-ONT 0 adicionada e depois online em `display ont info summary 0/1/0`.
+ONT 0 adicionada e depois online em `display ont info summary 0/1/0`. Isso não prova que a WAN PPPoE esteja criada ou autenticada.
 
 ## Erros conhecidos
 
@@ -47,7 +47,7 @@ Investigar DBA Max, capacidade/ont-type, line profile, T-CONT, GEM e referência
 
 ## Dependências
 
-Autofind; DBA; line profile; service profile; PON.
+Autofind; DBA; line profile; service profile; PON. A configuração route/PPPoE pertence à etapa posterior `20-ma5800-ont-wan-pppoe`.
 
 ## Riscos
 
@@ -70,4 +70,3 @@ Não guardar senha; não usar SN de produção como exemplo executável; não mo
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-
