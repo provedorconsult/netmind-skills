@@ -1,0 +1,4 @@
+interface:
+  display_name: "Backup seguro de configuração"
+  short_description: "Coleta e validação segura de backups"
+  default_prompt: "Use $network-config-backup para coletar e validar um backup textual sanitizado do equipamento inventariado."

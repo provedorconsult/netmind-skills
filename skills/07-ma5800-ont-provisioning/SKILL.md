@@ -19,11 +19,11 @@ Autofind e SN confirmados; profiles 100 consultados; DBA compatível; ONT-ID liv
 
 ## Comandos confirmados
 
-- [CONFIRMADO][DESTRUTIVO] `ont add 0 0 sn-auth 4857544354ABCFB2 omci ont-lineprofile-id 100 ont-srvprofile-id 100 desc "EG8145X6-10-TESTE"`
+- [CONFIRMADO][DESTRUTIVO] na sessão de origem: `ont add ${PON_PORT} ${ONT_ID} sn-auth ${ONT_SERIAL} omci ont-lineprofile-id ${LINE_PROFILE_ID} ont-srvprofile-id ${SERVICE_PROFILE_ID} desc "${ONT_DESCRIPTION}"`. Redescobrir valores no alvo.
 
 ## Comandos de descoberta
 
-- [DISCOVERY] `ont add ?`; `ont add 0 ?`; `ont add 0 0 sn-auth ?`; `ont add 0 0 sn-auth 4857544354ABCFB2 ?`; `ont add 0 0 sn-auth 4857544354ABCFB2 omci ?`.
+- [DISCOVERY] `ont add ?`; `ont add ${PON_PORT} ?`; `ont add ${PON_PORT} ${ONT_ID} sn-auth ?`; `ont add ${PON_PORT} ${ONT_ID} sn-auth ${ONT_SERIAL} ?`; `ont add ${PON_PORT} ${ONT_ID} sn-auth ${ONT_SERIAL} omci ?`.
 
 ## Sintaxe
 
