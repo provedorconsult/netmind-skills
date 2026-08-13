@@ -1,71 +1,76 @@
 ---
 name: 31-production-checklist
-description: Validar o Cisco ASR1001-X após mudança e antes do aceite de produção em ambiente ISP.
+description: Validar o Cisco ASR1001-X após mudança, separar homologação de persistência e emitir aceite baseado em evidências end-to-end.
 ---
 
 # Checklist de produção
 
 ## Objetivo
 
-Emitir aceite baseado em evidências e manter acesso.
+Emitir aceite somente quando a causa tratada, os serviços preservados e a persistência autorizada estiverem comprovados.
 
 ## Pré-requisitos
 
-Identificar o ASR1001-X e executar `show version` de forma sanitizada. Confirmar modo, privilégio, escopo, release IOS XE e acesso alternativo antes de qualquer mudança.
+Identificar ASR1001-X, release IOS XE, baseline sanitizado, escopo da mudança, rollback e acesso alternativo.
 
-## Comandos candidatos
+## Checklist pós-mudança
 
-- [INFERIDO] `show version`
-- [INFERIDO] `show interfaces`
-- [INFERIDO] `show ip route`
-- [INFERIDO] `show bgp summary`
-- [INFERIDO] `show pppoe session`
-- [INFERIDO] `show aaa sessions`
-- [INFERIDO] `show ip nat statistics`
-- [INFERIDO] `show policy-map interface`
-- [INFERIDO] `show processes cpu`
-- [INFERIDO] `show processes memory`
-- [INFERIDO] `show ip ssh`
+- [ ] Identidade/release permanecem as esperadas.
+- [ ] Apenas objetos autorizados mudaram.
+- [ ] Interfaces/uplinks críticos estão UP.
+- [ ] Rotas/FIB/CEF relevantes estão coerentes.
+- [ ] BGP/OSPF permanecem estáveis quando aplicável.
+- [ ] PPPoE/IPoE permanece funcional.
+- [ ] AAA/RADIUS permanece funcional.
+- [ ] NAT/CGNAT cria traduções esperadas e não apresenta novos drops/falhas.
+- [ ] ACL/policy/QoS preservam tráfego não envolvido.
+- [ ] CPU/memória sem regressão relevante.
+- [ ] SSH/gestão e NAT/PAT de gerenciamento permanecem funcionais.
+- [ ] Counters antes/depois comprovam forwarding bidirecional.
+- [ ] Cliente final validado quando houver acesso.
+- [ ] Limitações de teste explicitamente registradas quando não houver acesso ao cliente.
+- [ ] Rollback ainda é executável.
 
-## Discovery e classificação
+## Homologação técnica versus end-to-end
 
-Toda linha acima é `[INFERIDO]` até ser aceita na CLI, exceto quando explicitamente marcada `[CONFIRMADO]`. Antes de usar, executar ajuda contextual (`?`, `show ?`, `show <TOKEN> ?`) no modo correto e registrar a saída como `[DISCOVERY]`. Uma rejeição literal vira `[ERRO]`.
+É permitido homologar uma camada específica com evidência suficiente, mas não declarar “serviço end-to-end funcional” sem confirmação do cliente ou teste equivalente. Exemplo: tradução NAT + retorno ao BNG comprovam dataplane NAT, mas não substituem DNS/HTTP/HTTPS no cliente.
 
-## Procedimento
+## Persistência
 
-Marcar IOS XE, configuração, interfaces/uplinks, rotas, BGP, PPPoE, AAA, NAT, QoS, CPU, memória, SSH e persistência autorizada; falha em item impede aceite.
+Running-config homologado não autoriza automaticamente NVRAM. Persistência exige gate explícito. Após `write memory`/`copy running-config startup-config`:
 
-## Resultado esperado
+- [ ] retorno de sucesso registrado;
+- [ ] startup-config contém exatamente as linhas aprovadas;
+- [ ] objetos preexistentes permanecem intactos;
+- [ ] evidência sanitizada publicada no Source of Truth.
 
-Evidência suficiente para concluir o estado ou apresentar uma mudança conservadora sem inventar sintaxe.
+## Critério de aceite
 
-## Diagnóstico
+Aceitar quando:
 
-Correlacionar configuração, estado operacional e contadores. Parar na primeira camada falha e registrar comando, modo, horário e retorno literal sanitizado.
+1. a causa raiz está corrigida;
+2. os counters/estado provam efeito esperado;
+3. não há regressão nos objetos preservados;
+4. o cliente confirmou o serviço, quando exigido;
+5. a persistência, se autorizada, foi validada.
 
-## Dependências
+## Critério de rejeição
 
-Consultar a matriz global, a decision tree, o banco de erros e as Skills relacionadas antes de propor alteração.
-
-## Riscos
-
-Salvar configuração defeituosa dificulta rollback; não persistir antes da validação.
+Rejeitar ou manter pendente diante de novos drops, falha de pool/porta, sessão degradada, diferença inesperada em startup-config, serviço de gestão quebrado ou evidência contraditória.
 
 ## Rollback
 
-Acionar plano específico da mudança e repetir checklist.
+Acionar plano específico da mudança e repetir este checklist. Não usar clear/reload como primeira resposta.
 
-## Regras de segurança
+## Segurança
 
-Seguir SHOW → ANALISAR → VALIDAR → PROPOR → CONFIRMAR → ALTERAR → VALIDAR → DOCUMENTAR. Mascarar `password`, `secret`, `key`, `community`, RADIUS, BGP, PPP e chaves SSH. Todo comando mutável também recebe `[DESTRUTIVO]`.
+Sanitizar credenciais, dados pessoais e identificadores sensíveis. Não versionar configuração bruta.
 
-## O que NÃO fazer
+## Dependências
 
-Não executar alteração sem confirmação explícita; não usar sintaxe de memória; não expor segredos; não usar reload/clear/reset como primeira ação; não salvar configuração antes da validação.
+Usar com `30-safe-change` e a skill técnica específica. Para PPPoE UP sem navegação, usar `32-pppoe-up-no-navigation`.
 
 ## Fonte
 
-- Equipamento-alvo: Cisco ASR1001-X; versão real ainda não fornecida.
-- Documentação oficial Cisco ASR1000/IOS XE listada no README do pacote.
-- A CLI real prevalece. Marcar exemplos de outra release como `[VERSÃO DIFERENTE]`; nunca misturar IOS, IOS XE e IOS XR.
-
+- Cisco ASR1001-X / IOS XE; CLI real prevalece.
+- Processo refinado por validação real de CGNAT em IOS XE 17.09.03a, sem incorporar dados específicos de cliente.
