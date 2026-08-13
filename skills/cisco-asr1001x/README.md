@@ -1,10 +1,10 @@
 # Skills Cisco ASR1001-X para ISP
 
-Pacote profissional para Codex operar de forma conservadora em Cisco ASR1001-X como edge router/BNG de ISP. Nenhum acesso ou alteração foi realizado no equipamento durante a criação.
+Pacote profissional para Codex operar de forma conservadora em Cisco ASR1001-X como edge router/BNG de ISP. A evidência operacional incorporada é somente de leitura e não registra identidade de cliente.
 
 ## Estado de evidência
 
-A versão real do IOS XE ainda não foi fornecida. A primeira coleta obrigatória é `show version`, com saída sanitizada. Até uma linha ser aceita na CLI real:
+O contexto validado é Cisco ASR1001-X com IOS XE 17.09.03a em privileged EXEC. Essa evidência não se generaliza para outras releases, modelos ou modos. Antes de qualquer nova coleta, executar `show version` com saída sanitizada e confirmar que o contexto corresponde. Até uma linha ser aceita na CLI real:
 
 - `[CONFIRMADO]`: executada com sucesso no ASR de referência.
 - `[DISCOVERY]`: consulta de ajuda `?` executada e registrada.

@@ -151,4 +151,4 @@ O repositório também contém um pacote independente para Cisco ASR1001-X em am
 - [Decision tree Cisco](skills/cisco-asr1001x/CISCO-ASR1001X-DECISION-TREE.md)
 - [Rollback Cisco](skills/cisco-asr1001x/CISCO-ASR1001X-ROLLBACK.md)
 
-A versão IOS XE real permanece pendente de uma saída sanitizada de `show version`. Nenhum comando Cisco foi promovido a `[CONFIRMADO]` sem evidência da CLI.
+O contexto validado é Cisco ASR1001-X com IOS XE 17.09.03a em privileged EXEC. `show version`, `terminal length ?`, `terminal length 0` e `show running-config` estão `[CONFIRMADO]` somente nesse contexto; `show startup-config` permanece `[INFERIDO]`. Nenhum comando Cisco foi promovido sem evidência da CLI.
