@@ -24,7 +24,7 @@ Responder **SIM**, **NÃO** ou **DESCONHECIDO** a cada nó. Em **NÃO** ou **DES
 20. AAA/RADIUS autentica?
 21. Cliente recebe IP?
 
-No cenário route, o nó 18 exige antes confirmar que a WAN PPPoE foi aplicada à ONT de bancada. Separar suas fases: PADI, PADO, PADR/PADS, LCP, autenticação PAP/CHAP e IPCP. O nó 20 inclui validar IP/rota/DNS na ONT e, depois, NAT, DHCP e clientes LAN/Wi-Fi.
+No cenário route, o nó 19 exige antes confirmar que a WAN PPPoE foi aplicada à ONT de bancada. Separar suas fases: PADI, PADO, PADR/PADS, LCP, autenticação PAP/CHAP e IPCP. O nó 21 inclui validar IP/rota/DNS na ONT e, depois, NAT, DHCP e clientes LAN/Wi-Fi.
 
 ## Evidência confirmada disponível
 
@@ -34,8 +34,8 @@ No cenário route, o nó 18 exige antes confirmar que a WAN PPPoE foi aplicada �
 - Nó 8: `display ont-srvprofile gpon all`.
 - Nó 9: `display dba-profile all detail`.
 - Nós 13/14: `display service-port 1000` e, quando disponível, seus contadores.
-- Nó 14: `display port vlan 0/1/0`.
-- Nó 15: `display port vlan 0/8/0`.
+- Nó 15: `display port vlan 0/1/0`.
+- Nó 16: `display port vlan 0/8/0`.
 
 Assinatura crítica: ONT online e service-port UP, mas contadores do service-port em zero, WAN PPPoE `Disconnected` e BNG sem PADI/PADR exigem verificar o GEM mapping antes de alterar WAN, AAA, NAT ou VLAN.
 
