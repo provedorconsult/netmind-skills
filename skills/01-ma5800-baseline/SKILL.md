@@ -19,6 +19,7 @@ Acesso somente leitura; confirmar release e patch; janela apenas se uma etapa po
 
 ## Comandos confirmados
 
+- [CONFIRMADO] `display version` na MA5800-X7 MA5800V100R018C00/SPH507; confirmar `<cr>` e tratar paginação manual.
 - [CONFIRMADO] `display port vlan 0/1/0`
 - [CONFIRMADO] `display port vlan 0/8/0`
 - [CONFIRMADO] `display current-configuration | include ont-lineprofile`

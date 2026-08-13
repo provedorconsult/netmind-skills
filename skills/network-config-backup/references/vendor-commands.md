@@ -4,25 +4,26 @@ Aplicar a [classificação formal](command-classification.md). Estes comandos s�
 
 ## Huawei MA5800
 
-Sequência de leitura ainda não validada em equipamento real para esta skill:
+Contexto validado: MA5800-X7, MA5800V100R018C00, patch SPH507, user view. Ver [evidência sanitizada](validated-contexts.md).
 
-1. Contexto e versão: `[INFERIDO] display version`.
-2. Descoberta da configuração: `[INFERIDO] display current-configuration ?`.
-3. Configuração corrente: `[INFERIDO] display current-configuration`.
-4. Desabilitação de paginação: `[PENDENTE DE VALIDAÇÃO]`.
-5. Marcador inequívoco de fim da configuração: `[PENDENTE DE VALIDAÇÃO]`.
+1. Contexto e versão: `[CONFIRMADO] display version`; a CLI exige confirmação `<cr>`.
+2. Paginação da versão: `[CONFIRMADO]` avanço manual com espaço no prompt `---- More`.
+3. Marcador final da versão: `[CONFIRMADO]` retorno ao prompt de user view.
+4. Configuração corrente global: `[PENDENTE DE VALIDAÇÃO] display current-configuration`; nessa visão, a CLI exigiu `interface`, `ont`, `port` ou `service-port` e não retornou configuração.
+5. Sequência completa de backup: `[PENDENTE DE VALIDAÇÃO]`; não declarar sucesso com coleta parcial por filtros.
 
-Sem sintaxe validada de paginação ou marcador final, não declarar a coleta completa. Tratar `save`, exportação, transferência para servidor, reboot e restauração como `[PROIBIDO]` no fluxo automático.
+Tratar `save`, exportação, transferência para servidor, reboot e restauração como `[PROIBIDO]` no fluxo automático.
 
 ## Cisco ASR1001-X / IOS XE
 
-Sequência de leitura ainda não validada no equipamento-alvo:
+Contexto validado: ASR1001-X, IOS XE 17.09.03a, privileged EXEC. Ver [evidência sanitizada](validated-contexts.md).
 
-1. Contexto e versão: `[INFERIDO] show version`.
-2. Controle de paginação da sessão: `[INFERIDO] terminal length 0`; validar efeito e sintaxe no alvo antes de usar.
-3. Configuração corrente: `[INFERIDO] show running-config`.
-4. Configuração persistida: `[INFERIDO] show startup-config`.
-5. Marcador final: `[INFERIDO]` retorno ao prompt EXEC esperado, sem `--More--`, timeout, desconexão ou erro.
+1. Contexto e versão: `[CONFIRMADO] show version`.
+2. Descoberta de paginação: `[CONFIRMADO] terminal length ?`; a CLI informou a faixa `0-512` e `0` como sem pausas.
+3. Controle de paginação da sessão: `[CONFIRMADO] terminal length 0`; efeito limitado à sessão observada.
+4. Configuração corrente: `[CONFIRMADO] show running-config`; cabeçalho, linha `end` e retorno ao prompt observados sem paginação ou truncamento.
+5. Configuração persistida: `[INFERIDO] show startup-config`; não executado na validação.
+6. Marcador final: `[CONFIRMADO]` retorno ao prompt privileged EXEC depois da linha `end`.
 
 Classificar `copy running-config startup-config`, `write memory`, exportação, transferência para servidor, reload e restauração como `[PROIBIDO]` no fluxo automático. Eles persistem ou alteram estado e nunca fazem parte implícita de uma coleta somente de leitura.
 
