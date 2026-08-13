@@ -25,18 +25,21 @@ Resolver no Source of Truth antes de acessar o equipamento:
 - `${BACKUP_DATE}`: `DD-MM-AAAA`;
 - `${BACKUP_PHASE}`: vazio, `pre`, `pos` ou sequência aprovada;
 - `${BACKUP_ROOT}`: raiz de backups do Source of Truth.
+- `${READ_TIMEOUT_SECONDS}`: limite autorizado para a coleta;
+- `${PAGINATION_MODE}`: desabilitada por sintaxe validada ou avanço manual controlado;
+- `${EXPECTED_END_MARKER}`: prompt ou marcador final validado para a plataforma.
 
 Se identidade, fabricante ou modelo não estiverem confirmados, limitar-se a observações seguras e registrar `PENDENTE DE VALIDAÇÃO`. Não criar o backup sob nome arbitrário.
 
 ## Fluxo
 
 1. **Observar:** confirmar alvo, sessão, prompt, data, acesso somente leitura e espaço de destino.
-2. **Selecionar procedimento:** ler integralmente a skill do fabricante/modelo e consultar [comandos por plataforma](references/vendor-commands.md).
-3. **Precheck:** confirmar que o destino não existe, definir timeout e impedir paginação apenas quando a sintaxe estiver confirmada.
+2. **Selecionar procedimento:** ler integralmente a skill do fabricante/modelo, a [classificação de comandos](references/command-classification.md) e os [comandos por plataforma](references/vendor-commands.md).
+3. **Precheck:** preencher o [checklist de readiness](references/preflight-checklist.md), confirmar que o destino não existe e definir timeout, paginação e marcador final.
 4. **Coletar:** executar o comando de exibição confirmado ou descoberto na CLI. Não executar `save`, `write`, `copy`, export, reload ou equivalente como parte implícita da coleta.
 5. **Preservar bruto fora do Git:** manter a saída original somente em armazenamento protegido quando contiver segredos.
 6. **Sanitizar:** criar uma cópia destinada ao versionamento e mascarar credenciais, hashes, chaves, comunidades, tokens e dados proibidos pela política do Source of Truth.
-7. **Validar:** conferir completude, identidade, nome, data, conteúdo, sanitização e ausência de sobrescrita.
+7. **Validar:** conferir completude, identidade, nome, data, conteúdo, sanitização, ausência de sobrescrita e o [contrato de saída](references/output-contract.md).
 8. **Comparar:** confrontar com o backup anterior e destacar mudanças inesperadas.
 9. **Documentar:** registrar comando, horário, resultado, limitações, arquivo anterior e novo arquivo, sem segredos.
 10. **Pós-check:** confirmar que a sessão permaneceu somente leitura e que nenhum estado do equipamento mudou.
@@ -50,6 +53,15 @@ ${BACKUP_ROOT}/${DEVICE_CATEGORY}/${DEVICE_NAME}/${DEVICE_NAME}-${BACKUP_DATE}.t
 ```
 
 Para duas coletas ligadas a uma mudança, acrescentar `-pre` e `-pos`. Para coletas independentes no mesmo dia, usar `-01`, `-02` e seguintes. Nunca usar `latest.txt`, timestamp Unix ou nome genérico como arquivo principal.
+
+Exemplos sintéticos válidos para a validação estática: `OLT-LAB-01-12-08-2026.txt`, `OLT-LAB-01-12-08-2026-pre.txt`, `OLT-LAB-01-12-08-2026-pos.txt` e `OLT-LAB-01-12-08-2026-01.txt`. Eles não representam equipamentos reais.
+
+## Timeout, paginação e truncamento
+
+- Definir `${READ_TIMEOUT_SECONDS}` antes da coleta; nunca aguardar indefinidamente.
+- Desabilitar paginação somente com comando classificado para a plataforma e validado no contexto. Caso contrário, avançar manualmente sem enviar texto que possa ser interpretado como comando.
+- Invalidar a coleta se houver prompt de paginação remanescente, timeout, desconexão, limite de buffer, mensagem de erro ou ausência de `${EXPECTED_END_MARKER}`.
+- Não concatenar silenciosamente tentativas parciais. Recomeçar a coleta em novo arquivo quando a causa estiver resolvida.
 
 ## Sanitização
 
@@ -87,4 +99,4 @@ Não normalizar automaticamente divergências nem editar a configuração coleta
 
 ## Resultado esperado
 
-Entregar um backup textual completo, sanitizado, não sobrescrito, associado ao equipamento inventariado e acompanhado de evidência e comparação aplicáveis. Se qualquer requisito falhar, não publicar o arquivo e registrar a pendência.
+Entregar `backup_file`, `evidence`, `validation_result`, `diff_result` e `warnings` conforme o [contrato de saída](references/output-contract.md). O backup deve estar completo, sanitizado, não sobrescrito e associado ao equipamento inventariado. Se qualquer requisito falhar, não publicar o arquivo e registrar a pendência.

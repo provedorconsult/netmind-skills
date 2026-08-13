@@ -15,7 +15,7 @@ Identificar o ASR1001-X e executar `show version` de forma sanitizada. Confirmar
 
 ## Comandos candidatos
 
-- [INFERIDO] `username teste privilege 1 secret teste123`
+- [INFERIDO] `username <USERNAME> privilege <PRIVILEGE> secret <SECRET>`
 - [INFERIDO] `aaa authentication ?`
 - [INFERIDO] `aaa authorization ?`
 - [INFERIDO] `aaa accounting ?`
@@ -61,4 +61,3 @@ Não executar alteração sem confirmação explícita; não usar sintaxe de mem
 - Equipamento-alvo: Cisco ASR1001-X; versão real ainda não fornecida.
 - Documentação oficial Cisco ASR1000/IOS XE listada no README do pacote.
 - A CLI real prevalece. Marcar exemplos de outra release como `[VERSÃO DIFERENTE]`; nunca misturar IOS, IOS XE e IOS XR.
-

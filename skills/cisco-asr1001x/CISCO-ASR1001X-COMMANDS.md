@@ -117,7 +117,7 @@ Nenhuma saída do ASR foi fornecida. Portanto, comandos do prompt e da documenta
 | `show interfaces virtual-access` | EXEC | pppoe-bng | consultar pppoe-bng | [INFERIDO] | baixo | não aplicável | Pendente `show version` | Validar modo e `?` |
 | `show interfaces virtual-template` | EXEC | pppoe-bng | consultar pppoe-bng | [INFERIDO] | baixo | não aplicável | Pendente `show version` | Validar modo e `?` |
 | `show running-config interface Virtual-Template<NUMBER>` | EXEC | pppoe-bng | consultar pppoe-bng | [INFERIDO] | baixo | não aplicável | Pendente `show version` | Validar modo e `?` |
-| `username teste privilege 1 secret teste123` | global config | aaa | configurar aaa | [INFERIDO] | crítico | restaurar method lists e fallback | Pendente `show version` | Validar modo e `?` |
+| `username <USERNAME> privilege <PRIVILEGE> secret <SECRET>` | global config | aaa | configurar aaa | [INFERIDO] | crítico | restaurar method lists e fallback | Pendente `show version` | Validar modo e `?` |
 | `aaa authentication ?` | global config | aaa | descobrir sintaxe/opções | [INFERIDO] | crítico | restaurar method lists e fallback | Pendente `show version` | Validar modo e `?` |
 | `aaa authorization ?` | global config | aaa | descobrir sintaxe/opções | [INFERIDO] | crítico | restaurar method lists e fallback | Pendente `show version` | Validar modo e `?` |
 | `aaa accounting ?` | global config | aaa | descobrir sintaxe/opções | [INFERIDO] | crítico | restaurar method lists e fallback | Pendente `show version` | Validar modo e `?` |
