@@ -1,0 +1,14 @@
+# Credenciais e configuração bruta de equipamentos não pertencem ao pacote.
+.env
+.env.*
+*.pem
+*.key
+__pycache__/
+*.py[cod]
+
+# Artefatos locais preexistentes; não abrir nem versionar.
+asr1001x
+asr1001x_final_pppoe_radius_cgnat.txt
+olt ma5800
+olt-inovanet.txt
+olt-ma5800-12082026-1.txt

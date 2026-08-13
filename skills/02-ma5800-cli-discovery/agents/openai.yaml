@@ -1,0 +1,4 @@
+interface:
+  display_name: "MA5800 Cli Discovery"
+  short_description: "Procedimentos seguros para Huawei MA5800-X7"
+  default_prompt: "Use $02-ma5800-cli-discovery para orientar esta tarefa na Huawei MA5800-X7."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "NAT CGNAT"
+  short_description: "Procedimentos conservadores para Cisco ASR1001-X"
+  default_prompt: "Use $14-nat-cgnat para orientar esta tarefa no Cisco ASR1001-X."

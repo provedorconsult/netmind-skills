@@ -1,0 +1,4 @@
+interface:
+  display_name: "Interface Diagnostics"
+  short_description: "Procedimentos conservadores para Cisco ASR1001-X"
+  default_prompt: "Use $03-interface-diagnostics para orientar esta tarefa no Cisco ASR1001-X."

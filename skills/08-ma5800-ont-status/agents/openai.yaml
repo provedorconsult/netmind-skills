@@ -1,0 +1,4 @@
+interface:
+  display_name: "MA5800 Ont Status"
+  short_description: "Procedimentos seguros para Huawei MA5800-X7"
+  default_prompt: "Use $08-ma5800-ont-status para orientar esta tarefa na Huawei MA5800-X7."

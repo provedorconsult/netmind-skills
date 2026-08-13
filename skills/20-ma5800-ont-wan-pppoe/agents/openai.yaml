@@ -1,0 +1,4 @@
+interface:
+  display_name: "MA5800 ONT WAN PPPoE"
+  short_description: "WAN roteada PPPoE em ONT de teste"
+  default_prompt: "Use $20-ma5800-ont-wan-pppoe para planejar a WAN PPPoE da ONT de bancada."

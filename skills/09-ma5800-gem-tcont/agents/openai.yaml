@@ -1,0 +1,4 @@
+interface:
+  display_name: "MA5800 Gem Tcont"
+  short_description: "Procedimentos seguros para Huawei MA5800-X7"
+  default_prompt: "Use $09-ma5800-gem-tcont para orientar esta tarefa na Huawei MA5800-X7."

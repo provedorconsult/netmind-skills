@@ -1,0 +1,4 @@
+interface:
+  display_name: "Vlan Subinterfaces"
+  short_description: "Procedimentos conservadores para Cisco ASR1001-X"
+  default_prompt: "Use $10-vlan-subinterfaces para orientar esta tarefa no Cisco ASR1001-X."

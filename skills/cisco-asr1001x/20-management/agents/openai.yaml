@@ -1,0 +1,4 @@
+interface:
+  display_name: "Management"
+  short_description: "Procedimentos conservadores para Cisco ASR1001-X"
+  default_prompt: "Use $20-management para orientar esta tarefa no Cisco ASR1001-X."

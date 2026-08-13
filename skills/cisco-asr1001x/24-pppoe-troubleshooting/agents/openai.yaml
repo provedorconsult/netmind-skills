@@ -1,0 +1,4 @@
+interface:
+  display_name: "PPPOE Troubleshooting"
+  short_description: "Procedimentos conservadores para Cisco ASR1001-X"
+  default_prompt: "Use $24-pppoe-troubleshooting para orientar esta tarefa no Cisco ASR1001-X."

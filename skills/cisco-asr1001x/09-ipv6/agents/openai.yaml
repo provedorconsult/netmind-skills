@@ -1,0 +1,4 @@
+interface:
+  display_name: "IPV6"
+  short_description: "Procedimentos conservadores para Cisco ASR1001-X"
+  default_prompt: "Use $09-ipv6 para orientar esta tarefa no Cisco ASR1001-X."
