@@ -19,7 +19,9 @@
 - `TEST`: teste controlado conforme a skill e o escopo vigente.
 - `WRITE`: criação ou alteração de configuração somente quando o prompt/tarefa vigente autorizar.
 - `PERSIST`: persistência global deve ser tratada como ação própria quando aplicável.
-- `DESTRUCTIVE/HIGH-IMPACT`: remoção, reload/reset, mudança de gestão, routing, AAA, firewall, ACL/NAT de produção ou equivalente exige autorização e guardrails proporcionais.
+- `HIGH-IMPACT`: ações de risco material, incluindo como exemplos operações destrutivas (remoção, reload/reset), mudança de gestão, routing, AAA, firewall e ACL/NAT de produção, exigem autorização e guardrails proporcionais.
+
+`HIGH-IMPACT` é a classe canônica; “destructive” descreve um tipo de ação dentro dela e não constitui classe paralela.
 
 A skill nunca amplia o escopo concedido pelo prompt/tarefa/Issue.
 
