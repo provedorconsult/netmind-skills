@@ -15,6 +15,17 @@ A CLI do equipamento-alvo é a autoridade de sintaxe. Validar versão e usar `?`
 
 Um comando mutável pode receber simultaneamente `[CONFIRMADO][DESTRUTIVO]`.
 
+## Modelo de acesso operacional
+
+Acesso autenticado ao equipamento é uma capacidade básica da biblioteca. Abrir uma sessão não é classificado como mudança de configuração; o guardrail se aplica à classe de comando executado depois da conexão.
+
+- O prompt/tarefa/Issue vigente define `READ`, `DISCOVERY`, `TEST`, `WRITE`, `PERSIST` ou operação de alto impacto.
+- O Source of Truth do projeto consumidor define o alvo real, topologia, endereços e mecanismo autorizado de credenciais.
+- `.env`/`.env.*` pode ser lido localmente em runtime quando a política do projeto consumidor permitir; nunca é armazenado neste repositório nem exposto em logs, PRs ou respostas.
+- Falha de alias/DNS não deve impedir a sessão quando houver endereço de gerenciamento confirmado pelo Source of Truth ou parâmetro autorizado do ambiente; nunca substituir isso por varredura de rede.
+
+Consultar [Guardrails de acesso](ACCESS-GUARDRAILS.md) e a skill genérica [network-device-access](skills/network-device-access/SKILL.md) antes das skills específicas da plataforma.
+
 ## Equipamento e baseline
 
 | Item | Valor observado |
@@ -82,13 +93,14 @@ A sintaxe para profile de WAN roteada/PPPoE ainda não foi confirmada na R018. E
 
 ## Fluxo seguro
 
-1. Ler baseline e confirmar R018/SPH507.
-2. Aplicar [árvore de decisão](MA5800-DECISION-TREE.md) e parar na primeira falha.
-3. Consultar o [banco de erros](MA5800-ERROR-DATABASE.md).
-4. Conferir o [catálogo CLI](MA5800-CLI-COMMANDS.md) e a [matriz](COMMAND-MATRIX.md).
-5. Para sintaxe não confirmada, usar `?` no modo correto.
-6. Antes de mudar: dependências, Binding times, impacto, autorização e rollback.
-7. Validar primeiro em ONT de teste e registrar o retorno literal.
+1. Resolver e validar acesso com `network-device-access`.
+2. Ler baseline e confirmar R018/SPH507.
+3. Aplicar [árvore de decisão](MA5800-DECISION-TREE.md) e parar na primeira falha.
+4. Consultar o [banco de erros](MA5800-ERROR-DATABASE.md).
+5. Conferir o [catálogo CLI](MA5800-CLI-COMMANDS.md) e a [matriz](COMMAND-MATRIX.md).
+6. Para sintaxe não confirmada, usar `?` no modo correto.
+7. Antes de mudar: dependências, Binding times, impacto, autorização e rollback.
+8. Validar primeiro em ONT de teste e registrar o retorno literal.
 
 ## Regras de segurança
 
@@ -118,9 +130,11 @@ Nunca inventar sintaxe, alterar gestão/rota sem autorização, excluir defaults
 20. [ONT WAN PPPoE](skills/20-ma5800-ont-wan-pppoe/SKILL.md)
 21. [Decision tree](skills/ma5800-decision-tree/SKILL.md)
 22. [Backup seguro de configuração](skills/network-config-backup/SKILL.md)
+23. [Acesso seguro a equipamentos](skills/network-device-access/SKILL.md)
 
 ## Entregáveis auxiliares
 
+- [Guardrails de acesso](ACCESS-GUARDRAILS.md)
 - [Exemplos de uso](EXAMPLES.md)
 - [Matriz de comandos](COMMAND-MATRIX.md)
 - [Checklist de provisionamento](ONT-PROVISIONING-CHECKLIST.md)
