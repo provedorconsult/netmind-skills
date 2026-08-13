@@ -28,6 +28,7 @@ Estar no modo correto e usar uma ONT/perfil de teste quando a árvore chegar a u
 
 ## Comandos de descoberta
 
+- [PENDENTE DE VALIDAÇÃO] `display current-configuration ?` para enumerar somente as opções oferecidas pela CLI observada; não executar filtros nesta etapa
 - [DISCOVERY] `ont-lineprofile gpon profile-id ?`
 - [DISCOVERY] `dba-profile add profile-id ?`
 - [DISCOVERY] `dba-profile add profile-id 200 profile-name "TESTE" type5 fix ?`
@@ -51,6 +52,16 @@ Estar no modo correto e usar uma ONT/perfil de teste quando a árvore chegar a u
 ## Sintaxe
 
 Acrescentar um token por vez; registrar opções e `<cr>`; nunca transformar uma opção exibida em comando confirmado sem execução bem-sucedida.
+
+## Discovery de backup global
+
+1. Confirmar MA5800-X7, MA5800V100R018C00/SPH507, user view e autorização específica para discovery.
+2. Executar somente o candidato literal `display current-configuration ?`; não completar uma opção nem remover `?`.
+3. Registrar de forma sanitizada as opções, filtros, `<cr>`, paginação, mensagens de erro e retorno ao prompt.
+4. Se a ajuda paginar, usar apenas avanço manual já validado no contexto; interromper diante de comportamento ambíguo.
+5. Manter toda opção apenas exibida como `[DISCOVERY]`. Não executar filtro nem promover sintaxe a `[CONFIRMADO]` sem nova evidência real.
+6. Considerar uma futura coleta completa somente se a própria CLI enumerar todos os domínios exigidos e cada saída tiver início, fim e prompt verificáveis, sem erro, timeout, paginação residual, desconexão ou truncamento.
+7. Se a cobertura não for comprovadamente exaustiva, registrar `[PENDENTE DE VALIDAÇÃO]` e não publicar conteúdo parcial como backup.
 
 ## Exemplos
 
@@ -86,7 +97,7 @@ Preferir `display`; classificar cada comando; consultar referências e Binding t
 
 ## O que NÃO fazer
 
-Não remover `?`, não completar pela memória e não misturar release.
+Não remover `?`, não completar pela memória, não misturar release e não usar `save`, escrita, cópia, exportação, reload, reboot ou restore no fluxo automático.
 
 ## Fonte
 

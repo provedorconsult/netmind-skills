@@ -13,10 +13,13 @@ Produzir fotografia somente leitura antes de diagnóstico ou mudança.
 
 Identificar o ASR1001-X e executar `show version` de forma sanitizada. Confirmar modo, privilégio, escopo, release IOS XE e acesso alternativo antes de qualquer mudança.
 
+## Comandos confirmados no contexto ASR1001-X / IOS XE 17.09.03a
+
+- [CONFIRMADO] `show version`
+- [CONFIRMADO] `show running-config`
+
 ## Comandos candidatos
 
-- [INFERIDO] `show version`
-- [INFERIDO] `show running-config`
 - [INFERIDO] `show startup-config`
 - [INFERIDO] `show interfaces`
 - [INFERIDO] `show ip interface brief`
@@ -44,7 +47,7 @@ Toda linha acima é `[INFERIDO]` até ser aceita na CLI, exceto quando explicita
 
 ## Procedimento
 
-Executar `show version` primeiro; selecionar documentação da release; coletar demais leituras; sanitizar password, secret, key, community, RADIUS, BGP e PPP; registrar uptime e timestamp.
+Executar `show version` primeiro; confirmar se o contexto corresponde ao validado; selecionar documentação da release; coletar demais leituras; sanitizar password, secret, key, community, RADIUS, BGP e PPP; registrar uptime e timestamp.
 
 ## Resultado esperado
 
@@ -76,7 +79,6 @@ Não executar alteração sem confirmação explícita; não usar sintaxe de mem
 
 ## Fonte
 
-- Equipamento-alvo: Cisco ASR1001-X; versão real ainda não fornecida.
+- Contexto validado: Cisco ASR1001-X, IOS XE 17.09.03a; nenhuma identidade de cliente registrada.
 - Documentação oficial Cisco ASR1000/IOS XE listada no README do pacote.
 - A CLI real prevalece. Marcar exemplos de outra release como `[VERSÃO DIFERENTE]`; nunca misturar IOS, IOS XE e IOS XR.
-

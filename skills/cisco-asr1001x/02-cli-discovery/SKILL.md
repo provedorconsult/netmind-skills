@@ -84,7 +84,6 @@ Não executar alteração sem confirmação explícita; não usar sintaxe de mem
 
 ## Fonte
 
-- Equipamento-alvo: Cisco ASR1001-X; versão real ainda não fornecida.
+- Contexto validado: Cisco ASR1001-X, IOS XE 17.09.03a; nenhuma identidade de cliente registrada.
 - Documentação oficial Cisco ASR1000/IOS XE listada no README do pacote.
 - A CLI real prevalece. Marcar exemplos de outra release como `[VERSÃO DIFERENTE]`; nunca misturar IOS, IOS XE e IOS XR.
-
