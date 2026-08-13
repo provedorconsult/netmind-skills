@@ -7,7 +7,7 @@ description: Analisar a relação DBA, T-CONT e GEM em line profiles GPON da MA5
 
 ## Objetivo
 
-Validar o caminho de transporte GPON antes de criar service-port.
+Validar o caminho de transporte GPON T-CONT → GEM → GEM mapping → service-port antes de criar ou diagnosticar serviço.
 
 ## Quando usar
 
@@ -27,15 +27,15 @@ Line profile detail e DBA listados.
 
 ## Sintaxe
 
-T-CONT 0 do profile 100 usa DBA 201; GEM Index 1 é ETH, encrypt on, cascade off, queue 0.
+T-CONT 0 do profile 100 usa DBA 201; GEM Index 1 é ETH, encrypt on, cascade off, queue 0. Se o profile está em `mapping-mode VLAN`, o GEM precisa de mapping explícito da VLAN/flow de serviço; GEM e service-port `up`, isoladamente, não provam encaminhamento.
 
 ## Exemplos
 
-Caminho: ONT → T-CONT 0/DBA 201 → GEM 1 → service-port 1000.
+Caminho: ONT → T-CONT 0/DBA 201 → GEM 1 → GEM mapping VLAN/flow → service-port 1000 → VLAN PON/uplink → BNG.
 
 ## Resultado esperado
 
-O line profile exibe T-CONT e GEM referenciados pelo service-port.
+O line profile exibe T-CONT, GEM e mapping compatível com a VLAN/flow do service-port; o service-port contabiliza tráfego quando a ONT tenta o serviço.
 
 ## Erros conhecidos
 
@@ -43,7 +43,7 @@ Type 4 é incompatível com OMCI neste cenário; DBA Max incompatível pode bloq
 
 ## Diagnóstico
 
-Conferir DBA, associação T-CONT, GEM index/service type e capacidade da ONT.
+Conferir DBA, associação T-CONT, GEM index/service type, mapping VLAN/flow, `binding times`, service-port e capacidade da ONT. Não tratar `Match state: mismatch` como causa automática de bloqueio de forwarding: investigar essa diferença de capacidade/service profile em trilha separada.
 
 ## Dependências
 
@@ -70,4 +70,3 @@ Não inventar comando `gem add`; não confundir T-CONT com GEM.
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-

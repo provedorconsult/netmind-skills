@@ -28,7 +28,7 @@ VLAN 100 contínua até o BNG; service-port up; WAN route aplicada à ONT de ban
 
 ## Sintaxe
 
-Arquitetura: EG8145X6-10 (route/NAT/DHCP/Wi-Fi e cliente PPPoE) → GPON → GEM1 → service-port1000 → VLAN100 → uplink0/8/0 → ASR1001-X (servidor PPPoE/BNG) → AAA/RADIUS. A MA5800 transporta o tráfego e pode provisionar a WAN por OMCI; ela não termina a sessão como cliente.
+Arquitetura: EG8145X6-10 (route/NAT/DHCP/Wi-Fi e cliente PPPoE) → GPON → T-CONT → GEM → GEM mapping VLAN/flow → service-port → VLAN → uplink → ASR1001-X (servidor PPPoE/BNG) → AAA/RADIUS. A MA5800 transporta o tráfego e pode provisionar a WAN por OMCI; ela não termina a sessão como cliente.
 
 ## Exemplos
 
@@ -44,7 +44,7 @@ Não há erro PPPoE literal fornecido; não fabricar diagnóstico.
 
 ## Diagnóstico
 
-Validar WAN/profile na ONT; depois PADI, PADO, PADR/PADS, LCP, PAP/CHAP, IPCP, IP, rota/DNS, NAT/DHCP e LAN/Wi-Fi.
+Validar WAN/profile na ONT; T-CONT/GEM/mapping/service-port/VLAN/uplink; depois PADI, PADO, PADR/PADS, LCP, PAP/CHAP, IPCP, IP, rota/DNS, NAT/DHCP e LAN/Wi-Fi. Se WAN está `Disconnected`, service-port `up` mas zerado e BNG sem PADI/PADR, verificar primeiro o mapping VLAN/flow do GEM. NAT/CGNAT só é avaliado depois de sessão/IP funcionais.
 
 ## Dependências
 

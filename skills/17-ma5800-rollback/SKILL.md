@@ -29,6 +29,8 @@ Snapshot textual anterior, comandos reversos validados por `?`, critérios de ab
 
 Ordem inversa típica: serviço → binding → profiles novos; preservar objetos compartilhados/default.
 
+Para mapping de GEM, o rollback deve apontar exclusivamente para o GEM e mapping-index criados. Descobrir antes, no contexto exato, a forma `undo gem mapping <GEM_ID> <MAPPING_INDEX>` e validar que o índice corresponde à VLAN/flow recém-adicionado; não usar `save` global sem autorização explícita.
+
 ## Exemplos
 
 Se service-port novo falhar, removê-lo somente após confirmar índice e sintaxe; depois avaliar ONT/profile.
@@ -70,4 +72,3 @@ Não usar comandos não confirmados nem apagar profile default.
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-
