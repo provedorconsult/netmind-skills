@@ -33,7 +33,7 @@ O enable ocorre em `config-if-gpon-0/1`, porta 0.
 
 ## Exemplos
 
-ONT observada: 0/1/0, SN 4857544354ABCFB2, HWTC, EG8145X6-10, MAC AC5E-143C-EB3E, NNI 2.5G/1.25G.
+Exemplo parametrizado: `${PON_FSP}`, SN `${ONT_SERIAL}`, vendor `${ONT_VENDOR}`, modelo `${ONT_MODEL}`, MAC `${ONT_MAC}`, NNI `${ONT_NNI_RATE}`.
 
 ## Resultado esperado
 
@@ -72,4 +72,3 @@ Não adicionar uma ONT somente por ter aparecido; validar SN e localização.
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-

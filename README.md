@@ -27,9 +27,9 @@ Um comando mutável pode receber simultaneamente `[CONFIRMADO][DESTRUTIVO]`.
 | 0/9 | H901MPLA Standby_normal |
 | 0/10 e 0/11 | H901PILA |
 | PON/ONT | 0/1/0, ONT-ID 0 |
-| ONT | EG8145X6-10, SN 4857544354ABCFB2 |
+| ONT | `${ONT_MODEL}`, SN `${ONT_SERIAL}` |
 | Uplink | 0/8/0 |
-| Gestão | VLAN 10, Vlanif10 10.101.0.2/30, gateway 10.101.0.1 |
+| Gestão | VLAN `${MGMT_VLAN}`, `${MGMT_VLANIF}` `${MGMT_IP}/${MGMT_PREFIX}`, gateway `${MGMT_GATEWAY}` |
 | Clientes | VLAN 100 |
 | Service-port | 1000, GEM 1, VLAN 100, up |
 
@@ -41,10 +41,10 @@ vlan 100 smart
 vlan desc 10 description "gerencia"
 port vlan 10 0/8 0
 port vlan 100 0/8 0
-interface Vlanif10
+interface ${MGMT_VLANIF}
  description "MGMT"
- ip address 10.101.0.2 255.255.255.252
-ip route-static 0.0.0.0 0.0.0.0 10.101.0.1
+ ip address ${MGMT_IP} ${MGMT_MASK}
+ip route-static 0.0.0.0 0.0.0.0 ${MGMT_GATEWAY}
 ```
 
 Não executar este bloco como script. Ele é um registro do estado observado.
@@ -117,6 +117,7 @@ Nunca inventar sintaxe, alterar gestão/rota sem autorização, excluir defaults
 19. [Production checklist](skills/19-ma5800-production-checklist/SKILL.md)
 20. [ONT WAN PPPoE](skills/20-ma5800-ont-wan-pppoe/SKILL.md)
 21. [Decision tree](skills/ma5800-decision-tree/SKILL.md)
+22. [Backup seguro de configuração](skills/network-config-backup/SKILL.md)
 
 ## Entregáveis auxiliares
 

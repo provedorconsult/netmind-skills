@@ -48,7 +48,7 @@ Cliente
   → Internet
 ```
 
-A OLT usa IP privado 10.101.0.2 e é alcançada a partir do ASR pelo comando já informado `ssh -l Clovis 10.101.0.2`. Nunca tentar acesso direto à OLT pela Internet.
+A OLT de destino deve ser alcançada somente pelo caminho autorizado, usando valores do inventário: `ssh -l ${DOWNSTREAM_USERNAME} ${DOWNSTREAM_HOST}`. Nunca tentar acesso direto pela Internet.
 
 ## Segurança e sanitização
 

@@ -39,7 +39,7 @@ Hardware: 0/1 H907CGHF; 0/8 H901MPLA Active_normal; 0/9 H901MPLA Standby_normal;
 
 ## Resultado esperado
 
-Release MA5800V100R018/SPH507; VLANs 1,10,100 no uplink; VLAN 100 na PON; Vlanif10 10.101.0.2/30; rota via 10.101.0.1.
+Release e patch confirmados; `${UPLINK_VLANS}` no uplink; `${PON_VLANS}` na PON; `${MGMT_VLANIF}` com `${MGMT_PREFIX}`; rota via `${MGMT_GATEWAY}`.
 
 ## Erros conhecidos
 
@@ -74,4 +74,3 @@ Não alterar VLAN 10, Vlanif10, rota padrão ou profiles default.
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-

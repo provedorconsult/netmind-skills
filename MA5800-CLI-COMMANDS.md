@@ -67,9 +67,9 @@ Base: MA5800V100R018/SPH507. Os modos abaixo refletem o contexto observado quand
 | `ont add ?` | Descobrir PortID | [DISCOVERY] | `portid<U><0,15>` | Baixo |
 | `ont add 0 ?` | Descobrir autenticação | [DISCOVERY] | loid/ontid/password/protect/sn... | Baixo |
 | `ont add 0 0 sn-auth ?` | Descobrir SN | [DISCOVERY] | `sn-value` | Baixo |
-| `ont add 0 0 sn-auth 4857544354ABCFB2 ?` | Descobrir protocolo | [DISCOVERY] | omci/password-auth/snmp | Baixo |
-| `ont add 0 0 sn-auth 4857544354ABCFB2 omci ?` | Descobrir profiles/desc | [DISCOVERY] | desc, line/srv profile, ont-type | Baixo |
-| `ont add 0 0 sn-auth 4857544354ABCFB2 omci ont-lineprofile-id 100 ont-srvprofile-id 100 desc "EG8145X6-10-TESTE"` | Adicionar ONT | [CONFIRMADO][DESTRUTIVO] | 1 permitida, 1 sucesso | Alto |
+| `ont add ${PON_PORT} ${ONT_ID} sn-auth ${ONT_SERIAL} ?` | Descobrir protocolo | [DISCOVERY] | omci/password-auth/snmp | Baixo |
+| `ont add ${PON_PORT} ${ONT_ID} sn-auth ${ONT_SERIAL} omci ?` | Descobrir profiles/desc | [DISCOVERY] | desc, line/srv profile, ont-type | Baixo |
+| `ont add ${PON_PORT} ${ONT_ID} sn-auth ${ONT_SERIAL} omci ont-lineprofile-id ${LINE_PROFILE_ID} ont-srvprofile-id ${SERVICE_PROFILE_ID} desc "${ONT_DESCRIPTION}"` | Adicionar ONT | [CONFIRMADO][DESTRUTIVO] na sessão de origem; redescobrir valores no alvo | 1 permitida, 1 sucesso | Alto |
 
 ## LINE PROFILE — profile 100
 

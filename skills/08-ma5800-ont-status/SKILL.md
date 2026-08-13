@@ -31,7 +31,7 @@ Usar F/S/P completo. `display ont info 0/1` não é válido neste contexto.
 
 ## Exemplos
 
-ONT 0 online, SN 4857544354ABCFB2, EG8145X6-10, distância 1 m, Rx/Tx -23.10/2.04 dBm.
+Exemplo parametrizado: ONT `${ONT_ID}` online, SN `${ONT_SERIAL}`, modelo `${ONT_MODEL}`, distância `${ONT_DISTANCE}`, Rx/Tx `${ONT_RX_DBM}`/`${ONT_TX_DBM}`.
 
 ## Resultado esperado
 
@@ -70,4 +70,3 @@ Não declarar a ONT saudável apenas por estar online; correlacionar serviço e 
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-
