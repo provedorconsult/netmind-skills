@@ -15,7 +15,7 @@ Usar quando a tarefa corresponder à descrição desta Skill. Validar primeiro r
 
 ## Pré-requisitos
 
-ONT online; GEM 1 existente; VLAN 100 na PON e uplink; índice 1000 livre.
+ONT online; GEM 1 existente; em mapping VLAN, GEM mapping compatível com a VLAN/flow; VLAN 100 na PON e uplink; índice 1000 livre.
 
 ## Comandos confirmados
 
@@ -37,7 +37,7 @@ Resultado: index 1000, VLAN 100, gpon 0/1/0, ONT 0, GEM 1, admin enable, state u
 
 ## Resultado esperado
 
-Service-port `up` e parâmetros iguais ao plano.
+Service-port `up`, parâmetros iguais ao plano e contadores compatíveis com o tráfego de teste. Estado `up` sem bytes/pacotes não prova forwarding.
 
 ## Erros conhecidos
 
@@ -45,7 +45,7 @@ Service-port `up` e parâmetros iguais ao plano.
 
 ## Diagnóstico
 
-Listar service-ports; conferir índice, ONT, GEM, VLAN e estado da PON.
+Listar service-ports; conferir índice, ONT, GEM, VLAN, estado da PON e contadores. Com ONT online, service-port `up`/zero tráfego e BNG sem PADI/PADR, voltar ao GEM mapping do line profile antes de alterar VLAN, WAN ou AAA.
 
 ## Dependências
 
@@ -72,4 +72,3 @@ Não criar antes de GEM/ONT/VLAN; não apagar automaticamente.
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-

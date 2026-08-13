@@ -27,7 +27,7 @@ Carregar `ma5800-decision-tree` e `15-ma5800-error-database`.
 
 ## Sintaxe
 
-Executar leitura em ordem física→GPON→profiles→GEM→service-port→VLAN→uplink→BNG→AAA.
+Executar leitura em ordem física→GPON→profiles→T-CONT→GEM→GEM mapping VLAN/flow→service-port no mesmo GEM→VLAN PON/uplink→BNG→AAA. Em `mapping-mode VLAN`, não inferir que a existência do GEM encaminha tráfego: registrar o mapping explícito e compatível com a VLAN do serviço.
 
 ## Exemplos
 
@@ -43,7 +43,7 @@ Consultar `MA5800-ERROR-DATABASE.md` para os oito erros literais.
 
 ## Diagnóstico
 
-Aplicar a árvore de 20 passos e parar.
+Aplicar a árvore de 21 passos e parar. A assinatura ONT online + service-port `up` sem contadores + WAN PPPoE `Disconnected` + BNG sem PADI/PADR exige verificação prioritária do mapping VLAN/flow do GEM. Tratar `Match state: mismatch` como trilha paralela até evidência de impacto no forwarding.
 
 ## Dependências
 
@@ -70,4 +70,3 @@ Não shotgun troubleshooting; não alterar camadas posteriores.
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-

@@ -27,7 +27,7 @@ Autorização explícita; release validada; baseline; dependências; ONT de test
 
 ## Sintaxe
 
-Plano mínimo: alvo, estado anterior, comando, impacto, critério de sucesso, abort e rollback.
+Plano mínimo: alvo, estado anterior, comando, impacto, critério de sucesso, abort e rollback. Para GEM mapping: confirmar `binding times`/escopo do profile, mapping-index livre, VLAN/GEM/service-port coerentes, snapshot sanitizado OLT+BNG, rollback específico e pós-validação ponta a ponta.
 
 ## Exemplos
 
@@ -51,7 +51,7 @@ Rollback e acesso de gestão resiliente.
 
 ## Riscos
 
-Perda de gestão, serviço multi-tenant ou alteração em ONT online.
+Perda de gestão, serviço multi-tenant ou alteração em ONT online. `commit` aplica a mudança no objeto/contexto; `save` global é persistência distinta e nunca é implícito nem executado sem autorização explícita.
 
 ## Rollback
 
@@ -70,4 +70,3 @@ Não executar destrutivo sem confirmação; não alterar gestão/rota; não usar
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-
