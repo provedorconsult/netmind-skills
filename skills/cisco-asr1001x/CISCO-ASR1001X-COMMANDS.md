@@ -117,7 +117,7 @@ Nenhuma saída do ASR foi fornecida. Portanto, comandos do prompt e da documenta
 | `show interfaces virtual-access` | EXEC | pppoe-bng | consultar pppoe-bng | [INFERIDO] | baixo | não aplicável | Pendente `show version` | Validar modo e `?` |
 | `show interfaces virtual-template` | EXEC | pppoe-bng | consultar pppoe-bng | [INFERIDO] | baixo | não aplicável | Pendente `show version` | Validar modo e `?` |
 | `show running-config interface Virtual-Template<NUMBER>` | EXEC | pppoe-bng | consultar pppoe-bng | [INFERIDO] | baixo | não aplicável | Pendente `show version` | Validar modo e `?` |
-| `username teste privilege 1 secret teste123` | global config | aaa | configurar aaa | [INFERIDO] | crítico | restaurar method lists e fallback | Pendente `show version` | Validar modo e `?` |
+| `username <USERNAME> privilege <PRIVILEGE> secret <SECRET>` | global config | aaa | configurar aaa | [INFERIDO] | crítico | restaurar method lists e fallback | Pendente `show version` | Validar modo e `?` |
 | `aaa authentication ?` | global config | aaa | descobrir sintaxe/opções | [INFERIDO] | crítico | restaurar method lists e fallback | Pendente `show version` | Validar modo e `?` |
 | `aaa authorization ?` | global config | aaa | descobrir sintaxe/opções | [INFERIDO] | crítico | restaurar method lists e fallback | Pendente `show version` | Validar modo e `?` |
 | `aaa accounting ?` | global config | aaa | descobrir sintaxe/opções | [INFERIDO] | crítico | restaurar method lists e fallback | Pendente `show version` | Validar modo e `?` |
@@ -178,7 +178,7 @@ Nenhuma saída do ASR foi fornecida. Portanto, comandos do prompt e da documenta
 | `config-register 0x2142` | global config | boot | configurar boot | [INFERIDO] | crítico | restaurar variável/register sem reload | Pendente `show version` | Validar modo e `?` |
 | `show processes cpu sorted` | EXEC | resources | consultar resources | [INFERIDO] | baixo | não aplicável | Pendente `show version` | Validar modo e `?` |
 | `show platform resources` | EXEC | resources | consultar resources | [INFERIDO] | baixo | não aplicável | Pendente `show version` | Validar modo e `?` |
-| `ssh -l Clovis 10.101.0.2` | ASR EXEC shell | downstream | configurar downstream | [CONFIRMADO] | baixo | encerrar sessão SSH | IOS XE observado apenas como arquitetura | Validar modo e `?` |
+| `ssh -l ${DOWNSTREAM_USERNAME} ${DOWNSTREAM_HOST}` | ASR EXEC shell | downstream | acessar downstream | [CONFIRMADO] na sessão de origem | baixo | encerrar sessão SSH | IOS XE observado apenas como arquitetura | Validar modo, alvo e `?` |
 | `configure terminal` | EXEC | mode | entrar em configuração global | [INFERIDO] | médio | end | Pendente `show version` | Validar modo e `?` |
 | `end` | EXEC | mode | sair para privileged EXEC | [INFERIDO] | médio | end | Pendente `show version` | Validar modo e `?` |
 
@@ -189,4 +189,3 @@ Nenhuma saída do ASR foi fornecida. Portanto, comandos do prompt e da documenta
 - Todo comando de configuração também é `[DESTRUTIVO]`, mesmo quando posteriormente confirmado.
 - Sanitizar toda saída antes de documentar.
 - Para erro, preservar linha, prompt, cursor e retorno literal no banco de erros.
-

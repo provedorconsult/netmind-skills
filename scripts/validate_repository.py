@@ -8,6 +8,7 @@ from pathlib import Path
 import yaml
 
 from quick_validate import validate_skill
+from validate_operational_safety import validate_operational_safety
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_ROOT = ROOT / "skills"
@@ -115,6 +116,7 @@ def main():
     validate_skills(failures)
     validate_local_links(failures)
     scan_for_sensitive_artifacts(failures)
+    validate_operational_safety(failures)
     if failures:
         print(f"Validation failed with {len(failures)} error(s)")
         return 1

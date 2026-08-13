@@ -7,7 +7,7 @@ description: Orientar acesso SSH à Huawei MA5800-X7 privada através do Cisco A
 
 ## Objetivo
 
-Usar o ASR como salto autorizado até 10.101.0.2.
+Usar o ASR como salto autorizado até `${DOWNSTREAM_HOST}`.
 
 ## Pré-requisitos
 
@@ -15,7 +15,7 @@ Identificar o ASR1001-X e executar `show version` de forma sanitizada. Confirmar
 
 ## Comandos candidatos
 
-- [CONFIRMADO] `ssh -l Clovis 10.101.0.2`
+- [CONFIRMADO] na sessão de origem: `ssh -l ${DOWNSTREAM_USERNAME} ${DOWNSTREAM_HOST}`. Validar no alvo.
 
 ## Discovery e classificação
 

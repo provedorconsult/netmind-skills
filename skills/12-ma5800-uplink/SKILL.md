@@ -63,11 +63,10 @@ Preferir `display`; classificar cada comando; consultar referências e Binding t
 
 ## O que NÃO fazer
 
-Não alterar rota 0/0 via 10.101.0.1 ou Vlanif10.
+Não alterar rota padrão via `${MGMT_GATEWAY}` ou `${MGMT_VLANIF}`.
 
 ## Fonte
 
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-

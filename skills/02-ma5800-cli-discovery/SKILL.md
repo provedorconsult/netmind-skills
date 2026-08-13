@@ -38,8 +38,8 @@ Estar no modo correto e usar uma ONT/perfil de teste quando a árvore chegar a u
 - [DISCOVERY] `ont add ?`
 - [DISCOVERY] `ont add 0 ?`
 - [DISCOVERY] `ont add 0 0 sn-auth ?`
-- [DISCOVERY] `ont add 0 0 sn-auth 4857544354ABCFB2 ?`
-- [DISCOVERY] `ont add 0 0 sn-auth 4857544354ABCFB2 omci ?`
+- [DISCOVERY] `ont add ${PON_PORT} ${ONT_ID} sn-auth ${ONT_SERIAL} ?`
+- [DISCOVERY] `ont add ${PON_PORT} ${ONT_ID} sn-auth ${ONT_SERIAL} omci ?`
 - [DISCOVERY] `ont-port ?`
 - [DISCOVERY] `ont-port eth ?`
 - [DISCOVERY] `port ?`
@@ -93,4 +93,3 @@ Não remover `?`, não completar pela memória e não misturar release.
 - Evidência primária: sessão CLI fornecida pelo operador, MA5800V100R018, patch SPH507.
 - Referência oficial Huawei: portal de suporte MA5800 e guias oficiais listados no README.
 - A CLI do equipamento prevalece sobre documentação. Marcar material de outra release como `[VERSÃO DIFERENTE]`.
-
