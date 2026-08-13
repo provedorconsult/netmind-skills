@@ -98,6 +98,34 @@ Ao coletar running/startup config, sanitizar também valores cifrados ou hash. N
 | 29 | [ISP troubleshooting](29-isp-troubleshooting/SKILL.md) | Ponta a ponta |
 | 30 | [Safe change](30-safe-change/SKILL.md) | Mudança conservadora |
 | 31 | [Production checklist](31-production-checklist/SKILL.md) | Aceite pós-mudança |
+| 32 | [PPPoE UP sem navegação](32-pppoe-up-no-navigation/SKILL.md) | Isola BNG, NAT/CGNAT, retorno e testes do cliente |
+
+## Lição operacional: PPPoE UP não comprova navegação
+
+Uma sessão PPPoE `UP`, IPv4 atribuído e rota conectada comprovam autenticação e
+terminação no BNG, mas não o encaminhamento completo até a Internet. Para um
+assinante em RFC1918 ou RFC6598, o diagnóstico deve correlacionar counters da
+sessão, rota/FIB, classificação NAT, pool público autorizado, tradução dinâmica,
+retorno e teste no cliente.
+
+Antes de qualquer correção CGNAT, obter do Source of Truth o prefixo de
+assinantes e o bloco público autorizado. Criar ACL exclusiva do prefixo do
+serviço; não reutilizar por conveniência ACLs que também classifiquem gestão ou
+outros serviços. Nunca assumir que um IP público em loopback ou PAT de gestão
+está disponível para CGNAT.
+
+O fluxo é:
+
+```text
+PPPoE UP → IP atribuído → tráfego chega ao BNG → tradução dinâmica criada
+→ retorno ao BNG → DNS/HTTP/HTTPS no cliente
+```
+
+Separar os gates de aplicação, homologação e persistência. `write memory` ou
+equivalente só ocorre após autorização explícita e validação de startup-config.
+O caso técnico reutilizável está em
+[32-pppoe-up-no-navigation](32-pppoe-up-no-navigation/SKILL.md); os parâmetros
+reais pertencem exclusivamente ao Source of Truth do projeto consumidor.
 
 ## Checklist de produção
 
