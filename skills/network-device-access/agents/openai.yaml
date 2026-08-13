@@ -1,0 +1,4 @@
+interface:
+  display_name: "Network Device Access"
+  short_description: "Acesso autenticado seguro a equipamentos de rede"
+  default_prompt: "Use $network-device-access para preparar e validar o acesso ao equipamento antes da tarefa operacional."
