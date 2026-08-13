@@ -3,6 +3,8 @@
 .env.*
 *.pem
 *.key
+__pycache__/
+*.py[cod]
 
 # Artefatos locais preexistentes; não abrir nem versionar.
 asr1001x
