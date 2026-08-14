@@ -26,6 +26,19 @@ RESERVED_EXAMPLE_NETWORKS = tuple(
     for network in ("192.0.2.0/24", "198.51.100.0/24", "203.0.113.0/24")
 )
 
+CGNAT_GUARDRAILS = {
+    "skills/cisco-asr1001x/14-nat-cgnat/SKILL.md": (
+        "ACL exclusiva",
+        "rota de retorno",
+        "Persistir running-config é gate separado",
+    ),
+    "skills/cisco-asr1001x/32-pppoe-up-no-navigation/SKILL.md": (
+        "Não assumir que PPPoE UP implica forwarding completo",
+        "ACL exclusiva",
+        "Só persistir após validar running-config",
+    ),
+}
+
 
 def valid_backup_name(name):
     return bool(BACKUP_NAME.fullmatch(name) or PARAMETERIZED_BACKUP_NAME.fullmatch(name))
@@ -131,10 +144,26 @@ def scan_possible_specific_data(failures):
     print(f"Flagged {len(seen)} ambiguous specific-data occurrence(s)")
 
 
+def validate_cgnat_guardrails(failures):
+    """Require reusable CGNAT safety gates when the optional Cisco skills exist."""
+    checked = 0
+    for relative, required_phrases in CGNAT_GUARDRAILS.items():
+        path = ROOT / relative
+        if not path.exists():
+            continue
+        content = path.read_text(encoding="utf-8")
+        for phrase in required_phrases:
+            if phrase not in content:
+                failures.append(f"{relative}: missing CGNAT guardrail '{phrase}'")
+        checked += 1
+    print(f"Validated CGNAT guardrails in {checked} skill(s)")
+
+
 def validate_operational_safety(failures):
     validate_filename_classifier(failures)
     validate_documented_backup_names(failures)
     scan_possible_specific_data(failures)
+    validate_cgnat_guardrails(failures)
 
 
 def main():

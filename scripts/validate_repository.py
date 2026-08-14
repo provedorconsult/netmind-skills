@@ -5,9 +5,7 @@ import re
 import sys
 from pathlib import Path
 
-import yaml
-
-from quick_validate import validate_skill
+from quick_validate import safe_load_yaml, validate_agent_manifest, validate_skill
 from validate_operational_safety import validate_operational_safety
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,7 +30,7 @@ def validate_skills(failures):
             fail(f"{skill_dir.relative_to(ROOT)}: {message}", failures)
             continue
 
-        frontmatter = yaml.safe_load(
+        frontmatter = safe_load_yaml(
             re.match(
                 r"^---\n(.*?)\n---",
                 skill_file.read_text(encoding="utf-8"),
@@ -47,29 +45,51 @@ def validate_skills(failures):
                 failures,
             )
 
-        agent_file = skill_dir / "agents" / "openai.yaml"
-        if not agent_file.exists():
-            fail(f"{agent_file.relative_to(ROOT)} is missing", failures)
-            continue
-        try:
-            agent_data = yaml.safe_load(agent_file.read_text(encoding="utf-8"))
-        except yaml.YAMLError as exc:
-            fail(f"{agent_file.relative_to(ROOT)}: invalid YAML: {exc}", failures)
-            continue
-
-        interface = (agent_data or {}).get("interface", {})
-        for key in ("display_name", "short_description", "default_prompt"):
-            if not isinstance(interface.get(key), str) or not interface[key].strip():
-                fail(f"{agent_file.relative_to(ROOT)}: missing interface.{key}", failures)
-        if f"${expected_name}" not in interface.get("default_prompt", ""):
-            fail(
-                f"{agent_file.relative_to(ROOT)}: default_prompt must mention "
-                f"${expected_name}",
-                failures,
-            )
+        valid_agent, agent_message = validate_agent_manifest(skill_dir)
+        if not valid_agent:
+            fail(f"{skill_dir.relative_to(ROOT)}: {agent_message}", failures)
 
     print(f"Validated {len(skill_files)} SKILL.md files")
     return skill_files
+
+
+def validate_cisco_skill_index(failures):
+    """Keep the Cisco package README index aligned with shipped skill folders."""
+    package = SKILLS_ROOT / "cisco-asr1001x"
+    readme = package / "README.md"
+    if not readme.exists():
+        fail("skills/cisco-asr1001x/README.md is missing", failures)
+        return
+
+    expected = {path.name for path in package.iterdir() if (path / "SKILL.md").exists()}
+    indexed = set(
+        re.findall(
+            r"\|\s*\d+\s*\|\s*\[[^]]+\]\((\d{2}-[a-z][a-z0-9-]*)/SKILL\.md\)",
+            readme.read_text(encoding="utf-8"),
+        )
+    )
+    missing = sorted(expected - indexed)
+    stale = sorted(indexed - expected)
+    if missing:
+        fail(f"skills/cisco-asr1001x/README.md: missing skill index entries: {', '.join(missing)}", failures)
+    if stale:
+        fail(f"skills/cisco-asr1001x/README.md: stale skill index entries: {', '.join(stale)}", failures)
+    print(f"Validated {len(indexed)} Cisco skill index entries")
+
+
+def validate_cisco_skill_references(failures):
+    """Detect references to non-existent numbered Cisco skills in package docs."""
+    package = SKILLS_ROOT / "cisco-asr1001x"
+    available = {path.name for path in package.iterdir() if (path / "SKILL.md").exists()}
+    referenced = set()
+    for markdown in package.rglob("*.md"):
+        code_spans = re.findall(r"`([^`]+)`", markdown.read_text(encoding="utf-8"))
+        for code_span in code_spans:
+            referenced.update(re.findall(r"\b\d{2}-[a-z][a-z0-9-]*\b", code_span))
+    unknown = sorted(referenced - available)
+    if unknown:
+        fail(f"skills/cisco-asr1001x: references unknown skill(s): {', '.join(unknown)}", failures)
+    print(f"Validated {len(referenced)} numbered Cisco skill reference(s)")
 
 
 def validate_local_links(failures):
@@ -114,6 +134,8 @@ def scan_for_sensitive_artifacts(failures):
 def main():
     failures = []
     validate_skills(failures)
+    validate_cisco_skill_index(failures)
+    validate_cisco_skill_references(failures)
     validate_local_links(failures)
     scan_for_sensitive_artifacts(failures)
     validate_operational_safety(failures)

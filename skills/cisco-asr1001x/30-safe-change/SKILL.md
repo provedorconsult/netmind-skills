@@ -1,70 +1,83 @@
 ---
 name: 30-safe-change
-description: Planejar e controlar mudanças no Cisco ASR1001-X com baseline, autorização, validação e rollback.
+description: Planejar e controlar mudanças no Cisco ASR1001-X com baseline, gates de autorização, validação, rollback e persistência separada.
 ---
 
 # Mudança segura
 
 ## Objetivo
 
-Impedir alterações improvisadas em produção.
+Impedir alterações improvisadas em produção e separar claramente aplicação, homologação e persistência.
 
 ## Pré-requisitos
 
-Identificar o ASR1001-X e executar `show version` de forma sanitizada. Confirmar modo, privilégio, escopo, release IOS XE e acesso alternativo antes de qualquer mudança.
+Usar primeiro `network-device-access`. Identificar ASR1001-X, release IOS XE, privilégio, escopo e Source of Truth. Capturar baseline sanitizado e acesso alternativo antes de qualquer HIGH-IMPACT.
 
-## Comandos candidatos
+## Gate 1 — Diagnóstico
 
-- [INFERIDO] `show version`
-- [INFERIDO] `show processes cpu`
-- [INFERIDO] `show processes memory`
-- [INFERIDO] `show running-config`
-- [INFERIDO] `show interfaces`
-- [INFERIDO] `show ip route`
-- [INFERIDO] `show bgp summary`
-- [INFERIDO] `show pppoe session`
-- [INFERIDO] `configure terminal`
-- [INFERIDO] `end`
+READ-ONLY. Confirmar causa raiz com configuração, estado operacional e counters. Não propor alteração enquanto a primeira camada falha não estiver identificada.
 
-## Discovery e classificação
+## Gate 2 — Change Plan
 
-Toda linha acima é `[INFERIDO]` até ser aceita na CLI, exceto quando explicitamente marcada `[CONFIRMADO]`. Antes de usar, executar ajuda contextual (`?`, `show ?`, `show <TOKEN> ?`) no modo correto e registrar a saída como `[DISCOVERY]`. Uma rejeição literal vira `[ERRO]`.
+Antes de configurar, documentar:
 
-## Procedimento
+- equipamento/release;
+- causa tratada;
+- comandos exatos;
+- objetos existentes preservados;
+- dependências;
+- risco/impacto;
+- prechecks e abort conditions;
+- validação pós-mudança;
+- rollback específico;
+- itens ainda parametrizados que impedem execução.
 
-Identificar equipamento/release/uptime/CPU/memória; salvar estado sanitizado; apresentar comando, objetivo, impacto, dependências, resultado, validação e rollback; confirmar; alterar uma camada; validar e documentar.
+Valores de rede devem vir do Source of Truth ou de confirmação explícita do responsável/upstream; não inferir IP, prefixo, ASN, VLAN ou pool.
 
-## Resultado esperado
+## Gate 3 — Aplicação em running-config
 
-Evidência suficiente para concluir o estado ou apresentar uma mudança conservadora sem inventar sintaxe.
+Somente após autorização explícita. Alterar a menor unidade possível, validar imediatamente e parar diante de saída inesperada. Não executar comandos adicionais “para aproveitar a janela”.
 
-## Diagnóstico
+## Gate 4 — Homologação
 
-Correlacionar configuração, estado operacional e contadores. Parar na primeira camada falha e registrar comando, modo, horário e retorno literal sanitizado.
+Provar que a mudança resolveu a causa e preservou serviços existentes. Usar counters antes/depois, estado de sessão e teste end-to-end quando disponível.
 
-## Dependências
+## Gate 5 — Persistência
 
-Consultar a matriz global, a decision tree, o banco de erros e as Skills relacionadas antes de propor alteração.
+`write memory`, `copy running-config startup-config` ou equivalente é `[DESTRUTIVO]` e exige autorização específica. Não assumir que autorização para running-config inclui NVRAM.
 
-## Riscos
+Após persistir:
 
-`copy running-config startup-config` muda estado persistente e exige autorização; snapshot pode conter segredos.
+1. confirmar retorno `[OK]` ou equivalente;
+2. validar startup-config;
+3. comparar somente as linhas aprovadas;
+4. registrar evidência no Source of Truth.
+
+## Critérios de abort
+
+Abortar se identidade/release divergir, baseline mudar inesperadamente, dependência não estiver confirmada, objeto alvo já possuir consumidor não documentado, rollback ficar inválido ou a CLI rejeitar a sintaxe aprovada.
 
 ## Rollback
 
-Escrever antes da mudança e usar comandos específicos; nunca usar reload como rollback normal.
+Escrever antes da mudança, usando comandos específicos e ordem inversa das dependências. Nunca usar reload, clear global ou restauração ampla como rollback normal quando a mudança puder ser removida isoladamente.
 
 ## Regras de segurança
 
-Seguir SHOW → ANALISAR → VALIDAR → PROPOR → CONFIRMAR → ALTERAR → VALIDAR → DOCUMENTAR. Mascarar `password`, `secret`, `key`, `community`, RADIUS, BGP, PPP e chaves SSH. Todo comando mutável também recebe `[DESTRUTIVO]`.
+Fluxo obrigatório:
+
+`SHOW → ANALISAR → VALIDAR → PROPOR → AUTORIZAR → ALTERAR → VALIDAR → AUTORIZAR PERSISTÊNCIA → PERSISTIR → DOCUMENTAR`.
+
+Sanitizar secrets e dados de assinantes. Configuração bruta não deve ser versionada sem sanitização.
 
 ## O que NÃO fazer
 
-Não executar alteração sem confirmação explícita; não usar sintaxe de memória; não expor segredos; não usar reload/clear/reset como primeira ação; não salvar configuração antes da validação.
+Não salvar antes da homologação, não transformar discovery em mudança, não inferir parâmetros de produção, não remover objetos compartilhados sem checar consumidores e não misturar correções de causas diferentes no mesmo gate.
+
+## Dependências
+
+Usar `31-production-checklist` para aceite e a skill técnica específica da mudança.
 
 ## Fonte
 
-- Equipamento-alvo: Cisco ASR1001-X; versão real ainda não fornecida.
-- Documentação oficial Cisco ASR1000/IOS XE listada no README do pacote.
-- A CLI real prevalece. Marcar exemplos de outra release como `[VERSÃO DIFERENTE]`; nunca misturar IOS, IOS XE e IOS XR.
-
+- Cisco ASR1001-X / IOS XE; CLI real prevalece.
+- Processo operacional refinado a partir de mudança CGNAT validada em IOS XE 17.09.03a, sem dados específicos de cliente.

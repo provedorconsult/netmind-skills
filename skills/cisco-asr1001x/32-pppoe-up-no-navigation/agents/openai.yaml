@@ -1,0 +1,4 @@
+interface:
+  display_name: "PPPoE sem navegação"
+  short_description: "Diagnóstico ponta a ponta de PPPoE UP sem Internet no ASR1001-X"
+  default_prompt: "Use $32-pppoe-up-no-navigation para isolar onde o assinante PPPoE UP deixa de navegar."
