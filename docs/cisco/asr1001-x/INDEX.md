@@ -14,20 +14,20 @@ Este é um artefato de navegação; `index` não é categoria operacional.
 
 ## cli
 
-- Nenhum módulo publicado.
+- [contextual-cli-discovery](cli/contextual-cli-discovery.md) — Descoberta contextual de sintaxe no Cisco ASR1001-X antes de comandos não confirmados.
 
 ## config
 
-- Nenhum módulo publicado.
+- [vlan-subinterface-prechecks](config/vlan-subinterface-prechecks.md) — Prechecks para configuração de subinterfaces 802.1Q no Cisco ASR1001-X.
 
 ## diag
 
-- Nenhum módulo publicado.
+- [pppoe-session-up-no-navigation](diag/pppoe-session-up-no-navigation.md) — Diagnóstico de PPPoE ativo sem assumir navegação funcional no ASR1001-X.
 
 ## mon
 
-- Nenhum módulo publicado.
+- [cpu-memory-observation](mon/cpu-memory-observation.md) — Observação de CPU, memória e recursos de plataforma no ASR1001-X.
 
 ## update
 
-- Nenhum módulo publicado.
+- [change-persistence-gates](update/change-persistence-gates.md) — Gates de aplicação, homologação, persistência e rollback no ASR1001-X.
