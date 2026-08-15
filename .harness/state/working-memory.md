@@ -2,7 +2,7 @@
 
 ## Active Goal
 
-`G01` is running on `feature/g01-foundation-structure`. This work establishes the AI-Native foundation only; it does not migrate technical content or execute G02–G10.
+`G01` is in `CHECKER_REVIEW` on `feature/g01-foundation-structure` (PR #11). This work establishes the AI-Native foundation only; it does not migrate technical content or execute G02–G10.
 
 ## Invariants
 

@@ -1,13 +1,13 @@
 {
   "goal": "G01",
   "goalFile": "01-foundation-audit-and-structure.md",
-  "status": "MAKER_RUNNING",
+  "status": "CHECKER_REVIEW",
   "branch": "feature/g01-foundation-structure",
-  "commit": null,
-  "pullRequest": null,
-  "maker": {"status": "running"},
+  "commit": "a4aa4b471fdf45e0fa10fd716e38d07519f6d461",
+  "pullRequest": 11,
+  "maker": {"status": "complete"},
   "checker": {"status": "pending", "verdict": null, "comment": null},
   "merge": {"authorized": false, "merged": false, "mergeCommit": null},
   "nextGoal": "G02",
-  "githubVerified": false
+  "githubVerified": true
 }
