@@ -54,6 +54,19 @@ class HuaweiMa5800MigrationTests(unittest.TestCase):
                 (root / "INDEX.md").read_text(),
             )
 
+        repository_check = subprocess.run(
+            [sys.executable, "scripts/build_indexes.py", "--check"],
+            cwd=ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(
+            repository_check.returncode,
+            0,
+            repository_check.stderr + repository_check.stdout,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
