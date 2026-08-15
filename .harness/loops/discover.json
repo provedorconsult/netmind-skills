@@ -1,0 +1,10 @@
+{
+  "id": "discover",
+  "role": "orchestrator",
+  "type": "discovery",
+  "purpose": "Select only the earliest goal whose predecessor is merged on main.",
+  "inputs": [".harness/sprints/current.json", ".harness/state/current.json", "GitHub main state"],
+  "actions": ["read-goal-catalog", "confirm-predecessor-merged-on-main", "set-ready"],
+  "outputs": [".harness/state/current.json"],
+  "stopConditions": ["previous-goal-not-merged", "github-state-unavailable"]
+}

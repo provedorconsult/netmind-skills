@@ -1,0 +1,20 @@
+{
+  "id": "goal-lifecycle",
+  "title": "NetMind sequential goal lifecycle",
+  "steps": [
+    {"id": "discover", "action": "discover", "loop": "discover"},
+    {"id": "isolate", "action": "create-goal-branch", "owner": "maker"},
+    {"id": "maker", "action": "implement", "loop": "maker"},
+    {"id": "verify", "action": "validate", "command": "bash scripts/harness-validate.sh"},
+    {"id": "open-pr", "action": "open-or-update-github-pr", "owner": "maker"},
+    {"id": "checker", "action": "review-github-pr", "loop": "checker"},
+    {"id": "approval-gate", "action": "verify-real-github-checker-comment", "loop": "merge-gate"},
+    {"id": "merge", "action": "merge-authorized-pr", "requiresState": "MERGE_AUTHORIZED"},
+    {"id": "post-merge", "action": "reconcile-real-github-merge", "loop": "post-merge"},
+    {"id": "memorize", "action": "append-iteration-evidence"},
+    {"id": "next-goal", "action": "promote-next-sequential-goal", "requiresState": "COMPLETE"}
+  ],
+  "stateTransitions": {"PLANNED": "READY", "READY": "MAKER_RUNNING", "MAKER_RUNNING": "VALIDATING", "VALIDATING": "PR_OPEN", "PR_OPEN": "CHECKER_REVIEW", "CHECKER_REVIEW": ["CHANGES_REQUESTED", "BLOCKED", "MERGE_AUTHORIZED"], "CHANGES_REQUESTED": "MAKER_RUNNING", "MERGE_AUTHORIZED": "MERGING", "MERGING": "MERGED", "MERGED": "POST_MERGE", "POST_MERGE": "COMPLETE"},
+  "terminalStates": ["BLOCKED", "COMPLETE"],
+  "nextGoalRule": "Only a GitHub-confirmed MERGED predecessor on main may promote the next catalog goal to READY."
+}

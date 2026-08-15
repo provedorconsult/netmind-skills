@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - ".github/workflows/validate-skills.yml"
+      - ".harness/**"
+      - "tests/harness/**"
       - "scripts/**"
       - "skills/**"
       - "*.md"
@@ -12,6 +14,8 @@ on:
       - main
     paths:
       - ".github/workflows/validate-skills.yml"
+      - ".harness/**"
+      - "tests/harness/**"
       - "scripts/**"
       - "skills/**"
       - "*.md"
@@ -44,3 +48,9 @@ jobs:
 
       - name: Run Skill Creator structural validator
         run: python scripts/validate_repository.py
+
+      - name: Validate NetMind harness definition
+        run: bash scripts/harness-validate.sh
+
+      - name: Test NetMind harness merge gate
+        run: bash scripts/test-harness-gates.sh

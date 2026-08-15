@@ -1,0 +1,12 @@
+{
+  "id": "checker",
+  "role": "automated Checker",
+  "type": "pull-request-review",
+  "purpose": "Review the real pull request and publish one literal verdict.",
+  "inputs": ["goal", "pull request diff", "CI status", "evidence", ".harness/policies/merge-policy.json"],
+  "checks": ["scope", "implementation", "tests", "CI", "security", "evidence", "goal-conformance"],
+  "validVerdicts": ["approve", "request-changes", "blocked"],
+  "commentRequirement": "Publish exactly one valid verdict as the entire PR comment.",
+  "transitions": {"approve": "MERGE_AUTHORIZED", "request-changes": "CHANGES_REQUESTED", "blocked": "BLOCKED"},
+  "stopConditions": ["verdict-published", "github-state-unavailable"]
+}
