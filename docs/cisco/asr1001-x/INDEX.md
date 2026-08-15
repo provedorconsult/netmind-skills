@@ -10,6 +10,8 @@ ultima_atualizacao: "generated"
 
 # cisco asr1001-x
 
+Este é um artefato de navegação; `index` não é categoria operacional.
+
 ## cli
 
 - Nenhum módulo publicado.

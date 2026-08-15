@@ -10,6 +10,8 @@ ultima_atualizacao: "generated"
 
 # huawei ma5800-x7
 
+Este é um artefato de navegação; `index` não é categoria operacional.
+
 ## cli
 
 - Nenhum módulo publicado.

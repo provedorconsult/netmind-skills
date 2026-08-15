@@ -2,12 +2,10 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+import subprocess
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
-import build_indexes
-
-
 DOCUMENT = """---
 fabricante: huawei
 modelo: [ma5800-x7]
@@ -22,19 +20,29 @@ ultima_atualizacao: "2026-08-15"
 
 
 class BuildIndexesTests(unittest.TestCase):
-    def test_build_is_deterministic_and_check_detects_drift(self):
+    def command(self, root, mode):
+        return subprocess.run(
+            [sys.executable, str(SCRIPTS / "build_indexes.py"), mode, "--root", str(root)],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+    def test_build_check_and_navigation_chain(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             doc = root / "docs/huawei/ma5800-x7/diag/ont.md"
             doc.parent.mkdir(parents=True)
             doc.write_text(DOCUMENT, encoding="utf-8")
-            generated = build_indexes.artifacts(root)
-            for path, content in generated.items():
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(content, encoding="utf-8")
-            self.assertEqual(build_indexes.artifacts(root), generated)
-            self.assertIn(root / "INDEX.md", generated)
-            self.assertIn(root / "llms.txt", generated)
-            self.assertIn("[ont](diag/ont.md)", generated[root / "docs/huawei/ma5800-x7/INDEX.md"])
+            self.assertEqual(self.command(root, "--build").returncode, 0)
+            self.assertEqual(self.command(root, "--check").returncode, 0)
+            self.assertIn("[huawei](docs/huawei/INDEX.md)", (root / "INDEX.md").read_text(encoding="utf-8"))
+            self.assertIn("[ma5800-x7](ma5800-x7/INDEX.md)", (root / "docs/huawei/INDEX.md").read_text(encoding="utf-8"))
+            self.assertIn("[ont](diag/ont.md)", (root / "docs/huawei/ma5800-x7/INDEX.md").read_text(encoding="utf-8"))
+            for source, target in ((root / "INDEX.md", "docs/huawei/INDEX.md"), (root / "docs/huawei/INDEX.md", "ma5800-x7/INDEX.md"), (root / "docs/huawei/ma5800-x7/INDEX.md", "diag/ont.md")):
+                self.assertIn(target, source.read_text(encoding="utf-8"))
+                self.assertTrue((source.parent / target).is_file())
             (root / "INDEX.md").write_text("stale\n", encoding="utf-8")
-            self.assertNotEqual((root / "INDEX.md").read_text(encoding="utf-8"), build_indexes.artifacts(root)[root / "INDEX.md"])
+            self.assertNotEqual(self.command(root, "--check").returncode, 0)
+            self.assertEqual(self.command(root, "--build").returncode, 0)
+            self.assertEqual(self.command(root, "--check").returncode, 0)

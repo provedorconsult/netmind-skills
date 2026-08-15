@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Build or verify deterministic AI-native documentation indexes."""
+"""Build or verify deterministic AI-native documentation indexes.
+
+Generated navigation artifacts use ``categoria: index``. This is metadata for
+indexes only; operational modules remain limited to ``CATEGORIES``.
+"""
 
 import argparse
 import sys
@@ -56,7 +60,7 @@ def metadata(documents_root):
 
 
 def model_index(vendor, model, records, root):
-    lines = ["---", f"fabricante: {vendor}", f"modelo: [{model}]", "categoria: index", "topicos: [indice]", f'descricao: "Índice de {vendor} {model}."', 'versao_firmware_testada: "N/A"', 'ultima_atualizacao: "generated"', "---", "", f"# {vendor} {model}", ""]
+    lines = ["---", f"fabricante: {vendor}", f"modelo: [{model}]", "categoria: index", "topicos: [indice]", f'descricao: "Índice de {vendor} {model}."', 'versao_firmware_testada: "N/A"', 'ultima_atualizacao: "generated"', "---", "", f"# {vendor} {model}", "", "Este é um artefato de navegação; `index` não é categoria operacional.", ""]
     for category in CATEGORIES:
         lines += [f"## {category}", ""]
         items = [item for item in records if item[2]["categoria"] == category]
@@ -71,7 +75,7 @@ def model_index(vendor, model, records, root):
 
 
 def vendor_index(vendor, models):
-    lines = ["---", f"fabricante: {vendor}", "modelo: [N/A]", "categoria: index", "topicos: [indice]", f'descricao: "Índice de modelos {vendor}."', 'versao_firmware_testada: "N/A"', 'ultima_atualizacao: "generated"', "---", "", f"# {vendor}", ""]
+    lines = ["---", f"fabricante: {vendor}", "modelo: [N/A]", "categoria: index", "topicos: [indice]", f'descricao: "Índice de modelos {vendor}."', 'versao_firmware_testada: "N/A"', 'ultima_atualizacao: "generated"', "---", "", f"# {vendor}", "", "Este é um artefato de navegação; `index` não é categoria operacional.", ""]
     lines += [f"- [{model}]({model}/INDEX.md)" for model in sorted(models)]
     return "\n".join(lines) + "\n"
 

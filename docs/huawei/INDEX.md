@@ -10,4 +10,6 @@ ultima_atualizacao: "generated"
 
 # huawei
 
+Este é um artefato de navegação; `index` não é categoria operacional.
+
 - [ma5800-x7](ma5800-x7/INDEX.md)
