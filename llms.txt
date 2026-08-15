@@ -1,0 +1,12 @@
+# NetMind Skills
+
+Documentação operacional AI-Native para equipamentos de rede.
+
+## Fabricantes
+
+- [cisco](docs/cisco/INDEX.md)
+- [huawei](docs/huawei/INDEX.md)
+
+## Acesso rápido por tarefa
+
+- Consulte o índice do fabricante e depois o índice do modelo para selecionar um módulo atômico.
