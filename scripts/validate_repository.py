@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 from quick_validate import safe_load_yaml, validate_agent_manifest, validate_skill
+from validate_frontmatter import validate_docs
 from validate_operational_safety import validate_operational_safety
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -131,6 +132,11 @@ def scan_for_sensitive_artifacts(failures):
     print(f"Scanned {checked} documentation/YAML files for obvious secrets")
 
 
+def validate_documentation_frontmatter(failures):
+    for message in validate_docs(ROOT / "docs"):
+        fail(message, failures)
+
+
 def main():
     failures = []
     validate_skills(failures)
@@ -138,6 +144,7 @@ def main():
     validate_cisco_skill_references(failures)
     validate_local_links(failures)
     scan_for_sensitive_artifacts(failures)
+    validate_documentation_frontmatter(failures)
     validate_operational_safety(failures)
     if failures:
         print(f"Validation failed with {len(failures)} error(s)")
