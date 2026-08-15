@@ -1,0 +1,17 @@
+{
+  "catalogVersion": 1,
+  "integrationBranch": "main",
+  "activeGoal": "G01",
+  "goals": [
+    {"id": "G01", "file": "01-foundation-audit-and-structure.md", "status": "PLANNED", "predecessor": null},
+    {"id": "G02", "file": "02-frontmatter-schema-and-validator.md", "status": "BLOCKED", "predecessor": "G01"},
+    {"id": "G03", "file": "03-build-indexes.md", "status": "BLOCKED", "predecessor": "G02"},
+    {"id": "G04", "file": "04-content-migration-huawei.md", "status": "BLOCKED", "predecessor": "G03"},
+    {"id": "G05", "file": "05-content-migration-mikrotik-cisco.md", "status": "BLOCKED", "predecessor": "G04"},
+    {"id": "G06", "file": "06-deprecation-policy.md", "status": "BLOCKED", "predecessor": "G05"},
+    {"id": "G07", "file": "07-ci-markdown-links.md", "status": "BLOCKED", "predecessor": "G06"},
+    {"id": "G08", "file": "08-readme-contributing-and-templates.md", "status": "BLOCKED", "predecessor": "G07"},
+    {"id": "G09", "file": "09-end-to-end-ai-validation.md", "status": "BLOCKED", "predecessor": "G08"},
+    {"id": "G10", "file": "10-final-release-gate.md", "status": "BLOCKED", "predecessor": "G09"}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "post-merge",
+  "role": "orchestrator",
+  "type": "reconcile",
+  "purpose": "Reconcile the merged PR against GitHub and release only the next ordered goal.",
+  "inputs": ["GitHub PR merged state", ".harness/state/current.json", ".harness/sprints/current.json"],
+  "actions": ["confirm-merge-on-main", "record-merge-evidence", "mark-complete", "promote-next-goal"],
+  "outputs": [".harness/state/current.json", ".harness/sprints/current.json", ".harness/state/iteration-log.jsonl"],
+  "stopConditions": ["pr-not-merged-on-github", "next-goal-predecessor-not-merged"]
+}

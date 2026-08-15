@@ -140,6 +140,7 @@ Nunca inventar sintaxe, alterar gestão/rota sem autorização, excluir defaults
 - [Checklist de provisionamento](ONT-PROVISIONING-CHECKLIST.md)
 - [Checklist de troubleshooting](TROUBLESHOOTING-CHECKLIST.md)
 - [Checklist de rollback](ROLLBACK-CHECKLIST.md)
+- [Harness Git-native de Goals](HARNESS.md)
 
 ## Documentação oficial Huawei
 

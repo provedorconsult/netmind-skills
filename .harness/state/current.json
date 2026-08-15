@@ -1,0 +1,13 @@
+{
+  "goal": "G01",
+  "goalFile": "01-foundation-audit-and-structure.md",
+  "status": "PLANNED",
+  "branch": null,
+  "commit": null,
+  "pullRequest": null,
+  "maker": {"status": "idle"},
+  "checker": {"status": "pending", "verdict": null, "comment": null},
+  "merge": {"authorized": false, "merged": false, "mergeCommit": null},
+  "nextGoal": "G02",
+  "githubVerified": false
+}
