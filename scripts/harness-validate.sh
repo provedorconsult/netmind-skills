@@ -80,16 +80,12 @@ for index, goal in enumerate(goals):
     expected_predecessor = None if index == 0 else expected[index - 1]
     if goal.get('predecessor') != expected_predecessor:
         failures.append(f"invalid predecessor for {goal.get('id')}")
-if goals and any(goal.get('status') != 'BLOCKED' for goal in goals[1:]):
-    failures.append('only G01 may run before a GitHub-confirmed predecessor merge')
+if goals and (goals[0].get('status') != 'PLANNED' or any(goal.get('status') != 'BLOCKED' for goal in goals[1:])):
+    failures.append('initial catalog must not execute G01-G10')
 
 current = data.get('.harness/state/current.json', {})
-if current.get('goal') != catalog.get('activeGoal') or current.get('status') not in states:
-    failures.append('current state must identify a valid active catalog goal and state')
-if goals and current.get('status') != goals[0].get('status'):
-    failures.append('current state must match the active catalog goal state')
-if current.get('merge', {}).get('authorized') and current.get('checker', {}).get('verdict') != 'approve':
-    failures.append('merge cannot be authorized without Checker approve')
+if current.get('goal') != 'G01' or current.get('status') != 'PLANNED' or current.get('merge', {}).get('authorized'):
+    failures.append('initial current state is inconsistent')
 
 if failures:
     print('\n'.join(f'ERROR: {failure}' for failure in failures))

@@ -3,7 +3,7 @@
   "integrationBranch": "main",
   "activeGoal": "G01",
   "goals": [
-    {"id": "G01", "file": "01-foundation-audit-and-structure.md", "status": "CHECKER_REVIEW", "predecessor": null},
+    {"id": "G01", "file": "01-foundation-audit-and-structure.md", "status": "PLANNED", "predecessor": null},
     {"id": "G02", "file": "02-frontmatter-schema-and-validator.md", "status": "BLOCKED", "predecessor": "G01"},
     {"id": "G03", "file": "03-build-indexes.md", "status": "BLOCKED", "predecessor": "G02"},
     {"id": "G04", "file": "04-content-migration-huawei.md", "status": "BLOCKED", "predecessor": "G03"},

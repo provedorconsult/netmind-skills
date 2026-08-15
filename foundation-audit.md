@@ -21,3 +21,4 @@
 - No files for manufacturer/model combinations without current repository evidence were created. The PRD lists examples such as MikroTik and Fiberhome, but this Goal does not invent model documentation.
 - The PRD calls for generated `INDEX.md`, root `INDEX.md`, and `llms.txt`; those artifacts are deliberately deferred to G03, which owns `scripts/build_indexes.py`.
 - The PRD describes `lint-markdown.yml` and `generate-indexes.yml`; they are deliberately deferred to G07, the CI Goal.
+- The versioned harness state cannot safely store the SHA of the same commit that contains it: changing that field creates a different SHA. Runtime GitHub state reconciliation is intentionally deferred to a future dedicated Goal; G01 does not introduce a false static SHA.

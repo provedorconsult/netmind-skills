@@ -1,7 +1,7 @@
 ---
 fabricante: "<fabricante>"
 modelo: ["<modelo-1>", "<modelo-2>"]
-categoria: "<cli | configuracao | diagnostico | monitoramento | atualizacao>"
+categoria: "<cli | config | diag | mon | update>"
 topicos: ["<topico-1>", "<topico-2>", "<topico-3>"]
 descricao: "<Resumo sucinto de uma ou duas frases do objetivo deste documento.>"
 versao_firmware_testada: "<versao ou N/A>"

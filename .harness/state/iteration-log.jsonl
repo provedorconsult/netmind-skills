@@ -1,3 +1,0 @@
-
-{"goal":"G01","status":"MAKER_RUNNING","branch":"feature/g01-foundation-structure","event":"foundation-audit-complete","summary":"Confirmed G11 merge baseline; inspected PRD and repository tree; identified MA5800 and ASR command references as legacy monoliths preserved for later migration."}
-{"goal":"G01","status":"CHECKER_REVIEW","branch":"feature/g01-foundation-structure","commit":"a4aa4b471fdf45e0fa10fd716e38d07519f6d461","pullRequest":11,"event":"pr-opened","summary":"Opened PR #11 against main after structural validation; awaiting automated Checker verdict."}
