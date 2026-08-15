@@ -49,6 +49,9 @@ jobs:
       - name: Run Skill Creator structural validator
         run: python scripts/validate_repository.py
 
+      - name: Test documentation frontmatter validator
+        run: python -m unittest discover -s tests -p 'test_*.py'
+
       - name: Validate NetMind harness definition
         run: bash scripts/harness-validate.sh
 
