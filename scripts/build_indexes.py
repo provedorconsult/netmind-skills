@@ -71,13 +71,13 @@ def model_index(vendor, model, records, root):
         else:
             lines.append("- Nenhum módulo publicado.")
         lines.append("")
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def vendor_index(vendor, models):
     lines = ["---", f"fabricante: {vendor}", "modelo: [N/A]", "categoria: index", "topicos: [indice]", f'descricao: "Índice de modelos {vendor}."', 'versao_firmware_testada: "N/A"', 'ultima_atualizacao: "generated"', "---", "", f"# {vendor}", "", "Este é um artefato de navegação; `index` não é categoria operacional.", ""]
     lines += [f"- [{model}]({model}/INDEX.md)" for model in sorted(models)]
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def artifacts(root):
