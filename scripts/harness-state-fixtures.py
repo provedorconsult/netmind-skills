@@ -21,6 +21,7 @@ g13 = next(goal for goal in catalog['goals'] if goal['id'] == 'G13')
 completed = {goal['id']: goal for goal in catalog['completedGoals']}
 g12 = completed['G12']
 assert first['id'] == 'G01' and first['status'] == 'BLOCKED'
+assert first['classification'] == 'DONE' and first['mergeStatus'] == 'MERGED'
 assert second['id'] == 'G02' and second['status'] == 'BLOCKED'
 assert second['predecessor'] == first['id']
 assert g12['status'] == 'DONE' and g12['mergeStatus'] == 'MERGED'

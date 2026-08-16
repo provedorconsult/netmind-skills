@@ -85,6 +85,13 @@ if catalog.get('activeGoal') != 'G13':
     failures.append('activeGoal must be G13 after G12 reconciliation')
 if any(goal.get('status') != 'BLOCKED' for goal in goals[:10]) or goals[-1].get('status') != 'READY':
     failures.append('legacy backlog must be BLOCKED and G13 must be READY')
+classifications = {goal.get('id'): goal.get('classification') for goal in goals}
+if any(classifications.get(goal) != 'DONE' for goal in legacy_expected[:7]):
+    failures.append('G01-G07 must retain DONE historical classifications')
+if classifications.get('G08') != 'SUPERSEDED' or classifications.get('G09') != 'SUPERSEDED' or classifications.get('G10') != 'BLOCKED':
+    failures.append('legacy G08-G10 classifications are inconsistent')
+if not (root / 'G13-RECONCILIATION.md').is_file():
+    failures.append('G13 reconciliation report is missing')
 completed = {goal.get('id'): goal for goal in catalog.get('completedGoals', [])}
 g12 = completed.get('G12', {})
 if g12.get('status') != 'DONE' or g12.get('mergeStatus') != 'MERGED' or g12.get('pullRequest') != 20 or g12.get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
