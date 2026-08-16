@@ -98,7 +98,7 @@ if g12.get('status') != 'DONE' or g12.get('mergeStatus') != 'MERGED' or g12.get(
     failures.append('catalog must record G12 as DONE/MERGED with PR #20 merge evidence')
 
 current = data.get('.harness/state/current.json', {})
-if current.get('goal') != 'G13' or current.get('goalFile') != '13-backlog-goals-and-legacy-prs-reconciliation.md' or current.get('status') != 'READY' or current.get('predecessor') != 'G12' or current.get('completedGoal') != 'G12':
+if current.get('goal') != 'G13' or current.get('goalFile') != '13-backlog-goals-and-legacy-prs-reconciliation.md' or current.get('status') not in {'MAKER_RUNNING', 'CHECKER_REVIEW'} or current.get('predecessor') != 'G12' or current.get('completedGoal') != 'G12':
     failures.append('current state must promote G13 after G12')
 current_completed = {goal.get('id'): goal for goal in current.get('completedGoals', [])}
 if current_completed.get('G12', {}).get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
