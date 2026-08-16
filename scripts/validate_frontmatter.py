@@ -20,6 +20,8 @@ REQUIRED_FIELDS = {
     "ultima_atualizacao": str,
 }
 
+OPTIONAL_FIELDS = {"status": str}
+
 
 def error(path, message):
     return f"{path}: {message}"
@@ -61,6 +63,11 @@ def validate_metadata(path, metadata):
                 failures.append(
                     error(path, f"field '{field}' must contain non-empty strings")
                 )
+    for field, expected_type in OPTIONAL_FIELDS.items():
+        if field in metadata and not isinstance(metadata[field], expected_type):
+            failures.append(error(path, f"field '{field}' must be {expected_type.__name__}"))
+        elif field in metadata and not metadata[field].strip():
+            failures.append(error(path, f"field '{field}' cannot be empty"))
     return failures
 
 

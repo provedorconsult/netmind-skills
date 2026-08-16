@@ -40,7 +40,8 @@ def metadata(documents_root):
         if path.name == "INDEX.md":
             continue
         relative = path.relative_to(documents_root)
-        if len(relative.parts) < 3:
+        deprecated = relative.parts[0] == "_deprecated"
+        if len(relative.parts) < (5 if deprecated else 3):
             raise ValueError(f"{path}: expected docs/<fabricante>/<modelo>/...")
         try:
             data = frontmatter(path)
@@ -55,6 +56,10 @@ def metadata(documents_root):
         models = data["modelo"]
         if not isinstance(models, list) or not models:
             raise ValueError(f"{path}: modelo must be a non-empty list")
+        if deprecated:
+            if data.get("status") != "deprecated":
+                raise ValueError(f"{path}: deprecated documents must set status: deprecated")
+            continue
         records.append((relative.parts[0], relative.parts[1], data, path))
     return records
 
