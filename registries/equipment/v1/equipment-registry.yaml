@@ -39,7 +39,7 @@ records:
       id: software:cisco:ios-xe
       value: IOS XE
     version:
-      id: version:cisco:ios-xe:17.09.03a
+      id: version:cisco:ios-xe:17-09-03a
       value: 17.09.03a
     firmware_patch:
       id: null

@@ -101,10 +101,13 @@ def artifacts(root):
         vendors.setdefault(vendor, []).append(model)
     for vendor, models in sorted(vendors.items()):
         output[docs / vendor / "INDEX.md"] = vendor_index(vendor, models)
-    root_lines = ["# NetMind Skills Index", "", "## Registries", "", "- [Equipment Registry](registries/equipment/INDEX.md)", "", "## Fabricantes", ""]
+    registry_link = "- [Equipment Registry](registries/equipment/INDEX.md)"
+    registry_llms_link = f"{registry_link} — identidade técnica versionada e evidenciada; não prova capability, compatibilidade ou Skill aplicável."
+    registry_section = ["## Registries", "", registry_link, ""] if (root / "registries/equipment/INDEX.md").is_file() else []
+    root_lines = ["# NetMind Skills Index", ""] + registry_section + ["## Fabricantes", ""]
     root_lines += [f"- [{vendor}](docs/{vendor}/INDEX.md)" for vendor in sorted(vendors)]
     output[root / "INDEX.md"] = "\n".join(root_lines) + "\n"
-    llms = ["# NetMind Skills", "", "Documentação operacional AI-Native para equipamentos de rede.", "", "## Registries", "", "- [Equipment Registry](registries/equipment/INDEX.md) — identidade técnica versionada e evidenciada; não prova capability, compatibilidade ou Skill aplicável.", "", "## Fabricantes", ""]
+    llms = ["# NetMind Skills", "", "Documentação operacional AI-Native para equipamentos de rede.", ""] + (["## Registries", "", registry_llms_link, ""] if registry_section else []) + ["## Fabricantes", ""]
     llms += [f"- [{vendor}](docs/{vendor}/INDEX.md)" for vendor in sorted(vendors)]
     llms += ["", "## Acesso rápido por tarefa", "", "- Consulte o índice do fabricante e depois o índice do modelo para selecionar um módulo atômico."]
     output[root / "llms.txt"] = "\n".join(llms) + "\n"
