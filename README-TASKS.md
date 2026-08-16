@@ -19,9 +19,11 @@ G01–G10 são preservados como backlog legado bloqueado; não constituem a
 sequência ativa após G12. A classificação formal está em
 [G13-RECONCILIATION.md](G13-RECONCILIATION.md).
 
-## Sequência vigente
+## Último Goal concluído
 
-1. `13-backlog-goals-and-legacy-prs-reconciliation.md` — G13, predecessor G12.
+1. `13-backlog-goals-and-legacy-prs-reconciliation.md` — G13, predecessor G12, concluído via PR #22.
+
+Não há próximo Goal formalmente definido neste catálogo.
 
 ## Protocolo
 

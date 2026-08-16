@@ -28,7 +28,7 @@ catálogo continua a impedir execução incidental de item legado.
 | G10 | BLOCKED | Release gate legado depende da arquitetura pós-registry, registries necessários e revisão institucional. |
 | G11 | DONE / MERGED | PR #19, merge `5ba9d39`; fixa a arquitetura canônica. |
 | G12 | DONE / MERGED | PR #20, head aprovado `20634b6`, merge `ed3b157`; entrega Equipment Registry v1. |
-| G13 | ACTIVE | Fonte canônica: `13-backlog-goals-and-legacy-prs-reconciliation.md`. |
+| G13 | DONE / MERGED | PR #22, merge `fc88f280`, predecessor G12. |
 
 ## PRs legadas
 

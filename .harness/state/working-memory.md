@@ -7,14 +7,16 @@
 - G12: `DONE / MERGED` in PR #20, approved head
   `20634b6335df02f832f16930c4fb5f2713117082`, merge commit
   `ed3b157c048c0480a01398c7abdf7821148d830f`.
+- G13: `DONE / MERGED` in PR #22, approved head
+  `0eecaf65149073a5e4b6dbc919c95b7bf4dd9ffb`, merge commit
+  `fc88f28038e62d28a0d7381cab5fb20565fa726b`, predecessor G12.
 
 ## Active Goal
 
-`G13` is `READY`. Its canonical source is
-`13-backlog-goals-and-legacy-prs-reconciliation.md`; its predecessor is G12.
-G01–G10 remain preserved as blocked legacy backlog until G13 audits them.
+Nenhum Goal está ativo. Não há próximo Goal formalmente definido no catálogo;
+`nextGoal` permanece `null` até decisão posterior do Harness/Checker.
 
-G13 audit decisions are recorded in `G13-RECONCILIATION.md`. G01–G07 are
+G13 audit decisions are recorded in `G13-RECONCILIATION.md`. G01–G07 são
 historically done/merged, G08 and G09 are superseded, and G10 remains blocked;
 their catalog status remains `BLOCKED` to prevent automatic legacy execution.
 
