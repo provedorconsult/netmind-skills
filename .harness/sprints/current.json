@@ -20,7 +20,7 @@
     {"id": "G09", "file": "09-end-to-end-ai-validation.md", "status": "BLOCKED", "classification": "SUPERSEDED", "predecessor": "G08"},
     {"id": "G10", "file": "10-final-release-gate.md", "status": "BLOCKED", "classification": "BLOCKED", "predecessor": "G09"},
     {"id": "G13", "file": "13-backlog-goals-and-legacy-prs-reconciliation.md", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 22, "mergeCommit": "fc88f28038e62d28a0d7381cab5fb20565fa726b", "predecessor": "G12"},
-    {"id": "G14", "file": "14-harness-post-g13-reconciliation.md", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 23, "mergeCommit": "d6cf4f684317810d915a89bd9e03524564e8afa9", "predecessor": "G13"},
+    {"id": "G14", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 23, "mergeCommit": "d6cf4f684317810d915a89bd9e03524564e8afa9", "predecessor": "G13"},
     {"id": "G15", "file": "15-readme-institucional-ai-native.md", "status": "READY", "predecessor": "G14"}
   ]
 }
