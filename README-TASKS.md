@@ -16,7 +16,8 @@ Estas tarefas foram derivadas do `PRD-NetMind-Skills.md` fornecido para análise
 10. `10-final-release-gate.md`
 
 G01–G10 são preservados como backlog legado bloqueado; não constituem a
-sequência ativa após G12. Sua classificação formal pertence a G13.
+sequência ativa após G12. A classificação formal está em
+[G13-RECONCILIATION.md](G13-RECONCILIATION.md).
 
 ## Sequência vigente
 

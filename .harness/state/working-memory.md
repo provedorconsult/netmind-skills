@@ -14,6 +14,10 @@
 `13-backlog-goals-and-legacy-prs-reconciliation.md`; its predecessor is G12.
 G01–G10 remain preserved as blocked legacy backlog until G13 audits them.
 
+G13 audit decisions are recorded in `G13-RECONCILIATION.md`. G01–G07 are
+historically done/merged, G08 and G09 are superseded, and G10 remains blocked;
+their catalog status remains `BLOCKED` to prevent automatic legacy execution.
+
 ## Invariants
 
 - Execute one catalog goal at a time and preserve catalog order.
