@@ -9,7 +9,7 @@ VERDICTS = {"approve", "request-changes", "blocked"}
 
 def build_prompt(goal, pr, head, verdict, details=""):
     if verdict == "approve":
-        action = f"Integrate PR #{pr} into main, run post-merge validation, and do not start the next Goal until the merge is GitHub-confirmed."
+        action = "No further implementation changes. Hand off the PR to the authorized merge operator; after GitHub confirms the merge, run post-merge validation."
     elif verdict == "request-changes":
         action = "Apply the requested corrections below, re-run validation, push the new HEAD, and request Checker review again."
     else:
