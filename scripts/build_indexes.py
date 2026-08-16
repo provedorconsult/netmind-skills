@@ -101,10 +101,10 @@ def artifacts(root):
         vendors.setdefault(vendor, []).append(model)
     for vendor, models in sorted(vendors.items()):
         output[docs / vendor / "INDEX.md"] = vendor_index(vendor, models)
-    root_lines = ["# NetMind Skills Index", "", "## Fabricantes", ""]
+    root_lines = ["# NetMind Skills Index", "", "## Registries", "", "- [Equipment Registry](registries/equipment/INDEX.md)", "", "## Fabricantes", ""]
     root_lines += [f"- [{vendor}](docs/{vendor}/INDEX.md)" for vendor in sorted(vendors)]
     output[root / "INDEX.md"] = "\n".join(root_lines) + "\n"
-    llms = ["# NetMind Skills", "", "Documentação operacional AI-Native para equipamentos de rede.", "", "## Fabricantes", ""]
+    llms = ["# NetMind Skills", "", "Documentação operacional AI-Native para equipamentos de rede.", "", "## Registries", "", "- [Equipment Registry](registries/equipment/INDEX.md) — identidade técnica versionada e evidenciada; não prova capability, compatibilidade ou Skill aplicável.", "", "## Fabricantes", ""]
     llms += [f"- [{vendor}](docs/{vendor}/INDEX.md)" for vendor in sorted(vendors)]
     llms += ["", "## Acesso rápido por tarefa", "", "- Consulte o índice do fabricante e depois o índice do modelo para selecionar um módulo atômico."]
     output[root / "llms.txt"] = "\n".join(llms) + "\n"

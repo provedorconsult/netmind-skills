@@ -2,6 +2,10 @@
 
 Documentação operacional AI-Native para equipamentos de rede.
 
+## Registries
+
+- [Equipment Registry](registries/equipment/INDEX.md) — identidade técnica versionada e evidenciada; não prova capability, compatibilidade ou Skill aplicável.
+
 ## Fabricantes
 
 - [cisco](docs/cisco/INDEX.md)
