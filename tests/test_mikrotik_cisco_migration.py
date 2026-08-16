@@ -15,6 +15,11 @@ HUAWEI_HASHES = {
     "diag/gem-mapping-service-failure.md": "2dcd23bb346467a0330a9077a8114c09a62a51ea4d12c3c50ba7fd8f67b15bcd",
     "mon/service-port-counters.md": "5e4d036904ba3b69f2770fed498a9a1f4b796077980a612221a7cb15d81d49e0",
     "update/rollback-prechecks.md": "33e37e630eab22d98bef36d69271eeace331d627a1d019ea83ffa577cf9b46a2",
+    "cli/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "config/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "diag/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "mon/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "update/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
 }
 
 
@@ -24,9 +29,11 @@ class MikroTikCiscoMigrationTests(unittest.TestCase):
         for category in ("cli", "config", "diag", "mon", "update"):
             self.assertEqual(len(list((cisco / category).glob("*.md"))), 1)
         huawei = ROOT / "docs" / "huawei" / "ma5800-x7"
-        for relative, expected in HUAWEI_HASHES.items():
-            actual = hashlib.sha256((huawei / relative).read_bytes()).hexdigest()
-            self.assertEqual(actual, expected, relative)
+        actual_hashes = {
+            path.relative_to(huawei).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in huawei.rglob("*") if path.is_file()
+        }
+        self.assertEqual(actual_hashes, HUAWEI_HASHES)
         result = subprocess.run(
             [sys.executable, "scripts/build_indexes.py", "--check"],
             cwd=ROOT, check=False, capture_output=True, text=True,

@@ -10,13 +10,22 @@ inventar evidência; uma migração MikroTik futura requer fonte técnica primá
 
 ## Mapa de origem → destino — Cisco
 
-| Origem | Destino | Tipo | Observação |
+| Origem | Destino | Status | Observação |
 |---|---|---|---|
-| `skills/cisco-asr1001x/02-cli-discovery/SKILL.md` | `docs/cisco/asr1001-x/cli/contextual-cli-discovery.md` | cli | Preserva descoberta, `[INFERIDO]`, `[DISCOVERY]`, `[ERRO]` e guardrails. |
-| `skills/cisco-asr1001x/10-vlan-subinterfaces/SKILL.md` | `docs/cisco/asr1001-x/config/vlan-subinterface-prechecks.md` | config | Preserva prechecks e comandos sem versão inventada. |
-| `skills/cisco-asr1001x/24-pppoe-troubleshooting/SKILL.md` | `docs/cisco/asr1001-x/diag/pppoe-session-up-no-navigation.md` | diag | Preserva evidência IOS XE 17.09.03a e limites destrutivos. |
-| `skills/cisco-asr1001x/23-cpu-memory/SKILL.md` | `docs/cisco/asr1001-x/mon/cpu-memory-observation.md` | mon | Preserva consultas inferidas e ausência de versão real. |
-| `skills/cisco-asr1001x/30-safe-change/SKILL.md` | `docs/cisco/asr1001-x/update/change-persistence-gates.md` | update | Preserva gates, persistência e rollback. |
+| `02-cli-discovery/SKILL.md` | `cli/contextual-cli-discovery.md` | migrated | Descoberta, `[INFERIDO]`, `[DISCOVERY]` e `[ERRO]`. |
+| `10-vlan-subinterfaces/SKILL.md` | `config/vlan-subinterface-prechecks.md` | migrated | Prechecks e comandos sem versão inventada. |
+| `24-pppoe-troubleshooting/SKILL.md` | `diag/pppoe-session-up-no-navigation.md` | migrated | Evidência IOS XE 17.09.03a e limites destrutivos. |
+| `23-cpu-memory/SKILL.md` | `mon/cpu-memory-observation.md` | migrated | Consultas inferidas e versão N/A. |
+| `30-safe-change/SKILL.md` | `update/change-persistence-gates.md` | migrated | Gates, persistência e rollback. |
+| `01-baseline`, `03-interface-diagnostics`, `04-optical-diagnostics`, `05-ip-routing`, `06-static-routing`, `07-bgp`, `08-ospf`, `09-ipv6` (`SKILL.md`) | — | preserved-legacy | Inventariados; fora da amostra controlada. |
+| `11-pppoe-bng`, `12-aaa-local`, `13-aaa-radius`, `14-nat-cgnat`, `15-acl`, `16-qos`, `17-policy-map`, `18-route-map-prefix-list` (`SKILL.md`) | — | preserved-legacy | Inventariados; fora da amostra controlada. |
+| `19-loopback`, `20-management`, `21-ssh`, `22-boot-config-register`, `25-bgp-troubleshooting`, `26-nat-troubleshooting`, `27-service-policy-troubleshooting`, `28-ma5800-access` (`SKILL.md`) | — | preserved-legacy | Inventariados; fora da amostra controlada. |
+| `29-isp-troubleshooting`, `31-production-checklist`, `32-pppoe-up-no-navigation` (`SKILL.md`) | — | preserved-legacy | Inventariados; fora da amostra controlada. |
+| `CISCO-ASR1001X-COMMANDS.md` | — | preserved-legacy | Catálogo integral preservado para migração posterior. |
+| `CISCO-ASR1001X-DECISION-TREE.md` | — | preserved-legacy | Árvore integral preservada para migração posterior. |
+| `CISCO-ASR1001X-ERROR-DATABASE.md` | — | preserved-legacy | Banco de erros integral preservado para migração posterior. |
+| `CISCO-ASR1001X-ROLLBACK.md` | — | preserved-legacy | Guia de rollback integral preservado para migração posterior. |
+| `README.md` | — | preserved-legacy | Índice e contexto do pacote preservados. |
 
 ## Conteúdo preservado no legado
 
