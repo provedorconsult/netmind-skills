@@ -1,0 +1,50 @@
+format: netmind-equipment-registry
+format_version: "1.0"
+records:
+  - id: equipment:huawei:unknown:ma5800-x7
+    manufacturer:
+      id: manufacturer:huawei
+      value: Huawei
+    family:
+      id: null
+      value: null
+    model:
+      id: model:huawei:unknown:ma5800-x7
+      value: MA5800-X7
+    software_cli:
+      id: null
+      value: null
+    version:
+      id: version:huawei:unknown:ma5800v100r018
+      value: MA5800V100R018
+    firmware_patch:
+      id: firmware:huawei:unknown:ma5800v100r018:sph507
+      value: SPH507
+    evidence:
+      - classification: CONFIRMADO
+        reference: README.md#equipamento-e-baseline
+        statement: "MA5800-X7, MA5800V100R018 e patch SPH507 são contexto observado."
+
+  - id: equipment:cisco:unknown:asr1001-x
+    manufacturer:
+      id: manufacturer:cisco
+      value: Cisco
+    family:
+      id: null
+      value: null
+    model:
+      id: model:cisco:unknown:asr1001-x
+      value: ASR1001-X
+    software_cli:
+      id: software:cisco:ios-xe
+      value: IOS XE
+    version:
+      id: version:cisco:ios-xe:17-09-03a
+      value: 17.09.03a
+    firmware_patch:
+      id: null
+      value: null
+    evidence:
+      - classification: CONFIRMADO
+        reference: README.md#pacote-cisco-asr1001-x
+        statement: "O contexto validado é ASR1001-X com IOS XE 17.09.03a."

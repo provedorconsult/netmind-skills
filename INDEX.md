@@ -1,5 +1,9 @@
 # NetMind Skills Index
 
+## Registries
+
+- [Equipment Registry](registries/equipment/INDEX.md)
+
 ## Fabricantes
 
 - [cisco](docs/cisco/INDEX.md)
