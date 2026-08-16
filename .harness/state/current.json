@@ -1,13 +1,19 @@
 {
-  "goal": "G01",
-  "goalFile": "01-foundation-audit-and-structure.md",
-  "status": "PLANNED",
+  "goal": "G13",
+  "goalFile": "13-backlog-goals-and-legacy-prs-reconciliation.md",
+  "status": "READY",
+  "predecessor": "G12",
+  "completedGoal": "G12",
   "branch": null,
   "commit": null,
   "pullRequest": null,
   "maker": {"status": "idle"},
   "checker": {"status": "pending", "verdict": null, "comment": null},
   "merge": {"authorized": false, "merged": false, "mergeCommit": null},
-  "nextGoal": "G02",
-  "githubVerified": false
+  "nextGoal": null,
+  "githubVerified": true,
+  "completedGoals": [
+    {"id": "G11", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 19, "mergeCommit": "5ba9d398faf35022ea216c72f9f4c42420371261"},
+    {"id": "G12", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 20, "mergeCommit": "ed3b157c048c0480a01398c7abdf7821148d830f", "approvedHead": "20634b6335df02f832f16930c4fb5f2713117082"}
+  ]
 }

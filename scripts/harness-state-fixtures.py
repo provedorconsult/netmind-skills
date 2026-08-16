@@ -14,10 +14,19 @@ assert chain['stateTransitions']['CHANGES_REQUESTED'] == 'MAKER_RUNNING'
 # Case 6: Checker blocked terminates execution.
 assert chain['stateTransitions']['CHECKER_REVIEW'][1] == 'BLOCKED'
 assert 'BLOCKED' in chain['terminalStates']
-# Cases 7 and 8: successor remains blocked until predecessor's real merge,
-# then post-merge is the sole transition that promotes it.
+# Cases 7 and 8: legacy backlog remains blocked, while a GitHub-confirmed
+# G12 merge is the sole basis for promoting G13.
 first, second = catalog['goals'][:2]
-assert first['status'] == 'PLANNED' and second['status'] == 'BLOCKED'
+g13 = next(goal for goal in catalog['goals'] if goal['id'] == 'G13')
+completed = {goal['id']: goal for goal in catalog['completedGoals']}
+g12 = completed['G12']
+assert first['id'] == 'G01' and first['status'] == 'BLOCKED'
+assert second['id'] == 'G02' and second['status'] == 'BLOCKED'
 assert second['predecessor'] == first['id']
+assert g12['status'] == 'DONE' and g12['mergeStatus'] == 'MERGED'
+assert g12['pullRequest'] == 20
+assert g12['mergeCommit'] == 'ed3b157c048c0480a01398c7abdf7821148d830f'
+assert catalog['activeGoal'] == 'G13'
+assert g13['status'] == 'READY' and g13['predecessor'] == 'G12'
 assert chain['nextGoalRule'] == 'Only a GitHub-confirmed MERGED predecessor on main may promote the next catalog goal to READY.'
 print("Harness state fixtures passed")
