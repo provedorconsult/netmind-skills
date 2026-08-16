@@ -66,6 +66,12 @@ if checker.get('role') != 'automated Checker' or checker.get('validVerdicts') !=
     failures.append('Checker verdict contract is invalid')
 if checker.get('transitions') != {'approve': 'MERGE_AUTHORIZED', 'request-changes': 'CHANGES_REQUESTED', 'blocked': 'BLOCKED'}:
     failures.append('Checker transitions are invalid')
+if 'makerPromptRequirement' not in checker or 'separate concise execution prompt' not in checker['makerPromptRequirement']:
+    failures.append('Checker must require a separate concise Maker execution prompt')
+if 'Maker Execution Prompt' not in (root / '.harness/templates/review-template.md').read_text(encoding='utf-8'):
+    failures.append('review template must require the Maker execution prompt')
+if not (root / 'scripts/harness-checker-prompt.py').is_file():
+    failures.append('Checker prompt generator is missing')
 if gate.get('command') != 'python3 scripts/harness-merge-gate.py --repo <owner/repo> --pr <number>':
     failures.append('merge gate must query GitHub PR evidence')
 

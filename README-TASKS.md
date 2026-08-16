@@ -31,9 +31,16 @@ O Maker:
 
 O Checker:
 - revisa a PR;
-- publica o veredito por comentário social;
+- cria sempre um **prompt conciso e direto de execução para o Maker**;
+- publica o prompt como comentário separado na PR;
+- publica o veredito por comentário social separado;
 - `approve` = autorização para merge;
 - qualquer outro veredito = sem merge.
+
+O prompt do Checker deve conter somente o necessário para a próxima ação:
+Goal, PR, HEAD revisado, veredito e ação objetiva. Em `request-changes` ou
+`blocked`, deve informar as correções ou o bloqueio concreto. O prompt não pode
+ser usado como autorização de merge.
 
 Nenhuma tarefa pode ser integrada sem o comentário social literal `approve`
 publicado pelo Checker na Pull Request daquela tarefa.

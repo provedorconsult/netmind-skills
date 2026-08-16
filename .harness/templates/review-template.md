@@ -10,6 +10,10 @@
 - Evidence checked:
 - Goal conformity checked:
 
+## Maker Execution Prompt
+
+Generate with `python3 scripts/harness-checker-prompt.py`. Publish the generated prompt as one separate PR conversation comment. Keep it concise and directly executable by the Maker.
+
 ## Verdict
 
-Publish exactly one comment on the GitHub PR: `approve`, `request-changes`, or `blocked`.
+Publish exactly one separate comment on the GitHub PR containing only: `approve`, `request-changes`, or `blocked`.

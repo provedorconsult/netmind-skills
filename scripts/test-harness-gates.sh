@@ -12,4 +12,17 @@ expect_denied lgtm
 expect_denied approved
 expect_authorized approve
 python3 "$root/scripts/harness-state-fixtures.py"
+for verdict in approve request-changes blocked; do
+  prompt=(python3 "$root/scripts/harness-checker-prompt.py" --goal G01 --pr 1 --head abc123 --verdict "$verdict")
+  if [[ "$verdict" != approve ]]; then
+    prompt+=(--details 'Corrigir o bloqueio e repetir a validação.')
+  fi
+  output=$("${prompt[@]}")
+  grep -q '^MAKER EXECUTION PROMPT$' <<<"$output"
+  grep -q '^Goal: G01$' <<<"$output"
+  grep -q '^PR: #1$' <<<"$output"
+  grep -q '^HEAD: abc123$' <<<"$output"
+  grep -q "^Verdict: $verdict$" <<<"$output"
+  grep -q '^Action: ' <<<"$output"
+done
 echo 'Harness gate tests passed'

@@ -3,5 +3,5 @@
   "file": "NN-goal-title.md",
   "status": "PLANNED",
   "predecessor": "GNN-1",
-  "acceptanceEvidence": ["branch", "commit", "pull request", "CI", "Checker verdict", "merge commit"]
+  "acceptanceEvidence": ["branch", "commit", "pull request", "CI", "Checker execution prompt", "Checker verdict", "merge commit"]
 }
