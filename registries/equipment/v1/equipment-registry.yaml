@@ -1,15 +1,15 @@
 format: netmind-equipment-registry
 format_version: "1.0"
 records:
-  - id: equipment:huawei:ma5800:ma5800-x7
+  - id: equipment:huawei:unknown:ma5800-x7
     manufacturer:
       id: manufacturer:huawei
       value: Huawei
     family:
-      id: family:huawei:ma5800
-      value: MA5800
+      id: null
+      value: null
     model:
-      id: model:huawei:ma5800:ma5800-x7
+      id: model:huawei:unknown:ma5800-x7
       value: MA5800-X7
     software_cli:
       id: null
@@ -25,15 +25,15 @@ records:
         reference: README.md#equipamento-e-baseline
         statement: "MA5800-X7, MA5800V100R018 e patch SPH507 são contexto observado."
 
-  - id: equipment:cisco:asr1000:asr1001-x
+  - id: equipment:cisco:unknown:asr1001-x
     manufacturer:
       id: manufacturer:cisco
       value: Cisco
     family:
-      id: family:cisco:asr1000
-      value: ASR1000
+      id: null
+      value: null
     model:
-      id: model:cisco:asr1000:asr1001-x
+      id: model:cisco:unknown:asr1001-x
       value: ASR1001-X
     software_cli:
       id: software:cisco:ios-xe

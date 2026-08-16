@@ -45,6 +45,17 @@ class EquipmentRegistryTests(unittest.TestCase):
         errors = self.validate(VALID.replace("software_cli: {id: null, value: null}", "software_cli: {id: software:vendor:os, value: null}"))
         self.assertTrue(any("both be known or both be null" in error for error in errors))
 
+    def test_unknown_family_requires_unknown_derived_id_segment(self):
+        unknown_family = VALID.replace(
+            "family: {id: family:vendor:family, value: Family}",
+            "family: {id: null, value: null}",
+        ).replace("model:vendor:family:model", "model:vendor:unknown:model").replace(
+            "equipment:vendor:family:model", "equipment:vendor:unknown:model"
+        )
+        self.assertEqual(self.validate(unknown_family), [])
+        invalid = unknown_family.replace("model:vendor:unknown:model", "model:vendor:family:model")
+        self.assertTrue(any("unknown family" in error for error in self.validate(invalid)))
+
     def test_evidence_reference_must_be_local_and_anchored(self):
         errors = self.validate(VALID.replace("README.md#title", "missing.md"))
         self.assertTrue(any("Markdown anchor" in error for error in errors))

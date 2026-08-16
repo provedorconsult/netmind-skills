@@ -47,11 +47,11 @@ são preservados como observados na evidência, inclusive maiúsculas e pontuaç
 ```text
 manufacturer:<manufacturer>
 family:<manufacturer>:<family>
-model:<manufacturer>:<family>:<model>
+model:<manufacturer>:<family-ou-unknown>:<model>
 software:<manufacturer>:<software>
 version:<manufacturer>:<software-ou-unknown>:<version>
 firmware:<manufacturer>:<software-ou-unknown>:<version>:<patch>
-equipment:<manufacturer>:<family>:<model>
+equipment:<manufacturer>:<family-ou-unknown>:<model>
 ```
 
 Na normalização de segmentos, converta para minúsculas, substitua sequências de
@@ -59,7 +59,9 @@ caracteres fora de `a-z` e `0-9` por um único `-`, e remova hífens das pontas.
 Não normalizar um valor observado para mudar seu significado. O identificador
 de versão/firmware usa `unknown` apenas quando o software/CLI é desconhecido e
 o próprio valor de versão ou patch é comprovado; isso não afirma qual software
-o equipamento executa.
+o equipamento executa. Quando `family` for desconhecida, seus campos `id` e
+`value` são `null`, e os IDs derivados de `model` e `equipment` usam o segmento
+`unknown`; isso não afirma uma família.
 
 ## Unicidade e preenchimento
 

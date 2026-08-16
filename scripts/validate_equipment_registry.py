@@ -41,11 +41,11 @@ def validate_hierarchy(errors, number, record):
     manufacturer = record["manufacturer"]["id"]
     family = record["family"]["id"]
     model = record["model"]["id"]
-    if manufacturer is None or family is None or model is None:
+    if manufacturer is None or model is None:
         return
     manufacturer_segment = manufacturer.removeprefix("manufacturer:")
-    family_segment = family.rsplit(":", 1)[-1]
     model_segment = model.rsplit(":", 1)[-1]
+    family_segment = family.rsplit(":", 1)[-1] if family is not None else "unknown"
     expected = {
         "manufacturer": "manufacturer:",
         "family": f"family:{manufacturer_segment}:",
@@ -58,6 +58,8 @@ def validate_hierarchy(errors, number, record):
         identifier = record[field]["id"]
         if identifier is not None and not identifier.startswith(prefix):
             fail(errors, f"record {number} {field}: id does not match its identity hierarchy")
+    if family is None and not model.startswith(f"model:{manufacturer_segment}:unknown:"):
+        fail(errors, f"record {number} model: unknown family must use the unknown segment")
     if record["id"] != f"equipment:{manufacturer_segment}:{family_segment}:{model_segment}":
         fail(errors, f"record {number}: id does not match manufacturer, family and model")
 
