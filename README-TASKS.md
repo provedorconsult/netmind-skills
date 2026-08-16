@@ -2,7 +2,7 @@
 
 Estas tarefas foram derivadas do `PRD-NetMind-Skills.md` fornecido para análise.
 
-## Ordem recomendada
+## Backlog histórico
 
 1. `01-foundation-audit-and-structure.md`
 2. `02-frontmatter-schema-and-validator.md`
@@ -14,6 +14,13 @@ Estas tarefas foram derivadas do `PRD-NetMind-Skills.md` fornecido para análise
 8. `08-readme-contributing-and-templates.md`
 9. `09-end-to-end-ai-validation.md`
 10. `10-final-release-gate.md`
+
+G01–G10 são preservados como backlog legado bloqueado; não constituem a
+sequência ativa após G12. Sua classificação formal pertence a G13.
+
+## Sequência vigente
+
+1. `13-backlog-goals-and-legacy-prs-reconciliation.md` — G13, predecessor G12.
 
 ## Protocolo
 

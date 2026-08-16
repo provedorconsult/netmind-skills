@@ -71,21 +71,33 @@ if gate.get('command') != 'python3 scripts/harness-merge-gate.py --repo <owner/r
 
 catalog = data.get('.harness/sprints/current.json', {})
 goals = catalog.get('goals', [])
-expected = [f'G{i:02d}' for i in range(1, 11)]
+legacy_expected = [f'G{i:02d}' for i in range(1, 11)]
+expected = legacy_expected + ['G13']
 if [goal.get('id') for goal in goals] != expected:
-    failures.append('goal catalog must retain G01 through G10 in order')
+    failures.append('goal catalog must retain G01-G10 and promote G13 in order')
 for index, goal in enumerate(goals):
     if not (root / goal.get('file', '')).is_file():
         failures.append(f"goal source missing for {goal.get('id')}")
-    expected_predecessor = None if index == 0 else expected[index - 1]
+    expected_predecessor = None if index == 0 else (legacy_expected[index - 1] if index < len(legacy_expected) else 'G12')
     if goal.get('predecessor') != expected_predecessor:
         failures.append(f"invalid predecessor for {goal.get('id')}")
-if goals and (goals[0].get('status') != 'PLANNED' or any(goal.get('status') != 'BLOCKED' for goal in goals[1:])):
-    failures.append('initial catalog must not execute G01-G10')
+if catalog.get('activeGoal') != 'G13':
+    failures.append('activeGoal must be G13 after G12 reconciliation')
+if any(goal.get('status') != 'BLOCKED' for goal in goals[:10]) or goals[-1].get('status') != 'READY':
+    failures.append('legacy backlog must be BLOCKED and G13 must be READY')
+completed = {goal.get('id'): goal for goal in catalog.get('completedGoals', [])}
+g12 = completed.get('G12', {})
+if g12.get('status') != 'DONE' or g12.get('mergeStatus') != 'MERGED' or g12.get('pullRequest') != 20 or g12.get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
+    failures.append('catalog must record G12 as DONE/MERGED with PR #20 merge evidence')
 
 current = data.get('.harness/state/current.json', {})
-if current.get('goal') != 'G01' or current.get('status') != 'PLANNED' or current.get('merge', {}).get('authorized'):
-    failures.append('initial current state is inconsistent')
+if current.get('goal') != 'G13' or current.get('goalFile') != '13-backlog-goals-and-legacy-prs-reconciliation.md' or current.get('status') != 'READY' or current.get('predecessor') != 'G12' or current.get('completedGoal') != 'G12':
+    failures.append('current state must promote G13 after G12')
+current_completed = {goal.get('id'): goal for goal in current.get('completedGoals', [])}
+if current_completed.get('G12', {}).get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
+    failures.append('current state must retain G12 merge evidence')
+if current.get('merge', {}).get('authorized') or current.get('merge', {}).get('merged'):
+    failures.append('G13 must not be authorized or merged')
 
 if failures:
     print('\n'.join(f'ERROR: {failure}' for failure in failures))
