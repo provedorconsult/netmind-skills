@@ -4,3 +4,4 @@
 {"goal":"G13","event":"legacy-reconciliation","report":"G13-RECONCILIATION.md","sourcePullRequests":[2,7,18],"decision":"classifications recorded before legacy PR closure"}
 {"goal":"G13","event":"maker-running","branch":"chore/g13-reconcile-legacy-backlog","commit":"e717c29","source":"G13 audit record published; PRs #2, #7 and #18 closed as superseded"}
 {"goal":"G13","event":"checker-review","branch":"chore/g13-reconcile-legacy-backlog","commit":"cd90ad7","pullRequest":22,"source":"G13 PR opened; awaiting exact Checker verdict"}
+{"goal":"G13","status":"DONE","mergeStatus":"MERGED","pullRequest":22,"approvedHead":"0eecaf65149073a5e4b6dbc919c95b7bf4dd9ffb","mergeCommit":"fc88f28038e62d28a0d7381cab5fb20565fa726b","predecessor":"G12","source":"GitHub PR #22 merged on main"}
