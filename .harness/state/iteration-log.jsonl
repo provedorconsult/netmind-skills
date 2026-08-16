@@ -3,3 +3,4 @@
 {"goal":"G13","status":"READY","predecessor":"G12","goalFile":"13-backlog-goals-and-legacy-prs-reconciliation.md","source":"Harness post-G12 reconciliation"}
 {"goal":"G13","event":"legacy-reconciliation","report":"G13-RECONCILIATION.md","sourcePullRequests":[2,7,18],"decision":"classifications recorded before legacy PR closure"}
 {"goal":"G13","event":"maker-running","branch":"chore/g13-reconcile-legacy-backlog","commit":"e717c29","source":"G13 audit record published; PRs #2, #7 and #18 closed as superseded"}
+{"goal":"G13","event":"checker-review","branch":"chore/g13-reconcile-legacy-backlog","commit":"cd90ad7","pullRequest":22,"source":"G13 PR opened; awaiting exact Checker verdict"}
