@@ -1,19 +1,20 @@
 {
-  "goal": null,
-  "goalFile": null,
-  "status": "COMPLETE",
-  "predecessor": null,
-  "completedGoal": "G13",
+  "goal": "G15",
+  "goalFile": "15-readme-institucional-ai-native.md",
+  "status": "READY",
+  "predecessor": "G14",
+  "completedGoal": "G14",
   "branch": null,
   "commit": null,
   "pullRequest": null,
-  "maker": {"status": "idle"},
-  "checker": {"status": "completed", "verdict": "approve", "comment": "approve"},
-  "nextGoal": null,
+  "maker": {"status": "ready"},
+  "checker": {"status": "authorized", "verdict": "goal-authorized", "comment": "G15 promoted by Harness/Checker"},
+  "nextGoal": "G15",
   "githubVerified": true,
   "completedGoals": [
     {"id": "G11", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 19, "mergeCommit": "5ba9d398faf35022ea216c72f9f4c42420371261"},
     {"id": "G12", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 20, "mergeCommit": "ed3b157c048c0480a01398c7abdf7821148d830f", "approvedHead": "20634b6335df02f832f16930c4fb5f2713117082"},
-    {"id": "G13", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 22, "mergeCommit": "fc88f28038e62d28a0d7381cab5fb20565fa726b", "approvedHead": "0eecaf65149073a5e4b6dbc919c95b7bf4dd9ffb", "predecessor": "G12"}
+    {"id": "G13", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 22, "mergeCommit": "fc88f28038e62d28a0d7381cab5fb20565fa726b", "approvedHead": "0eecaf65149073a5e4b6dbc919c95b7bf4dd9ffb", "predecessor": "G12"},
+    {"id": "G14", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 23, "mergeCommit": "d6cf4f684317810d915a89bd9e03524564e8afa9", "predecessor": "G13"}
   ]
 }
