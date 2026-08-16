@@ -1,5 +1,66 @@
 # Codex Skills ISP — Huawei MA5800-X7 e Cisco ASR1001-X
 
+## NetMind Skills AI-Native
+
+Este repositório reúne documentação operacional reutilizável para agentes de
+IA, mantenedores e contribuidores de equipamentos de rede. As Skills preservam
+evidência técnica, comandos, limitações e guardrails; a CLI e a documentação
+oficial compatível com o alvo continuam sendo a autoridade de execução.
+
+### Navegação
+
+Comece por [llms.txt](llms.txt), o ponto de entrada AI-Native, e navegue pelos
+índices antes de abrir conteúdo amplo:
+
+```text
+llms.txt → INDEX.md → fabricante → modelo → categoria → Skill
+```
+
+[INDEX.md](INDEX.md) encaminha para os fabricantes e seus índices de modelo.
+Os índices são artefatos derivados do builder; agentes devem usá-los para
+selecionar módulos focados, não inferir caminhos ou sintaxe.
+
+### Estrutura e metadados
+
+Os módulos ativos ficam em `docs/<fabricante>/<modelo>/<categoria>/`, com as
+categorias operacionais `cli`, `config`, `diag`, `mon` e `update`. Cada módulo
+possui YAML Frontmatter com `fabricante`, `modelo`, `categoria`, `topicos`,
+`descricao`, `versao_firmware_testada` e `ultima_atualizacao`. `status` é
+opcional e `deprecated` somente se houver evidência explícita; consulte a
+[política de depreciação](deprecation-policy.md).
+
+Prefira documentos atômicos, normalmente com até 150 linhas, com uma finalidade
+técnica clara. Use nomes descritivos em kebab-case, sem espaços nem duplicação.
+`categoria: index` pertence apenas a artefatos de navegação gerados.
+
+### Validação e contribuição
+
+Para gerar índices derivados, execute:
+
+```bash
+python scripts/build_indexes.py --build
+```
+
+Para verificar sem alterar o repositório:
+
+```bash
+git diff --check
+bash scripts/harness-validate.sh
+python scripts/validate_repository.py
+python scripts/build_indexes.py --check
+python scripts/lint_markdown.py .
+python scripts/validate_markdown_links.py .
+```
+
+Leia [CONTRIBUTING.md](CONTRIBUTING.md) para o fluxo de Pull Request e a
+governança Maker/Checker. A CI verde não autoriza merge; somente o comentário
+social literal `approve` do Checker o autoriza.
+
+### Conteúdo histórico deste README
+
+As seções abaixo preservam a evidência operacional Huawei que já fazia parte
+deste repositório. Elas não substituem a navegação AI-Native acima.
+
 Pacote reutilizável de Skills operacionais para o Codex trabalhar com Huawei MA5800-X7 sem inventar sintaxe. A evidência primária é uma sessão real na **MA5800V100R018, patch SPH507**. Nenhuma criação deste repositório acessou ou alterou a OLT.
 
 ## Autoridade e classificação

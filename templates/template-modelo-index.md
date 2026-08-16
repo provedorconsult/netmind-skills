@@ -1,7 +1,7 @@
 ---
 fabricante: "<fabricante>"
 modelo: ["<modelo-ou-familia>"]
-categoria: "indice"
+categoria: "index"
 topicos: ["<topico-principal>"]
 descricao: "Índice inicial do modelo para roteamento da documentação atômica."
 versao_firmware_testada: "N/A"
@@ -12,12 +12,12 @@ ultima_atualizacao: "AAAA-MM-DD"
 
 Use este índice como ponto de entrada do modelo. Adicione links relativos para módulos atômicos nas categorias abaixo.
 
-## CLI
+## cli
 
-## Configuração
+## config
 
-## Diagnóstico
+## diag
 
-## Monitoramento
+## mon
 
-## Atualização
+## update
