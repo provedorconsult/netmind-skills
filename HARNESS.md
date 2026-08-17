@@ -8,7 +8,7 @@ The Git-native harness coordinates the existing G01–G10 catalog; it does not e
 
 The Maker works on only the active catalog goal and never merges. The automated Checker reviews the GitHub pull request and publishes exactly one verdict: `approve`, `request-changes`, or `blocked`.
 
-Only a complete, case-sensitive PR comment `approve` by the configured Checker login, with an open PR and green CI, authorizes merging. The merge gate queries GitHub directly; `current.json` cannot authorize a merge by itself.
+Only a complete, case-sensitive PR comment `approve` by the configured Checker login authorizes merging. The gate accepts it only when the PR is open, non-Draft and cleanly mergeable; its HEAD SHA is known; CI is green for the queried PR HEAD; and `approve` is the latest Checker verdict, posted after the current HEAD commit. A new commit therefore invalidates a prior approval and requires re-review. The merge gate queries GitHub directly; `current.json` cannot authorize a merge by itself.
 
 `request-changes` sends the goal back to `MAKER_RUNNING`. `blocked` ends the active lifecycle. After GitHub confirms that the PR is merged into `main`, post-merge reconciliation marks the goal complete and makes only its sequential successor ready.
 

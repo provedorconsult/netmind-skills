@@ -3,10 +3,10 @@
   "role": "orchestrator",
   "type": "github-authorization-gate",
   "purpose": "Authorize merging only from GitHub PR evidence.",
-  "inputs": ["open pull request", "CI conclusion", "Checker PR comments"],
+  "inputs": ["open non-draft pull request", "current HEAD SHA and commit timestamp", "clean merge state", "CI conclusion for queried HEAD", "chronological Checker PR comments"],
   "policy": ".harness/policies/merge-policy.json",
   "command": "python3 scripts/harness-merge-gate.py --repo <owner/repo> --pr <number>",
   "authorizedState": "MERGE_AUTHORIZED",
   "deniedState": "CHECKER_REVIEW",
-  "stopConditions": ["missing-literal-approve", "ci-not-green", "checker-not-executed"]
+  "stopConditions": ["draft-or-closed-pr", "unknown-or-changed-head", "merge-conflict", "ci-not-green", "checker-not-executed", "missing-literal-approve", "later-invalidating-verdict"]
 }
