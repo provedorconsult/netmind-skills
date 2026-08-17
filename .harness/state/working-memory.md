@@ -12,15 +12,15 @@
   `fc88f28038e62d28a0d7381cab5fb20565fa726b`, predecessor G12.
 - G14: `DONE / MERGED` in PR #23, merge commit
   `d6cf4f684317810d915a89bd9e03524564e8afa9`, predecessor G13.
+- G15: `DONE / MERGED` in PR #25, approved head
+  `23c43d1d7b89ffd4f7294c81b6407e5119458589`, merge commit
+  `afafd885c5f7e852a4f85356cd9327b9440758d1`, predecessor G14.
 
 ## Active Goal
 
-G15 está formalmente definido e promovido para `READY`, com predecessor `G14`.
-A fonte canônica é `15-readme-institucional-ai-native.md`.
-
-O objetivo de G15 é reestruturar o `README.md` como porta de entrada
-institucional, técnica e operacional do NetMind Skills em Português Brasil,
-sem implementar novos registries, Skills ou Goals posteriores.
+Nenhum Goal está ativo. G15 foi concluído e não há próximo Goal formalmente
+promovido; `nextGoal` permanece `null` até decisão posterior do
+Harness/Checker.
 
 ## Invariants
 
@@ -28,5 +28,4 @@ sem implementar novos registries, Skills ou Goals posteriores.
 - GitHub PR facts are authoritative; local state is a mirror.
 - Only an exact Checker PR comment of `approve` can authorize a merge.
 - `request-changes` returns control to the Maker; `blocked` stops the goal.
-- G15 é o único Goal autorizado para implementação neste momento.
-- G16+ permanecem fora de escopo até nova promoção formal.
+- Nenhum Goal posterior a G15 está autorizado até nova promoção formal.
