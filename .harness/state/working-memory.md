@@ -10,15 +10,17 @@
 - G13: `DONE / MERGED` in PR #22, approved head
   `0eecaf65149073a5e4b6dbc919c95b7bf4dd9ffb`, merge commit
   `fc88f28038e62d28a0d7381cab5fb20565fa726b`, predecessor G12.
+- G14: `DONE / MERGED` in PR #23, merge commit
+  `d6cf4f684317810d915a89bd9e03524564e8afa9`, predecessor G13.
 
 ## Active Goal
 
-Nenhum Goal está ativo. Não há próximo Goal formalmente definido no catálogo;
-`nextGoal` permanece `null` até decisão posterior do Harness/Checker.
+G15 está formalmente definido e promovido para `READY`, com predecessor `G14`.
+A fonte canônica é `15-readme-institucional-ai-native.md`.
 
-G13 audit decisions are recorded in `G13-RECONCILIATION.md`. G01–G07 são
-historically done/merged, G08 and G09 are superseded, and G10 remains blocked;
-their catalog status remains `BLOCKED` to prevent automatic legacy execution.
+O objetivo de G15 é reestruturar o `README.md` como porta de entrada
+institucional, técnica e operacional do NetMind Skills em Português Brasil,
+sem implementar novos registries, Skills ou Goals posteriores.
 
 ## Invariants
 
@@ -26,3 +28,5 @@ their catalog status remains `BLOCKED` to prevent automatic legacy execution.
 - GitHub PR facts are authoritative; local state is a mirror.
 - Only an exact Checker PR comment of `approve` can authorize a merge.
 - `request-changes` returns control to the Maker; `blocked` stops the goal.
+- G15 é o único Goal autorizado para implementação neste momento.
+- G16+ permanecem fora de escopo até nova promoção formal.
