@@ -84,8 +84,8 @@ for goal in goals:
         failures.append(f'goal source missing for {goal_id}')
     if goal.get('predecessor') != predecessors.get(goal_id):
         failures.append(f'invalid predecessor for {goal_id}')
-if catalog.get('activeGoal') != 'G15':
-    failures.append('activeGoal must be G15')
+if catalog.get('activeGoal') is not None:
+    failures.append('activeGoal must be null after G15 merge')
 if any(goal.get('status') != 'BLOCKED' for goal in goals[:10]):
     failures.append('legacy backlog must remain BLOCKED')
 classifications = {goal.get('id'): goal.get('classification') for goal in goals}
@@ -95,8 +95,8 @@ if classifications.get('G08') != 'SUPERSEDED' or classifications.get('G09') != '
     failures.append('legacy G08-G10 classifications are inconsistent')
 if not (root / 'G13-RECONCILIATION.md').is_file():
     failures.append('G13 reconciliation report is missing')
-if catalog.get('goals', [])[-2].get('status') != 'DONE' or catalog.get('goals', [])[-1].get('status') != 'READY':
-    failures.append('catalog must record G14 as DONE and G15 as READY')
+if catalog.get('goals', [])[-2].get('status') != 'DONE' or catalog.get('goals', [])[-1].get('status') != 'DONE':
+    failures.append('catalog must record G14 and G15 as DONE')
 completed = {goal.get('id'): goal for goal in catalog.get('completedGoals', [])}
 g12 = completed.get('G12', {})
 if g12.get('status') != 'DONE' or g12.get('mergeStatus') != 'MERGED' or g12.get('pullRequest') != 20 or g12.get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
@@ -104,17 +104,22 @@ if g12.get('status') != 'DONE' or g12.get('mergeStatus') != 'MERGED' or g12.get(
 g14 = completed.get('G14', {})
 if g14.get('status') != 'DONE' or g14.get('mergeStatus') != 'MERGED' or g14.get('pullRequest') != 23 or g14.get('mergeCommit') != 'd6cf4f684317810d915a89bd9e03524564e8afa9' or g14.get('predecessor') != 'G13':
     failures.append('catalog must record G14 as DONE/MERGED with PR #23 merge evidence')
+g15 = completed.get('G15', {})
+if g15.get('status') != 'DONE' or g15.get('mergeStatus') != 'MERGED' or g15.get('pullRequest') != 25 or g15.get('mergeCommit') != 'afafd885c5f7e852a4f85356cd9327b9440758d1' or g15.get('approvedHead') != '23c43d1d7b89ffd4f7294c81b6407e5119458589' or g15.get('predecessor') != 'G14':
+    failures.append('catalog must record G15 as DONE/MERGED with PR #25 merge evidence')
 
 current = data.get('.harness/state/current.json', {})
-if current.get('goal') != 'G15' or current.get('goalFile') != '15-readme-institucional-ai-native.md' or current.get('status') != 'READY' or current.get('predecessor') != 'G14' or current.get('completedGoal') != 'G14' or current.get('nextGoal') != 'G15':
-    failures.append('current state must promote G15 as READY with predecessor G14')
+if current.get('goal') is not None or current.get('goalFile') is not None or current.get('status') != 'COMPLETE' or current.get('predecessor') is not None or current.get('completedGoal') != 'G15' or current.get('nextGoal') is not None:
+    failures.append('current state must complete G15 without promoting a successor')
 current_completed = {goal.get('id'): goal for goal in current.get('completedGoals', [])}
 if current_completed.get('G12', {}).get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
     failures.append('current state must retain G12 merge evidence')
 if current_completed.get('G14', {}).get('mergeCommit') != 'd6cf4f684317810d915a89bd9e03524564e8afa9':
     failures.append('current state must retain G14 merge evidence')
-if current.get('checker') != {'status': 'authorized', 'verdict': 'goal-authorized', 'comment': 'G15 promoted by Harness/Checker'}:
-    failures.append('current state must record G15 promotion authorization')
+if current_completed.get('G15', {}) != g15:
+    failures.append('current state must mirror completed G15 evidence')
+if current.get('checker') != {'status': 'completed', 'verdict': 'approve', 'comment': 'approve'}:
+    failures.append('current state must record G15 Checker approval')
 
 if failures:
     print('\n'.join(f'ERROR: {failure}' for failure in failures))
