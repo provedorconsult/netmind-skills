@@ -17,7 +17,7 @@ Ele **não é**:
 - um manual completo de um único fabricante;
 - um Skill Router ou conjunto completo de registries já implementados.
 
-Huawei MA5800-X7 e Cisco ASR1001-X são a cobertura técnica atual. Eles são exemplos da biblioteca, não sua identidade: o projeto permanece multi-fabricante.
+Huawei MA5800-X7, Cisco ASR1001-X e ZTE ZXA10 C650 são a cobertura técnica atual. Eles são exemplos da biblioteca, não sua identidade: o projeto permanece multi-fabricante.
 
 ## Como um agente deve navegar
 
@@ -72,6 +72,7 @@ O registry existente é o **Equipment Registry**. Seus registros e contrato v1 e
 |---|---|---|
 | Huawei MA5800-X7 | [Índice Huawei](docs/huawei/ma5800-x7/INDEX.md) e [Skills MA5800](skills/01-ma5800-baseline/SKILL.md) | A evidência disponível depende do contexto registrado; confirme release, patch e CLI antes de agir. |
 | Cisco ASR1001-X | [Índice Cisco](docs/cisco/asr1001-x/INDEX.md) e [Skills Cisco](skills/cisco-asr1001x/README.md) | A aplicabilidade é contextual; não generalize comandos para outro IOS XE, modo ou plataforma. |
+| ZTE ZXA10 C650 | [Índice ZTE](docs/zte/zxa10-c650/INDEX.md) e [Skill de baseline](skills/21-zte-c650-baseline/SKILL.md) | Evidência observada somente para ZXA10 Software V1.1.2; a equivalência operacional autorizada não generaliza comandos para outra release ou chassis. |
 
 Para rotas de consulta, configuração, diagnóstico, monitoramento ou update, selecione primeiro o modelo e depois o módulo. A presença de um arquivo no caminho não prova que ele seja compatível com o alvo.
 
@@ -153,6 +154,7 @@ Os próximos passos arquiteturais — registries de compatibilidade, capability 
 - [Guardrails de acesso](ACCESS-GUARDRAILS.md)
 - [Huawei MA5800-X7](docs/huawei/ma5800-x7/INDEX.md)
 - [Cisco ASR1001-X](docs/cisco/asr1001-x/INDEX.md)
+- [ZTE ZXA10 C650](docs/zte/zxa10-c650/INDEX.md)
 - [Skills Cisco](skills/cisco-asr1001x/README.md)
 - [Matriz de comandos Huawei](COMMAND-MATRIX.md)
 - [Harness Git-native](HARNESS.md)

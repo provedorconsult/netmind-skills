@@ -1,0 +1,4 @@
+interface:
+  display_name: "ZTE C650 Baseline"
+  short_description: "Baseline READ/DISCOVERY para ZTE ZXA10 C650"
+  default_prompt: "Use $21-zte-c650-baseline para confirmar o baseline READ/DISCOVERY da ZTE ZXA10 C650."

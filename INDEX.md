@@ -8,3 +8,4 @@
 
 - [cisco](docs/cisco/INDEX.md)
 - [huawei](docs/huawei/INDEX.md)
+- [zte](docs/zte/INDEX.md)
