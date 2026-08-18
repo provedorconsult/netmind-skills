@@ -1,0 +1,4 @@
+interface:
+  display_name: "ZTE C600 ONT Correlation"
+  short_description: "Correlacionar ONUs GPON em modo somente leitura"
+  default_prompt: "Use $22-zte-c600-ont-correlation para correlacionar ONUs GPON em uma ZTE C600/C650."
