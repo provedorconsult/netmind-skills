@@ -72,11 +72,11 @@ if gate.get('command') != 'python3 scripts/harness-merge-gate.py --repo <owner/r
 catalog = data.get('.harness/sprints/current.json', {})
 goals = catalog.get('goals', [])
 legacy_expected = [f'G{i:02d}' for i in range(1, 11)]
-expected = legacy_expected + ['G13', 'G14', 'G15']
+expected = legacy_expected + ['G13', 'G14', 'G15', 'G16']
 if [goal.get('id') for goal in goals] != expected:
-    failures.append('goal catalog must retain G01-G10 and promote G13, G14 and G15 in order')
+    failures.append('goal catalog must retain G01-G10 and promote G13-G16 in order')
 predecessors = {**{goal: (None if goal == 'G01' else f'G{i-1:02d}') for i, goal in enumerate(legacy_expected, start=1)},
-               'G13': 'G12', 'G14': 'G13', 'G15': 'G14'}
+               'G13': 'G12', 'G14': 'G13', 'G15': 'G14', 'G16': 'G15'}
 for goal in goals:
     goal_id = goal.get('id')
     goal_file = goal.get('file')
@@ -85,7 +85,7 @@ for goal in goals:
     if goal.get('predecessor') != predecessors.get(goal_id):
         failures.append(f'invalid predecessor for {goal_id}')
 if catalog.get('activeGoal') is not None:
-    failures.append('activeGoal must be null after G15 merge')
+    failures.append('activeGoal must be null after G16 merge')
 if any(goal.get('status') != 'BLOCKED' for goal in goals[:10]):
     failures.append('legacy backlog must remain BLOCKED')
 classifications = {goal.get('id'): goal.get('classification') for goal in goals}
@@ -95,8 +95,8 @@ if classifications.get('G08') != 'SUPERSEDED' or classifications.get('G09') != '
     failures.append('legacy G08-G10 classifications are inconsistent')
 if not (root / 'G13-RECONCILIATION.md').is_file():
     failures.append('G13 reconciliation report is missing')
-if catalog.get('goals', [])[-2].get('status') != 'DONE' or catalog.get('goals', [])[-1].get('status') != 'DONE':
-    failures.append('catalog must record G14 and G15 as DONE')
+if any(goal.get('status') != 'DONE' for goal in catalog.get('goals', [])[-3:]):
+    failures.append('catalog must record G14-G16 as DONE')
 completed = {goal.get('id'): goal for goal in catalog.get('completedGoals', [])}
 g12 = completed.get('G12', {})
 if g12.get('status') != 'DONE' or g12.get('mergeStatus') != 'MERGED' or g12.get('pullRequest') != 20 or g12.get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
@@ -107,10 +107,13 @@ if g14.get('status') != 'DONE' or g14.get('mergeStatus') != 'MERGED' or g14.get(
 g15 = completed.get('G15', {})
 if g15.get('status') != 'DONE' or g15.get('mergeStatus') != 'MERGED' or g15.get('pullRequest') != 25 or g15.get('mergeCommit') != 'afafd885c5f7e852a4f85356cd9327b9440758d1' or g15.get('approvedHead') != '23c43d1d7b89ffd4f7294c81b6407e5119458589' or g15.get('predecessor') != 'G14':
     failures.append('catalog must record G15 as DONE/MERGED with PR #25 merge evidence')
+g16 = completed.get('G16', {})
+if g16.get('status') != 'DONE' or g16.get('mergeStatus') != 'MERGED' or g16.get('pullRequest') != 28 or g16.get('mergeCommit') != '6ad640b6cae88a0b2b0b459ae8f81c6e7ce026c6' or g16.get('approvedHead') != '7b871b31519a6623cd0cecef65ac89bc084f1255' or g16.get('predecessor') != 'G15':
+    failures.append('catalog must record G16 as DONE/MERGED with PR #28 merge evidence')
 
 current = data.get('.harness/state/current.json', {})
-if current.get('goal') is not None or current.get('goalFile') is not None or current.get('status') != 'COMPLETE' or current.get('predecessor') is not None or current.get('completedGoal') != 'G15' or current.get('nextGoal') is not None:
-    failures.append('current state must complete G15 without promoting a successor')
+if current.get('goal') is not None or current.get('goalFile') is not None or current.get('status') != 'COMPLETE' or current.get('predecessor') is not None or current.get('completedGoal') != 'G16' or current.get('nextGoal') is not None:
+    failures.append('current state must complete G16 without promoting a successor')
 current_completed = {goal.get('id'): goal for goal in current.get('completedGoals', [])}
 if current_completed.get('G12', {}).get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
     failures.append('current state must retain G12 merge evidence')
@@ -118,8 +121,10 @@ if current_completed.get('G14', {}).get('mergeCommit') != 'd6cf4f684317810d915a8
     failures.append('current state must retain G14 merge evidence')
 if current_completed.get('G15', {}) != g15:
     failures.append('current state must mirror completed G15 evidence')
+if current_completed.get('G16', {}) != g16:
+    failures.append('current state must mirror completed G16 evidence')
 if current.get('checker') != {'status': 'completed', 'verdict': 'approve', 'comment': 'approve'}:
-    failures.append('current state must record G15 Checker approval')
+    failures.append('current state must record G16 Checker approval')
 
 if failures:
     print('\n'.join(f'ERROR: {failure}' for failure in failures))
