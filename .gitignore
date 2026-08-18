@@ -3,6 +3,7 @@
 # correspondente autorizar, podem ser lidos localmente em runtime para autenticação.
 .env
 .env.*
+.env-*
 *.pem
 *.key
 __pycache__/

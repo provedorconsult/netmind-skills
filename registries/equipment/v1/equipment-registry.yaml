@@ -48,3 +48,27 @@ records:
       - classification: CONFIRMADO
         reference: README.md#pacote-cisco-asr1001-x
         statement: "O contexto validado é ASR1001-X com IOS XE 17.09.03a."
+
+  - id: equipment:zte:unknown:zxa10-c650
+    manufacturer:
+      id: manufacturer:zte
+      value: ZTE
+    family:
+      id: null
+      value: null
+    model:
+      id: model:zte:unknown:zxa10-c650
+      value: ZXA10 C650
+    software_cli:
+      id: software:zte:zxa10
+      value: ZTE ZXA10 Software
+    version:
+      id: version:zte:zxa10:v1-1-2
+      value: V1.1.2
+    firmware_patch:
+      id: null
+      value: null
+    evidence:
+      - classification: CONFIRMADO
+        reference: docs/zte/zxa10-c650/cli/fingerprint-and-cli-discovery.md#fingerprint-observado
+        statement: "A CLI observada reportou ZXA10 C650 executando ZTE ZXA10 Software V1.1.2."
