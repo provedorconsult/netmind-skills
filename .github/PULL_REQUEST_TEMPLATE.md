@@ -15,4 +15,4 @@
 
 ## Checker
 
-O Checker deve publicar exatamente um comentário: `approve`, `request-changes` ou `blocked`.
+Após revisar o HEAD atual e sua CI verde, o Checker deve publicar exatamente um comentário: `approve`, `request-changes` ou `blocked`. Um novo HEAD invalida o veredito anterior e exige nova revisão.
