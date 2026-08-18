@@ -15,16 +15,18 @@ assert chain['stateTransitions']['CHANGES_REQUESTED'] == 'MAKER_RUNNING'
 # Case 6: Checker blocked terminates execution.
 assert chain['stateTransitions']['CHECKER_REVIEW'][1] == 'BLOCKED'
 assert 'BLOCKED' in chain['terminalStates']
-# Cases 7 and 8: legacy backlog remains blocked, G13 through G15 are complete,
+# Cases 7 and 8: legacy backlog remains blocked, G13 through G16 are complete,
 # and no successor is promoted without a formal decision.
 first, second = catalog['goals'][:2]
 g13 = next(goal for goal in catalog['goals'] if goal['id'] == 'G13')
 g14 = next(goal for goal in catalog['goals'] if goal['id'] == 'G14')
 g15 = next(goal for goal in catalog['goals'] if goal['id'] == 'G15')
+g16 = next(goal for goal in catalog['goals'] if goal['id'] == 'G16')
 completed = {goal['id']: goal for goal in catalog['completedGoals']}
 g12 = completed['G12']
 g14_completed = completed['G14']
 g15_completed = completed['G15']
+g16_completed = completed['G16']
 assert first['id'] == 'G01' and first['status'] == 'BLOCKED'
 assert first['classification'] == 'DONE' and first['mergeStatus'] == 'MERGED'
 assert second['id'] == 'G02' and second['status'] == 'BLOCKED'
@@ -49,12 +51,19 @@ assert g15['pullRequest'] == 25
 assert g15['mergeCommit'] == 'afafd885c5f7e852a4f85356cd9327b9440758d1'
 assert g15['approvedHead'] == '23c43d1d7b89ffd4f7294c81b6407e5119458589'
 assert g15_completed == {key: value for key, value in g15.items() if key != 'file'}
+assert g16['predecessor'] == 'G15'
+assert g16['status'] == 'DONE' and g16['mergeStatus'] == 'MERGED'
+assert g16['pullRequest'] == 28
+assert g16['mergeCommit'] == '6ad640b6cae88a0b2b0b459ae8f81c6e7ce026c6'
+assert g16['approvedHead'] == '7b871b31519a6623cd0cecef65ac89bc084f1255'
+assert g16_completed == g16
 assert current['goal'] is None and current['goalFile'] is None
-assert current['status'] == 'COMPLETE' and current['completedGoal'] == 'G15'
+assert current['status'] == 'COMPLETE' and current['completedGoal'] == 'G16'
 assert current['predecessor'] is None and current['nextGoal'] is None
 assert 'merge' not in current
 assert current['checker'] == {'status': 'completed', 'verdict': 'approve', 'comment': 'approve'}
 assert {goal['id']: goal for goal in current['completedGoals']}['G14'] == g14_completed
 assert {goal['id']: goal for goal in current['completedGoals']}['G15'] == g15_completed
+assert {goal['id']: goal for goal in current['completedGoals']}['G16'] == g16_completed
 assert chain['nextGoalRule'] == 'Only a GitHub-confirmed MERGED predecessor on main may promote the next catalog goal to READY.'
 print("Harness state fixtures passed")
