@@ -9,3 +9,4 @@
 {"goal":"G15","status":"READY","predecessor":"G14","goalFile":"15-readme-institucional-ai-native.md","source":"Harness/Checker formal promotion"}
 {"goal":"G15","status":"DONE","mergeStatus":"MERGED","pullRequest":25,"approvedHead":"23c43d1d7b89ffd4f7294c81b6407e5119458589","mergeCommit":"afafd885c5f7e852a4f85356cd9327b9440758d1","predecessor":"G14","source":"GitHub PR #25 merged on main"}
 {"goal":"G16","status":"DONE","mergeStatus":"MERGED","pullRequest":28,"approvedHead":"7b871b31519a6623cd0cecef65ac89bc084f1255","mergeCommit":"6ad640b6cae88a0b2b0b459ae8f81c6e7ce026c6","predecessor":"G15","source":"GitHub PR #28 merged on main; post-merge reconciliation"}
+{"goal":"G17","status":"DONE","mergeStatus":"MERGED","pullRequest":31,"approvedHead":"1ddc124ed2c7aa05caf0d5de7c3df019bd12a30e","mergeCommit":"4117de936136dce7cfdff0a851829c4fc6a3f7c1","predecessor":"G16","source":"GitHub PR #31 merged on main; post-merge reconciliation"}
