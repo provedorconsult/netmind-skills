@@ -18,10 +18,13 @@
 - G16: `DONE / MERGED` in PR #28, approved head
   `7b871b31519a6623cd0cecef65ac89bc084f1255`, merge commit
   `6ad640b6cae88a0b2b0b459ae8f81c6e7ce026c6`, predecessor G15.
+- G17: `DONE / MERGED` in PR #31, approved head
+  `1ddc124ed2c7aa05caf0d5de7c3df019bd12a30e`, merge commit
+  `4117de936136dce7cfdff0a851829c4fc6a3f7c1`, predecessor G16.
 
 ## Active Goal
 
-Nenhum Goal está ativo. G16 foi concluído e não há próximo Goal formalmente
+Nenhum Goal está ativo. G17 foi concluído e não há próximo Goal formalmente
 promovido; `nextGoal` permanece `null` até decisão posterior do
 Harness/Checker.
 
@@ -31,4 +34,4 @@ Harness/Checker.
 - GitHub PR facts are authoritative; local state is a mirror.
 - Only an exact Checker PR comment of `approve` can authorize a merge.
 - `request-changes` returns control to the Maker; `blocked` stops the goal.
-- Nenhum Goal posterior a G16 está autorizado até nova promoção formal.
+- Nenhum Goal posterior a G17 está autorizado até nova promoção formal.
