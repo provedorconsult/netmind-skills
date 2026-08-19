@@ -23,4 +23,11 @@
 
 ## Verdict
 
-Publish exactly one comment on the GitHub PR: `approve`, `request-changes`, or `blocked`.
+Publish exactly one comment. For approval, the literal first line and the reviewed HEAD are both mandatory:
+
+```text
+approve
+approvedHead: <full HEAD SHA>
+```
+
+For a non-approval verdict, publish exactly `request-changes` or `blocked`.

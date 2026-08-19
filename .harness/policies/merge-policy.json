@@ -1,7 +1,7 @@
 {
   "version": 2,
   "policy": "MERGE AUTHORIZED requires all required GitHub PR evidence.",
-  "required": {"pullRequestOpen": true, "nonDraft": true, "mergeStateStatus": "CLEAN", "headKnown": true, "headCommitKnown": true, "ciConclusion": "success for queried HEAD", "checkerLogin": "configured automated Checker login", "checkerComment": "approve", "commentComparison": "case-sensitive exact entire comment", "approveAfterHead": true, "latestVerdict": "approve"},
+  "required": {"pullRequestOpen": true, "nonDraft": true, "mergeStateStatus": "CLEAN", "headKnown": true, "ciConclusion": "success for queried HEAD", "checkerLogin": "configured automated Checker login", "checkerComment": "approve", "approvedHead": "must equal current headRefOid", "commentComparison": "case-sensitive literal verdict line", "latestVerdict": "approve"},
   "deniedWhen": ["no open pull request", "draft PR", "merge conflict or unknown merge state", "unknown HEAD", "CI absent or not green", "Checker has no literal verdict", "approve predates HEAD", "later request-changes or blocked", "local state alone claims authorization"],
   "authorization": "MERGE AUTHORIZED",
   "denial": "MERGE DENIED",

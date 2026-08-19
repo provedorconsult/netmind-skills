@@ -4,10 +4,12 @@
 import argparse
 import json
 import subprocess
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
 VERDICTS = {"approve", "request-changes", "blocked"}
+APPROVAL = re.compile(r"^approve\napprovedHead: ([0-9a-f]{7,64})$")
 
 def deny(reason):
     print(f"MERGE DENIED: {reason}")
@@ -47,15 +49,14 @@ def evaluate(evidence, checker_login):
     if evidence.get("isDraft") is not False: return deny("PR is draft or draft state is unknown")
     if evidence.get("mergeStateStatus") != "CLEAN": return deny("PR merge state is not CLEAN")
     if not evidence.get("headRefOid"): return deny("PR HEAD is unknown")
-    head_time = head_commit_time(evidence)
-    if head_time is None: return deny("HEAD commit or its timestamp is unknown")
     if not ci_green(evidence.get("statusCheckRollup", [])): return deny("CI is not green for the queried HEAD")
-    verdicts = [comment for comment in evidence.get("comments", []) if comment.get("author", {}).get("login") == checker_login and comment.get("body") in VERDICTS]
+    verdicts = [comment for comment in evidence.get("comments", []) if comment.get("author", {}).get("login") == checker_login and (comment.get("body") in {"request-changes", "blocked"} or APPROVAL.fullmatch(comment.get("body", "")))]
     if not verdicts: return deny("Checker has not published a literal verdict")
     earliest = datetime.min.replace(tzinfo=timezone.utc)
     latest = max(verdicts, key=lambda item: parse_time(item.get("createdAt")) or earliest)
-    if latest.get("body") != "approve": return deny("latest Checker verdict is invalidating")
-    if (parse_time(latest.get("createdAt")) or earliest) <= head_time: return deny("approve is not newer than the current HEAD")
+    approval = APPROVAL.fullmatch(latest.get("body", ""))
+    if not approval: return deny("latest Checker verdict is invalidating")
+    if approval.group(1) != evidence["headRefOid"]: return deny("approvedHead does not match current HEAD")
     print("MERGE AUTHORIZED")
     return 0
 

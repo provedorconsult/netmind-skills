@@ -8,7 +8,7 @@ The Git-native harness coordinates the existing G01–G10 catalog; it does not e
 
 The Maker works on only the active catalog goal and never merges. The automated Checker reviews the GitHub pull request and publishes exactly one verdict: `approve`, `request-changes`, or `blocked`.
 
-Only a complete, case-sensitive PR comment `approve` by the configured Checker login authorizes merging when it is newer than the current PR HEAD. The PR must be open, non-Draft, `CLEAN`, have a known HEAD commit and green CI for that query. A later `request-changes` or `blocked` invalidates the approval. The merge gate queries GitHub directly; `current.json` cannot authorize a merge by itself.
+Only a case-sensitive `approve` verdict with an explicit `approvedHead: <SHA>` by the configured Checker login authorizes merging when `approvedHead` equals the current PR HEAD. The PR must be open, non-Draft, `CLEAN` and have green CI for that query. A later `request-changes` or `blocked` invalidates the approval. The merge gate queries GitHub directly; `current.json` cannot authorize a merge by itself.
 
 Every new Goal starts with the Acceptance Contract in `.harness/templates/goal-template.json`: scope, exclusions, required evidence, acceptance criteria, negative cases, regressions, security constraints and artifacts. Every criterion maps to a test; otherwise it is `UNTESTED` and the Goal cannot proceed. Evidence is explicitly classified as `OBSERVED`, `CONFIRMED`, `DERIVED` or `UNKNOWN`.
 

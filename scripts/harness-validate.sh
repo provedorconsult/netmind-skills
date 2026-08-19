@@ -41,9 +41,9 @@ for relative in required + ['.harness/templates/review-template.md', '.harness/t
 
 policy = data.get('.harness/policies/merge-policy.json', {})
 required_policy = policy.get('required', {})
-if required_policy.get('checkerComment') != 'approve' or required_policy.get('commentComparison') != 'case-sensitive exact entire comment':
-    failures.append('merge policy must require an exact literal approve')
-for field, expected in {'nonDraft': True, 'mergeStateStatus': 'CLEAN', 'headKnown': True, 'headCommitKnown': True, 'approveAfterHead': True, 'latestVerdict': 'approve'}.items():
+if required_policy.get('checkerComment') != 'approve' or required_policy.get('commentComparison') != 'case-sensitive literal verdict line':
+    failures.append('merge policy must require an exact literal approve verdict line')
+for field, expected in {'nonDraft': True, 'mergeStateStatus': 'CLEAN', 'headKnown': True, 'approvedHead': 'must equal current headRefOid', 'latestVerdict': 'approve'}.items():
     if required_policy.get(field) != expected:
         failures.append(f'merge policy missing {field}')
 if policy.get('sourceOfTruth') != 'GitHub pull request and its comments; local state only mirrors verified GitHub facts.':

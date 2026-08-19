@@ -12,6 +12,7 @@ expect_denied lgtm
 expect_denied approved
 expect_authorized approve
 expect_denied approve-new-head
+expect_denied approve-wrong-head
 expect_denied approve-then-request-changes
 expect_denied approve-then-blocked
 expect_denied draft-approve
