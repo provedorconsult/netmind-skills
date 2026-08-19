@@ -18,6 +18,9 @@ required = [
 ]
 failures = []
 data = {}
+for relative in ('scripts/harness-merge-gate.py', 'scripts/harness-pr-preflight.py', 'scripts/harness-project-state.py', 'scripts/validate_harness_evidence.py'):
+    if not (root / relative).is_file():
+        failures.append(f'missing {relative}')
 for relative in required:
     path = root / relative
     if not path.is_file():
@@ -40,6 +43,9 @@ policy = data.get('.harness/policies/merge-policy.json', {})
 required_policy = policy.get('required', {})
 if required_policy.get('checkerComment') != 'approve' or required_policy.get('commentComparison') != 'case-sensitive exact entire comment':
     failures.append('merge policy must require an exact literal approve')
+for field, expected in {'nonDraft': True, 'mergeStateStatus': 'CLEAN', 'headKnown': True, 'headCommitKnown': True, 'approveAfterHead': True, 'latestVerdict': 'approve'}.items():
+    if required_policy.get(field) != expected:
+        failures.append(f'merge policy missing {field}')
 if policy.get('sourceOfTruth') != 'GitHub pull request and its comments; local state only mirrors verified GitHub facts.':
     failures.append('merge policy must make GitHub evidence authoritative')
 
@@ -68,6 +74,11 @@ if checker.get('transitions') != {'approve': 'MERGE_AUTHORIZED', 'request-change
     failures.append('Checker transitions are invalid')
 if gate.get('command') != 'python3 scripts/harness-merge-gate.py --repo <owner/repo> --pr <number>':
     failures.append('merge gate must query GitHub PR evidence')
+
+template = data.get('.harness/templates/goal-template.json', {})
+for field in ('scope', 'outOfScope', 'evidenceRequired', 'acceptanceCriteria', 'negativeCases', 'regressionTests', 'securityConstraints', 'expectedArtifacts', 'acceptanceTestMap'):
+    if not template.get(field):
+        failures.append(f'goal template missing {field}')
 
 catalog = data.get('.harness/sprints/current.json', {})
 goals = catalog.get('goals', [])

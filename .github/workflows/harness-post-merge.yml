@@ -1,0 +1,32 @@
+name: Reconcile Harness After Merge
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.13'
+      - name: Reconcile derived Harness projection
+        run: python3 scripts/harness-project-state.py --write
+      - name: Commit projection when changed
+        run: |
+          if git diff --quiet -- .harness/state/current.json; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .harness/state/current.json
+          git commit -m 'chore(harness): reconcile merged goal projection'
+          git push origin HEAD:main
+      - name: Verify derived Harness projection
+        run: python3 scripts/harness-project-state.py --check

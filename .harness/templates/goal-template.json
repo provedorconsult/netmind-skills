@@ -1,7 +1,16 @@
 {
   "id": "GNN",
   "file": "NN-goal-title.md",
-  "status": "PLANNED",
+  "status": "READY",
   "predecessor": "GNN-1",
-  "acceptanceEvidence": ["branch", "commit", "pull request", "CI", "Checker verdict", "merge commit"]
+  "predecessorMerged": false,
+  "scope": ["path/to/changed-file"],
+  "outOfScope": ["unrelated paths and behavior"],
+  "evidenceRequired": ["branch", "commit", "pull request", "CI", "Checker verdict", "merge commit"],
+  "acceptanceCriteria": ["observable, deterministic outcome"],
+  "negativeCases": ["required failure behavior"],
+  "regressionTests": ["historical regression covered"],
+  "securityConstraints": ["no secrets or customer data"],
+  "expectedArtifacts": ["path/to/changed-file", "tests/path/to/test"],
+  "acceptanceTestMap": {"observable, deterministic outcome": "tests/path/to/test"}
 }

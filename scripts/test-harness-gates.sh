@@ -11,5 +11,15 @@ expect_denied ci-green-no-approve
 expect_denied lgtm
 expect_denied approved
 expect_authorized approve
+expect_denied approve-new-head
+expect_denied approve-then-request-changes
+expect_denied approve-then-blocked
+expect_denied draft-approve
+expect_denied conflict-approve
+expect_denied ci-absent
+expect_denied ci-failed
+expect_denied wrong-checker
+expect_denied approve-space
+python3 "$root/scripts/harness-project-state.py" --check
 python3 "$root/scripts/harness-state-fixtures.py"
 echo 'Harness gate tests passed'

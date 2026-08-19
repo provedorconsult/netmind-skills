@@ -1,5 +1,7 @@
 # Goal Evidence
 
+- Evidence status for each claim: `OBSERVED`, `CONFIRMED`, `DERIVED`, or `UNKNOWN`.
+- Do not fill technical identity fields from inference; use `null` and `UNKNOWN`.
 - Goal:
 - Branch:
 - Commit:
