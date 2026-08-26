@@ -2,11 +2,14 @@
   "id": "maker",
   "role": "Codex Maker",
   "type": "plan-execute-verify",
-  "purpose": "Implement exactly one ready goal and hand its pull request to the Checker.",
-  "inputs": ["current goal", ".harness/state/current.json", "AGENTS.md", "goal source file"],
+  "purpose": "Implement exactly one ready goal, hand its pull request to the Checker, and execute the merge only after MERGE_AUTHORIZED.",
+  "inputs": ["current goal", ".harness/state/current.json", "AGENTS.md", "goal source file", "real GitHub PR state", "merge gate result"],
   "actions": ["isolate-branch", "implement-goal", "run-validation", "record-evidence", "push-branch", "open-or-update-pr", "request-checker"],
-  "outputs": ["pull request", ".harness/state/current.json", ".harness/state/iteration-log.jsonl"],
+  "postApprovalActions": ["recheck-pr-state", "run-merge-gate", "merge-authorized-pr", "record-merge-evidence", "handoff-post-merge"],
+  "mergePermission": {"executor": "maker", "requiresState": "MERGE_AUTHORIZED", "checkerMayMerge": false, "headMustRemainReviewed": true, "ciMustRemainGreen": true},
+  "outputs": ["pull request", "merge evidence when authorized", ".harness/state/current.json", ".harness/state/iteration-log.jsonl"],
   "stateOnSuccess": "CHECKER_REVIEW",
-  "forbidden": ["merge-pull-request", "git push --force", "git push --force-with-lease", "rm -rf", "printenv", "read-or-print-.env", "out-of-goal-execution"],
-  "stopConditions": ["checker-review-pending", "validation-failed", "scope-violation", "secret-risk"]
+  "stateAfterAuthorizedMerge": "MERGED",
+  "forbidden": ["self-approve", "bypass-merge-gate", "merge-without-MERGE_AUTHORIZED", "git push --force", "git push --force-with-lease", "rm -rf", "printenv", "read-or-print-.env", "out-of-goal-execution"],
+  "stopConditions": ["checker-review-pending", "validation-failed", "scope-violation", "secret-risk", "merge-gate-denied", "reviewed-head-changed"]
 }
