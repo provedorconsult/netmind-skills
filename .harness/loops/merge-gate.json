@@ -2,11 +2,12 @@
   "id": "merge-gate",
   "role": "orchestrator",
   "type": "github-authorization-gate",
-  "purpose": "Authorize merging only from GitHub PR evidence.",
+  "purpose": "Authorize the Maker to merge only from real GitHub PR evidence.",
   "inputs": ["open pull request", "CI conclusion", "Checker PR comments"],
   "policy": ".harness/policies/merge-policy.json",
   "command": "python3 scripts/harness-merge-gate.py --repo <owner/repo> --pr <number>",
   "authorizedState": "MERGE_AUTHORIZED",
+  "authorizedExecutor": "maker",
   "deniedState": "CHECKER_REVIEW",
-  "stopConditions": ["missing-literal-approve", "ci-not-green", "checker-not-executed"]
+  "stopConditions": ["missing-literal-approve", "ci-not-green", "checker-not-executed", "reviewed-pr-state-changed"]
 }
