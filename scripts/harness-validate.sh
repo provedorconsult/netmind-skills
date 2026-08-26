@@ -42,6 +42,13 @@ if required_policy.get('checkerComment') != 'approve' or required_policy.get('co
     failures.append('merge policy must require an exact literal approve')
 if policy.get('sourceOfTruth') != 'GitHub pull request and its comments; local state only mirrors verified GitHub facts.':
     failures.append('merge policy must make GitHub evidence authoritative')
+execution = policy.get('execution', {})
+if execution.get('executor') != 'maker' or execution.get('requiresState') != 'MERGE_AUTHORIZED':
+    failures.append('merge policy must assign authorized merge execution to Maker')
+if execution.get('checkerMayMerge') is not False or execution.get('makerMaySelfApprove') is not False:
+    failures.append('merge policy must separate Checker approval from Maker execution')
+if execution.get('mustRecheckGitHubBeforeMerge') is not True:
+    failures.append('merge policy must require a fresh GitHub recheck before Maker merge')
 
 chain = data.get('.harness/chains/goal.chain.json', {})
 states = {'PLANNED', 'READY', 'MAKER_RUNNING', 'VALIDATING', 'PR_OPEN', 'CHECKER_REVIEW', 'CHANGES_REQUESTED', 'BLOCKED', 'MERGE_AUTHORIZED', 'MERGING', 'MERGED', 'POST_MERGE', 'COMPLETE'}
@@ -56,18 +63,38 @@ if transitions.get('CHECKER_REVIEW') != ['CHANGES_REQUESTED', 'BLOCKED', 'MERGE_
     failures.append('Checker transitions are not deterministic')
 if not any(step.get('id') == 'approval-gate' and step.get('action') == 'verify-real-github-checker-comment' for step in chain.get('steps', [])):
     failures.append('chain lacks real GitHub approval gate')
+merge_steps = [step for step in chain.get('steps', []) if step.get('id') == 'merge']
+if len(merge_steps) != 1 or merge_steps[0].get('action') != 'merge-authorized-pr' or merge_steps[0].get('owner') != 'maker' or merge_steps[0].get('requiresState') != 'MERGE_AUTHORIZED':
+    failures.append('merge step must be owned by Maker and require MERGE_AUTHORIZED')
 
 maker = data.get('.harness/loops/maker.json', {})
 checker = data.get('.harness/loops/checker.json', {})
 gate = data.get('.harness/loops/merge-gate.json', {})
-if maker.get('role') != 'Codex Maker' or 'merge-pull-request' not in maker.get('forbidden', []):
-    failures.append('Maker must be separate and unable to merge')
+if maker.get('role') != 'Codex Maker':
+    failures.append('Maker role is invalid')
+if 'merge-pull-request' in maker.get('forbidden', []):
+    failures.append('Maker must not be forbidden from executing an authorized merge')
+merge_permission = maker.get('mergePermission', {})
+if merge_permission.get('executor') != 'maker' or merge_permission.get('requiresState') != 'MERGE_AUTHORIZED':
+    failures.append('Maker merge permission must require MERGE_AUTHORIZED')
+if merge_permission.get('checkerMayMerge') is not False or merge_permission.get('headMustRemainReviewed') is not True or merge_permission.get('ciMustRemainGreen') is not True:
+    failures.append('Maker merge permission must preserve review/CI separation')
+post_approval = maker.get('postApprovalActions', [])
+for action in ('recheck-pr-state', 'run-merge-gate', 'merge-authorized-pr', 'record-merge-evidence'):
+    if action not in post_approval:
+        failures.append(f'Maker post-approval flow missing {action}')
+if 'merge-without-MERGE_AUTHORIZED' not in maker.get('forbidden', []) or 'self-approve' not in maker.get('forbidden', []):
+    failures.append('Maker must be forbidden from self-approval and unauthorized merge')
 if checker.get('role') != 'automated Checker' or checker.get('validVerdicts') != ['approve', 'request-changes', 'blocked']:
     failures.append('Checker verdict contract is invalid')
 if checker.get('transitions') != {'approve': 'MERGE_AUTHORIZED', 'request-changes': 'CHANGES_REQUESTED', 'blocked': 'BLOCKED'}:
     failures.append('Checker transitions are invalid')
+if 'merge-pull-request' not in checker.get('forbidden', []):
+    failures.append('Checker must be review-only and forbidden from merging')
 if gate.get('command') != 'python3 scripts/harness-merge-gate.py --repo <owner/repo> --pr <number>':
     failures.append('merge gate must query GitHub PR evidence')
+if gate.get('authorizedExecutor') != 'maker':
+    failures.append('merge gate must authorize the Maker as executor')
 
 catalog = data.get('.harness/sprints/current.json', {})
 goals = catalog.get('goals', [])
