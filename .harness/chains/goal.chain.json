@@ -9,7 +9,7 @@
     {"id": "open-pr", "action": "open-or-update-github-pr", "owner": "maker"},
     {"id": "checker", "action": "review-github-pr", "loop": "checker"},
     {"id": "approval-gate", "action": "verify-real-github-checker-comment", "loop": "merge-gate"},
-    {"id": "merge", "action": "merge-authorized-pr", "requiresState": "MERGE_AUTHORIZED"},
+    {"id": "merge", "action": "merge-authorized-pr", "owner": "maker", "requiresState": "MERGE_AUTHORIZED"},
     {"id": "post-merge", "action": "reconcile-real-github-merge", "loop": "post-merge"},
     {"id": "memorize", "action": "append-iteration-evidence"},
     {"id": "next-goal", "action": "promote-next-sequential-goal", "requiresState": "COMPLETE"}
