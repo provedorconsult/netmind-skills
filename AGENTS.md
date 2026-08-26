@@ -25,6 +25,16 @@
 
 A skill nunca amplia o escopo concedido pelo prompt/tarefa/Issue.
 
+## Harness: Maker, Checker e merge
+
+- O **Maker** implementa o Goal, valida o escopo, publica ou atualiza a PR, acompanha a CI e solicita a revisão do Checker.
+- O **Checker** é independente: revisa diff, testes, CI, segurança e evidências e publica somente um veredito válido: `approve`, `request-changes` ou `blocked`.
+- O Checker **não executa merge**. Um `approve` válido apenas transiciona o Goal para `MERGE_AUTHORIZED`.
+- O **Maker é o executor do merge**. Ele só pode mergear uma PR quando o merge gate confirmar `MERGE_AUTHORIZED` a partir do estado real do GitHub.
+- Antes do merge, o Maker deve confirmar que a PR continua aberta, mergeable, com CI verde e sem novo commit posterior ao HEAD revisado. Se o HEAD mudar, a autorização anterior deixa de ser suficiente e a PR retorna ao Checker.
+- O Maker não pode autoaprovar sua própria mudança, fabricar autorização, ignorar `request-changes`/`blocked`, contornar CI nem usar `git push --force` ou `git push --force-with-lease` para preservar uma aprovação antiga.
+- Após o merge, a reconciliação pós-merge confirma o merge em `main`, registra a evidência e somente então marca o Goal como concluído e libera o sucessor permitido.
+
 ## Guardrails
 
 - Antes de escrita: validar alvo, contexto, versão, sintaxe, precheck, impacto, dependências, rollback, abort e pós-validação.
