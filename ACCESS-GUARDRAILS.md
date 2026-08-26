@@ -39,6 +39,36 @@ Requisitos:
 - nunca incluir credenciais concretas em exemplos da skill;
 - não confundir posse da credencial com autorização para escrita.
 
+## Credencial PPPoE para diagnóstico
+
+A senha PPPoE é uma **credencial operacional**: pode ser necessária quando o
+procedimento de diagnóstico precisar validar a autenticação entre serviço,
+AAA/RADIUS, BNG/BRAS e sessão PPPoE. Esta regra é multi-fabricante e não
+confirma sintaxe, capability ou comando de nenhum equipamento.
+
+O `netmind-skills` define o procedimento; o **Source of Truth autorizado do
+projeto consumidor** fornece, quando aplicável, `pppoe_username` e
+`pppoe_password`. O agente deve usar a credencial somente dentro do escopo da
+tarefa. A disponibilidade da senha não concede `WRITE`, `PERSIST` ou
+`HIGH-IMPACT`.
+
+Quando a senha atual não for fornecida pela fonte autorizada, registrá-la como
+limitação diagnóstica e não deduzi-la, procurá-la em fontes não autorizadas,
+gerar uma nova nem tratar conhecimento histórico como credencial atual. O
+repositório não armazena senhas PPPoE; a senha real nunca entra em evidência,
+fixtures, exemplos, Skills, Git, PRs, comentários ou logs.
+
+Evidência sanitizada aceitável:
+
+```text
+PPPoE username: <pppoe-user>
+PPPoE password: PRESENT / AVAILABLE_FROM_SOT
+```
+
+O valor da senha não é evidência sanitizada. A presença pode ser reportada sem
+revelar o segredo, sempre separando `CONFIRMADO`, `DISCOVERY`, `INFERIDO`,
+`ERRO` e `VERSÃO DIFERENTE` conforme a evidência disponível.
+
 ## Falha de resolução de nome
 
 Um alias que não resolve não encerra automaticamente a operação. A skill deve aceitar um endereço já confirmado pelo Source of Truth ou parâmetro autorizado do ambiente.

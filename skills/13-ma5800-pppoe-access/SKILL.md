@@ -46,6 +46,21 @@ Não há erro PPPoE literal fornecido; não fabricar diagnóstico.
 
 Validar WAN/profile na ONT; T-CONT/GEM/mapping/service-port/VLAN/uplink; depois PADI, PADO, PADR/PADS, LCP, PAP/CHAP, IPCP, IP, rota/DNS, NAT/DHCP e LAN/Wi-Fi. Se WAN está `Disconnected`, service-port `up` mas zerado e BNG sem PADI/PADR, verificar primeiro o mapping VLAN/flow do GEM. NAT/CGNAT só é avaliado depois de sessão/IP funcionais.
 
+## Credencial PPPoE no diagnóstico
+
+Quando a validação de autenticação exigir credenciais, `pppoe_username` e
+`pppoe_password` podem ser informações operacionais necessárias. A senha atual
+deve vir exclusivamente do Source of Truth autorizado do sistema consumidor;
+esta Skill não armazena, deduz, gera ou recupera a senha.
+
+Se apenas o username estiver disponível, registrar `UNKNOWN`: a senha PPPoE
+atual não foi fornecida pelo Source of Truth. Não inferir a senha nem gerar uma
+nova; solicitar ou consultar somente a fonte autorizada conforme a política do
+sistema consumidor. Se a credencial for fornecida no contexto autorizado,
+registrar `CONFIRMADO` apenas para a disponibilidade e usá-la somente no
+escopo autorizado, sem incluí-la na evidência sanitizada. A posse da
+credencial não autoriza alteração na OLT, AAA, BNG ou BRAS.
+
 ## Dependências
 
 ONT, GPON, GEM, service-port, VLAN, uplink, BNG e AAA.
