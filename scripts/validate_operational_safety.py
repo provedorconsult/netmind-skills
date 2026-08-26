@@ -39,6 +39,30 @@ CGNAT_GUARDRAILS = {
     ),
 }
 
+PPPOE_CREDENTIAL_GUARDRAILS = {
+    "ACCESS-GUARDRAILS.md": (
+        "A senha PPPoE é uma **credencial operacional**",
+        "Source of Truth autorizado do\nprojeto consumidor",
+        "não deduzi-la",
+        "gerar uma nova",
+        "não concede `WRITE`, `PERSIST` ou\n`HIGH-IMPACT`",
+        "PPPoE password: PRESENT / AVAILABLE_FROM_SOT",
+        "senha real nunca entra em evidência",
+    ),
+    "skills/13-ma5800-pppoe-access/SKILL.md": (
+        "## Credencial PPPoE no diagnóstico",
+        "registrar `UNKNOWN`",
+        "registrar `CONFIRMADO` apenas para a disponibilidade",
+        "não autoriza alteração na OLT, AAA, BNG ou BRAS",
+    ),
+    "skills/cisco-asr1001x/24-pppoe-troubleshooting/SKILL.md": (
+        "## Credencial PPPoE no diagnóstico",
+        "marcar a limitação como `UNKNOWN`",
+        "disponibilidade como `CONFIRMADO`",
+        "não autoriza `WRITE`, `PERSIST` ou\n`HIGH-IMPACT`",
+    ),
+}
+
 
 def valid_backup_name(name):
     return bool(BACKUP_NAME.fullmatch(name) or PARAMETERIZED_BACKUP_NAME.fullmatch(name))
@@ -159,11 +183,28 @@ def validate_cgnat_guardrails(failures):
     print(f"Validated CGNAT guardrails in {checked} skill(s)")
 
 
+def validate_pppoe_credential_guardrails(failures):
+    """Keep PPPoE diagnostic-credential rules explicit and sanitizable."""
+    checked = 0
+    for relative, required_phrases in PPPOE_CREDENTIAL_GUARDRAILS.items():
+        path = ROOT / relative
+        if not path.exists():
+            failures.append(f"{relative}: missing PPPoE credential contract")
+            continue
+        content = path.read_text(encoding="utf-8")
+        for phrase in required_phrases:
+            if phrase not in content:
+                failures.append(f"{relative}: missing PPPoE credential guardrail '{phrase}'")
+        checked += 1
+    print(f"Validated PPPoE credential guardrails in {checked} document(s)")
+
+
 def validate_operational_safety(failures):
     validate_filename_classifier(failures)
     validate_documented_backup_names(failures)
     scan_possible_specific_data(failures)
     validate_cgnat_guardrails(failures)
+    validate_pppoe_credential_guardrails(failures)
 
 
 def main():
