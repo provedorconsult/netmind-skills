@@ -70,6 +70,7 @@ pode burlar o gate. O Maker não pode se autoaprovar nem mergear sem autorizaç�
 
 ## Estado atual
 
-`BLOCKED` — o Checker publicou `blocked` no HEAD inicial da PR #37 porque este
-artefato formal não existia. Esta versão corrige a evidência ausente e requer
-novo review e novo veredito literal para o novo HEAD.
+`CHANGES_REQUESTED` — o bloqueio inicial por ausência do artefato formal foi
+corrigido. O Checker identificou depois que o comando declarado pelo loop não
+incluía o obrigatório `--checker-login`; a definição canônica foi corrigida e
+requer novo review e novo veredito literal para o novo HEAD.

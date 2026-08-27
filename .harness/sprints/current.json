@@ -28,6 +28,6 @@
     {"id": "G16", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 28, "mergeCommit": "6ad640b6cae88a0b2b0b459ae8f81c6e7ce026c6", "approvedHead": "7b871b31519a6623cd0cecef65ac89bc084f1255", "predecessor": "G15"},
     {"id": "G17", "status": "DONE", "mergeStatus": "MERGED", "pullRequest": 31, "mergeCommit": "4117de936136dce7cfdff0a851829c4fc6a3f7c1", "approvedHead": "1ddc124ed2c7aa05caf0d5de7c3df019bd12a30e", "predecessor": "G16"},
     {"id": "G18", "file": "18-pppoe-credential-operational-knowledge.md", "status": "BLOCKED", "pullRequest": 35, "predecessor": "G17", "githubState": "OPEN", "checkerStatus": "BLOCKED", "blocker": "G18 is not yet registered in main; PR #35 also requires a complete Acceptance Contract and a new Checker review after PR #37 is authorized and merged."},
-    {"id": "G19", "file": "19-merge-gate-collision-reconciliation.md", "status": "BLOCKED", "pullRequest": 37, "predecessor": "G17", "githubState": "OPEN", "checkerStatus": "BLOCKED", "blocker": "Formal Goal artifact was absent at the reviewed HEAD; corrective evidence is pending Checker re-review."}
+    {"id": "G19", "file": "19-merge-gate-collision-reconciliation.md", "status": "CHANGES_REQUESTED", "pullRequest": 37, "predecessor": "G17", "githubState": "OPEN", "checkerStatus": "REQUEST_CHANGES", "blocker": "The loop command omitted the required --checker-login argument; corrective evidence is pending Checker re-review."}
   ]
 }

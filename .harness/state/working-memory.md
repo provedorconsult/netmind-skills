@@ -47,8 +47,10 @@ Harness/Checker.
   Maker may merge only after a fresh GitHub-backed `MERGE_AUTHORIZED` result.
 - The Checker published `blocked` for PR #37 at
   `2be0f599d2ab929dd2c212b5c0738bc1317af001` because the formal G19 source
-  file was absent. G19 is cataloged as `BLOCKED` until the corrective commit
-  is reviewed and the Checker publishes a new verdict for its new HEAD.
+  file was absent. That evidence was corrected. The subsequent Checker review
+  published `request-changes` because the merge-gate loop command omitted the
+  required `--checker-login` argument; G19 is now `CHANGES_REQUESTED` pending
+  a new review of the corrective HEAD.
 - G10 remains `BLOCKED`: it is a legacy release gate whose predecessor chain
   was superseded during G13 reconciliation. It has no GitHub-confirmed
   successor promotion and cannot be advanced by parallel PR activity.

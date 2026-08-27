@@ -84,8 +84,8 @@ if checker.get('transitions') != {'approve': 'MERGE_AUTHORIZED', 'request-change
     failures.append('Checker transitions are invalid')
 if 'merge-pull-request' not in checker.get('forbidden', []):
     failures.append('Checker must be review-only and forbidden from merging')
-if gate.get('command') != 'python3 scripts/harness-merge-gate.py --repo <owner/repo> --pr <number>':
-    failures.append('merge gate must query GitHub PR evidence')
+if gate.get('command') != 'python3 scripts/harness-merge-gate.py --repo <owner/repo> --pr <number> --checker-login <checker-login>':
+    failures.append('merge gate command must query GitHub evidence with the configured Checker login')
 if gate.get('authorizedExecutor') != 'maker':
     failures.append('merge gate must authorize the Maker as executor')
 merge_steps = [step for step in chain.get('steps', []) if step.get('id') == 'merge']
@@ -124,8 +124,8 @@ g18 = next((goal for goal in goals if goal.get('id') == 'G18'), {})
 if g18.get('file') != '18-pppoe-credential-operational-knowledge.md' or g18.get('pullRequest') != 35 or g18.get('status') != 'BLOCKED' or g18.get('checkerStatus') != 'BLOCKED':
     failures.append('catalog must record G18 and its observed blocked Checker verdict')
 g19 = next((goal for goal in goals if goal.get('id') == 'G19'), {})
-if g19.get('file') != '19-merge-gate-collision-reconciliation.md' or g19.get('pullRequest') != 37 or g19.get('status') != 'BLOCKED':
-    failures.append('catalog must record G19 and its observed blocked Checker verdict')
+if g19.get('file') != '19-merge-gate-collision-reconciliation.md' or g19.get('pullRequest') != 37 or g19.get('status') != 'CHANGES_REQUESTED' or g19.get('checkerStatus') != 'REQUEST_CHANGES':
+    failures.append('catalog must record G19 and its observed request-changes Checker verdict')
 completed = {goal.get('id'): goal for goal in catalog.get('completedGoals', [])}
 g12 = completed.get('G12', {})
 if g12.get('status') != 'DONE' or g12.get('mergeStatus') != 'MERGED' or g12.get('pullRequest') != 20 or g12.get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
