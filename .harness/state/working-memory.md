@@ -43,6 +43,10 @@ Harness/Checker.
   comment invariant.
 - G19 preserves PR #36's authority separation: the Checker never merges; the
   Maker may merge only after a fresh GitHub-backed `MERGE_AUTHORIZED` result.
+- The Checker published `blocked` for PR #37 at
+  `2be0f599d2ab929dd2c212b5c0738bc1317af001` because the formal G19 source
+  file was absent. G19 is cataloged as `BLOCKED` until the corrective commit
+  is reviewed and the Checker publishes a new verdict for its new HEAD.
 - G10 remains `BLOCKED`: it is a legacy release gate whose predecessor chain
   was superseded during G13 reconciliation. It has no GitHub-confirmed
   successor promotion and cannot be advanced by parallel PR activity.

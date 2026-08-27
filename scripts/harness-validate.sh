@@ -95,11 +95,11 @@ if len(merge_steps) != 1 or merge_steps[0].get('owner') != 'maker' or merge_step
 catalog = data.get('.harness/sprints/current.json', {})
 goals = catalog.get('goals', [])
 legacy_expected = [f'G{i:02d}' for i in range(1, 11)]
-expected = legacy_expected + ['G13', 'G14', 'G15', 'G16', 'G17', 'G18']
+expected = legacy_expected + ['G13', 'G14', 'G15', 'G16', 'G17', 'G18', 'G19']
 if [goal.get('id') for goal in goals] != expected:
-    failures.append('goal catalog must retain G01-G10 and promote G13-G18 in order')
+    failures.append('goal catalog must retain G01-G10 and record G13-G19 in order')
 predecessors = {**{goal: (None if goal == 'G01' else f'G{i-1:02d}') for i, goal in enumerate(legacy_expected, start=1)},
-               'G13': 'G12', 'G14': 'G13', 'G15': 'G14', 'G16': 'G15', 'G17': 'G16', 'G18': 'G17'}
+               'G13': 'G12', 'G14': 'G13', 'G15': 'G14', 'G16': 'G15', 'G17': 'G16', 'G18': 'G17', 'G19': 'G17'}
 for goal in goals:
     goal_id = goal.get('id')
     goal_file = goal.get('file')
@@ -123,6 +123,9 @@ if any(next((goal.get('status') for goal in goals if goal.get('id') == goal_id),
 g18 = next((goal for goal in goals if goal.get('id') == 'G18'), {})
 if g18.get('file') != '18-pppoe-credential-operational-knowledge.md' or g18.get('pullRequest') != 35 or g18.get('status') != 'CHECKER_REVIEW':
     failures.append('catalog must record G18 as the open PR #35 awaiting formal Checker approval')
+g19 = next((goal for goal in goals if goal.get('id') == 'G19'), {})
+if g19.get('file') != '19-merge-gate-collision-reconciliation.md' or g19.get('pullRequest') != 37 or g19.get('status') != 'BLOCKED':
+    failures.append('catalog must record G19 and its observed blocked Checker verdict')
 completed = {goal.get('id'): goal for goal in catalog.get('completedGoals', [])}
 g12 = completed.get('G12', {})
 if g12.get('status') != 'DONE' or g12.get('mergeStatus') != 'MERGED' or g12.get('pullRequest') != 20 or g12.get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
