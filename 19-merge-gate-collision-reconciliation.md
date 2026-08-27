@@ -25,11 +25,12 @@ preserve a separação de autoridade Maker/Checker e registre G18 formalmente.
 O contrato adota `headRefOid` atual mais veredito cronológico literal:
 
 - a PR deve estar aberta, não ser Draft e ter estado de merge `CLEAN`;
-- o `headRefOid` atual e o timestamp do commit correspondente devem estar
-  disponíveis na evidência GitHub;
+- o `headRefOid` atual deve estar disponível na evidência GitHub;
 - a CI consultada deve estar verde para a PR atual;
 - o último veredito válido do Checker deve ser o comentário inteiro, exato e
-  sensível a maiúsculas/minúsculas `approve`, publicado após o commit do HEAD;
+  sensível a maiúsculas/minúsculas `approve`; o mesmo Checker deve ter um
+  review nativo `APPROVED` cujo commit OID seja exatamente o `headRefOid`
+  atual, e o comentário não pode preceder esse review;
 - `request-changes` ou `blocked` posterior invalida autorização anterior.
 
 O formato multi-linha `approve\napprovedHead: <SHA>` da PR #33 não é adotado:

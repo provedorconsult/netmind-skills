@@ -44,7 +44,8 @@ if (required_policy.get('pullRequestDraft') is not False
         or required_policy.get('headRefOid') != 'known current PR HEAD'
         or required_policy.get('mergeStateStatus') != 'CLEAN'
         or required_policy.get('latestCheckerVerdict') != 'approve'
-        or required_policy.get('approvalAfterCurrentHead') is not True):
+        or required_policy.get('checkerReview') != 'APPROVED review by Checker bound to headRefOid'
+        or required_policy.get('checkerReviewBeforeVerdict') is not True):
     failures.append('merge policy must bind approval to a clean current PR HEAD')
 if policy.get('sourceOfTruth') != 'GitHub pull request and its comments; local state only mirrors verified GitHub facts.':
     failures.append('merge policy must make GitHub evidence authoritative')

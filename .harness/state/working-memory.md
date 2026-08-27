@@ -38,11 +38,11 @@ Harness/Checker.
   receives a new compliant Checker review.
 - G19 supersedes the incompatible merge-gate designs in PRs #27 and #33. The
   canonical design keeps a complete, exact one-word Checker verdict and binds
-  it to the queried current `headRefOid` by requiring the latest valid verdict
-  to be an `approve` created after the current HEAD commit. It also requires a
-  non-draft, clean PR and green CI. The multi-line `approvedHead` comment
-  format from PR #33 is not retained because it violates the exact-entire-
-  comment invariant.
+  it to the queried current `headRefOid` through a native GitHub `APPROVED`
+  review by the same Checker whose commit OID equals that HEAD. The literal
+  verdict cannot predate the review. It also requires a non-draft, clean PR and
+  green CI. The multi-line `approvedHead` comment format from PR #33 is not
+  retained because it violates the exact-entire-comment invariant.
 - G19 preserves PR #36's authority separation: the Checker never merges; the
   Maker may merge only after a fresh GitHub-backed `MERGE_AUTHORIZED` result.
 - The Checker published `blocked` for PR #37 at

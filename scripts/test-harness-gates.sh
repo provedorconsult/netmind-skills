@@ -11,7 +11,8 @@ expect_denied ci-green-no-approve 'Checker has no timestamped exact verdict'
 expect_denied lgtm 'Checker has no timestamped exact verdict'
 expect_denied approved 'Checker has no timestamped exact verdict'
 expect_authorized approve
-expect_denied approve-obsolete-head 'Checker approval predates current PR HEAD'
+expect_denied approve-obsolete-head 'Checker has not approved current PR HEAD'
+expect_denied approve-review-wrong-head 'Checker has not approved current PR HEAD'
 expect_denied request-changes-after-approve "latest Checker verdict is 'request-changes'"
 expect_denied blocked-after-approve "latest Checker verdict is 'blocked'"
 expect_denied draft 'PR is draft or draft status is unknown'
