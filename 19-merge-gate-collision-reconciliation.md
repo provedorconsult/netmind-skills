@@ -71,7 +71,9 @@ pode burlar o gate. O Maker não pode se autoaprovar nem mergear sem autorizaç�
 
 ## Estado atual
 
-`CHANGES_REQUESTED` — o bloqueio inicial por ausência do artefato formal foi
-corrigido. O Checker identificou depois que o comando declarado pelo loop não
-incluía o obrigatório `--checker-login`; a definição canônica foi corrigida e
-requer novo review e novo veredito literal para o novo HEAD.
+`CHANGES_REQUESTED` — o bloqueio inicial por ausência do artefato formal e a
+inconsistência de `--checker-login` foram corrigidos. O segundo
+`request-changes` confirmou que comparar o comentário com `committedDate` não
+provava que o SHA era o HEAD revisado. O gate agora exige review nativo
+`APPROVED` vinculado exatamente ao `headRefOid` atual; este novo HEAD aguarda
+re-review e novo veredito literal.
