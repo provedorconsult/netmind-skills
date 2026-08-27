@@ -1,1 +1,1 @@
-{"state":"OPEN","statusCheckRollup":[{"status":"COMPLETED","conclusion":"SUCCESS"}],"comments":[{"body":"Approved","author":{"login":"netmind-checker[bot]","type":"Bot"}}]}
+{"state":"OPEN","isDraft":false,"headRefOid":"1111111111111111111111111111111111111111","mergeStateStatus":"CLEAN","commits":[{"oid":"1111111111111111111111111111111111111111","committedDate":"2026-08-17T10:00:00Z"}],"statusCheckRollup":[{"status":"COMPLETED","conclusion":"SUCCESS"}],"comments":[{"body":"approved","createdAt":"2026-08-17T10:05:00Z","author":{"login":"netmind-checker[bot]","type":"Bot"}}]}

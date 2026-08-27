@@ -40,6 +40,13 @@ policy = data.get('.harness/policies/merge-policy.json', {})
 required_policy = policy.get('required', {})
 if required_policy.get('checkerComment') != 'approve' or required_policy.get('commentComparison') != 'case-sensitive exact entire comment':
     failures.append('merge policy must require an exact literal approve')
+if (required_policy.get('pullRequestDraft') is not False
+        or required_policy.get('headRefOid') != 'known current PR HEAD'
+        or required_policy.get('mergeStateStatus') != 'CLEAN'
+        or required_policy.get('latestCheckerVerdict') != 'approve'
+        or required_policy.get('checkerReview') != 'APPROVED review by Checker bound to headRefOid'
+        or required_policy.get('checkerReviewBeforeVerdict') is not True):
+    failures.append('merge policy must bind approval to a clean current PR HEAD')
 if policy.get('sourceOfTruth') != 'GitHub pull request and its comments; local state only mirrors verified GitHub facts.':
     failures.append('merge policy must make GitHub evidence authoritative')
 
@@ -60,23 +67,40 @@ if not any(step.get('id') == 'approval-gate' and step.get('action') == 'verify-r
 maker = data.get('.harness/loops/maker.json', {})
 checker = data.get('.harness/loops/checker.json', {})
 gate = data.get('.harness/loops/merge-gate.json', {})
-if maker.get('role') != 'Codex Maker' or 'merge-pull-request' not in maker.get('forbidden', []):
-    failures.append('Maker must be separate and unable to merge')
+execution = policy.get('execution', {})
+if execution.get('executor') != 'maker' or execution.get('requiresState') != 'MERGE_AUTHORIZED':
+    failures.append('merge policy must assign authorized merge execution to Maker')
+if execution.get('checkerMayMerge') is not False or execution.get('makerMaySelfApprove') is not False or execution.get('mustRecheckGitHubBeforeMerge') is not True:
+    failures.append('merge policy must preserve Maker/Checker authority separation')
+if maker.get('role') != 'Codex Maker' or 'merge-without-MERGE_AUTHORIZED' not in maker.get('forbidden', []) or 'self-approve' not in maker.get('forbidden', []):
+    failures.append('Maker must be forbidden from self-approval and unauthorized merge')
+permission = maker.get('mergePermission', {})
+if permission.get('executor') != 'maker' or permission.get('requiresState') != 'MERGE_AUTHORIZED' or permission.get('checkerMayMerge') is not False or permission.get('headMustRemainReviewed') is not True or permission.get('ciMustRemainGreen') is not True:
+    failures.append('Maker merge permission is incomplete')
+if not {'recheck-pr-state', 'run-merge-gate', 'merge-authorized-pr', 'record-merge-evidence'}.issubset(maker.get('postApprovalActions', [])):
+    failures.append('Maker post-approval flow is incomplete')
 if checker.get('role') != 'automated Checker' or checker.get('validVerdicts') != ['approve', 'request-changes', 'blocked']:
     failures.append('Checker verdict contract is invalid')
 if checker.get('transitions') != {'approve': 'MERGE_AUTHORIZED', 'request-changes': 'CHANGES_REQUESTED', 'blocked': 'BLOCKED'}:
     failures.append('Checker transitions are invalid')
-if gate.get('command') != 'python3 scripts/harness-merge-gate.py --repo <owner/repo> --pr <number>':
-    failures.append('merge gate must query GitHub PR evidence')
+if 'merge-pull-request' not in checker.get('forbidden', []):
+    failures.append('Checker must be review-only and forbidden from merging')
+if gate.get('command') != 'python3 scripts/harness-merge-gate.py --repo <owner/repo> --pr <number> --checker-login <checker-login>':
+    failures.append('merge gate command must query GitHub evidence with the configured Checker login')
+if gate.get('authorizedExecutor') != 'maker':
+    failures.append('merge gate must authorize the Maker as executor')
+merge_steps = [step for step in chain.get('steps', []) if step.get('id') == 'merge']
+if len(merge_steps) != 1 or merge_steps[0].get('owner') != 'maker' or merge_steps[0].get('requiresState') != 'MERGE_AUTHORIZED':
+    failures.append('merge step must be owned by Maker and require MERGE_AUTHORIZED')
 
 catalog = data.get('.harness/sprints/current.json', {})
 goals = catalog.get('goals', [])
 legacy_expected = [f'G{i:02d}' for i in range(1, 11)]
-expected = legacy_expected + ['G13', 'G14', 'G15', 'G16', 'G17']
+expected = legacy_expected + ['G13', 'G14', 'G15', 'G16', 'G17', 'G18', 'G19']
 if [goal.get('id') for goal in goals] != expected:
-    failures.append('goal catalog must retain G01-G10 and promote G13-G17 in order')
+    failures.append('goal catalog must retain G01-G10 and record G13-G19 in order')
 predecessors = {**{goal: (None if goal == 'G01' else f'G{i-1:02d}') for i, goal in enumerate(legacy_expected, start=1)},
-               'G13': 'G12', 'G14': 'G13', 'G15': 'G14', 'G16': 'G15', 'G17': 'G16'}
+               'G13': 'G12', 'G14': 'G13', 'G15': 'G14', 'G16': 'G15', 'G17': 'G16', 'G18': 'G17', 'G19': 'G17'}
 for goal in goals:
     goal_id = goal.get('id')
     goal_file = goal.get('file')
@@ -95,8 +119,14 @@ if classifications.get('G08') != 'SUPERSEDED' or classifications.get('G09') != '
     failures.append('legacy G08-G10 classifications are inconsistent')
 if not (root / 'G13-RECONCILIATION.md').is_file():
     failures.append('G13 reconciliation report is missing')
-if any(goal.get('status') != 'DONE' for goal in catalog.get('goals', [])[-4:]):
+if any(next((goal.get('status') for goal in goals if goal.get('id') == goal_id), None) != 'DONE' for goal_id in ('G14', 'G15', 'G16', 'G17')):
     failures.append('catalog must record G14-G17 as DONE')
+g18 = next((goal for goal in goals if goal.get('id') == 'G18'), {})
+if g18.get('file') != '18-pppoe-credential-operational-knowledge.md' or g18.get('pullRequest') != 35 or g18.get('status') != 'BLOCKED' or g18.get('checkerStatus') != 'BLOCKED':
+    failures.append('catalog must record G18 and its observed blocked Checker verdict')
+g19 = next((goal for goal in goals if goal.get('id') == 'G19'), {})
+if g19.get('file') != '19-merge-gate-collision-reconciliation.md' or g19.get('pullRequest') != 37 or g19.get('status') != 'CHANGES_REQUESTED' or g19.get('checkerStatus') != 'REQUEST_CHANGES':
+    failures.append('catalog must record G19 and its observed request-changes Checker verdict')
 completed = {goal.get('id'): goal for goal in catalog.get('completedGoals', [])}
 g12 = completed.get('G12', {})
 if g12.get('status') != 'DONE' or g12.get('mergeStatus') != 'MERGED' or g12.get('pullRequest') != 20 or g12.get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':

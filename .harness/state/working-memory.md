@@ -28,6 +28,35 @@ Nenhum Goal está ativo. G17 foi concluído e não há próximo Goal formalmente
 promovido; `nextGoal` permanece `null` até decisão posterior do
 Harness/Checker.
 
+## G18 and G19 reconciliation
+
+- G18 is formally cataloged with predecessor G17 and PR #35. Its observable
+  GitHub PR remains open, but the independent Checker published `blocked`:
+  G18 is not yet registered in `main`, and its Acceptance Contract had been
+  absent. G19 now supplies that contract without altering G18's technical
+  scope; G18 remains `BLOCKED` until G19 is merged with authorization and G18
+  receives a new compliant Checker review.
+- G19 supersedes the incompatible merge-gate designs in PRs #27 and #33. The
+  canonical design keeps a complete, exact one-word Checker verdict and binds
+  it to the queried current `headRefOid` through a native GitHub `APPROVED`
+  review by the same Checker whose commit OID equals that HEAD. The literal
+  verdict cannot predate the review. It also requires a non-draft, clean PR and
+  green CI. The multi-line `approvedHead` comment format from PR #33 is not
+  retained because it violates the exact-entire-comment invariant.
+- G19 preserves PR #36's authority separation: the Checker never merges; the
+  Maker may merge only after a fresh GitHub-backed `MERGE_AUTHORIZED` result.
+- The Checker published `blocked` for PR #37 at
+  `2be0f599d2ab929dd2c212b5c0738bc1317af001` because the formal G19 source
+  file was absent. That evidence and the subsequent missing
+  `--checker-login` command argument were corrected. The latest
+  `request-changes` identified that `approve.createdAt > committedDate` did
+  not prove the approved SHA was the PR HEAD. The corrective implementation
+  now requires the same Checker to submit a native `APPROVED` review whose
+  commit OID equals current `headRefOid`; the new HEAD awaits re-review.
+- G10 remains `BLOCKED`: it is a legacy release gate whose predecessor chain
+  was superseded during G13 reconciliation. It has no GitHub-confirmed
+  successor promotion and cannot be advanced by parallel PR activity.
+
 ## Invariants
 
 - Execute one catalog goal at a time and preserve catalog order.
