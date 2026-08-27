@@ -28,6 +28,25 @@ Nenhum Goal está ativo. G17 foi concluído e não há próximo Goal formalmente
 promovido; `nextGoal` permanece `null` até decisão posterior do
 Harness/Checker.
 
+## G18 and G19 reconciliation
+
+- G18 is formally cataloged with predecessor G17 and PR #35. Its observable
+  GitHub PR remains open; its catalog state is `CHECKER_REVIEW` pending a
+  formal Checker verdict that satisfies the configured Checker identity and
+  literal-verdict contract. This record does not alter G18's technical scope.
+- G19 supersedes the incompatible merge-gate designs in PRs #27 and #33. The
+  canonical design keeps a complete, exact one-word Checker verdict and binds
+  it to the queried current `headRefOid` by requiring the latest valid verdict
+  to be an `approve` created after the current HEAD commit. It also requires a
+  non-draft, clean PR and green CI. The multi-line `approvedHead` comment
+  format from PR #33 is not retained because it violates the exact-entire-
+  comment invariant.
+- G19 preserves PR #36's authority separation: the Checker never merges; the
+  Maker may merge only after a fresh GitHub-backed `MERGE_AUTHORIZED` result.
+- G10 remains `BLOCKED`: it is a legacy release gate whose predecessor chain
+  was superseded during G13 reconciliation. It has no GitHub-confirmed
+  successor promotion and cannot be advanced by parallel PR activity.
+
 ## Invariants
 
 - Execute one catalog goal at a time and preserve catalog order.

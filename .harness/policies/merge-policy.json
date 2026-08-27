@@ -1,8 +1,9 @@
 {
-  "version": 1,
-  "policy": "MERGE AUTHORIZED requires all required GitHub PR evidence.",
-  "required": {"pullRequestOpen": true, "ciConclusion": "success", "checkerLogin": "configured automated Checker login", "checkerExecuted": true, "checkerComment": "approve", "commentComparison": "case-sensitive exact entire comment"},
-  "deniedWhen": ["no open pull request", "CI is not green", "Checker did not execute", "no exact approve comment by Checker", "local state alone claims authorization"],
+  "version": 3,
+  "policy": "MERGE AUTHORIZED requires all required GitHub PR evidence and may be executed only by the Maker.",
+  "required": {"pullRequestOpen": true, "pullRequestDraft": false, "headRefOid": "known current PR HEAD", "mergeStateStatus": "CLEAN", "ciConclusion": "success for the queried current PR HEAD", "checkerLogin": "configured automated Checker login", "checkerExecuted": true, "checkerComment": "approve", "commentComparison": "case-sensitive exact entire comment", "latestCheckerVerdict": "approve", "approvalAfterCurrentHead": true},
+  "execution": {"executor": "maker", "requiresState": "MERGE_AUTHORIZED", "checkerMayMerge": false, "makerMaySelfApprove": false, "mustRecheckGitHubBeforeMerge": true},
+  "deniedWhen": ["no open pull request", "PR is draft", "current HEAD is unknown", "merge conflict or non-clean merge state", "CI is not green", "Checker did not execute", "no exact timestamped Checker verdict", "a later Checker request-changes or blocked verdict", "approval predates current HEAD", "Maker attempts to merge without MERGE_AUTHORIZED", "local state alone claims authorization"],
   "authorization": "MERGE AUTHORIZED",
   "denial": "MERGE DENIED",
   "sourceOfTruth": "GitHub pull request and its comments; local state only mirrors verified GitHub facts."
