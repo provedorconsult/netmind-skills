@@ -31,9 +31,11 @@ Harness/Checker.
 ## G18 and G19 reconciliation
 
 - G18 is formally cataloged with predecessor G17 and PR #35. Its observable
-  GitHub PR remains open; its catalog state is `CHECKER_REVIEW` pending a
-  formal Checker verdict that satisfies the configured Checker identity and
-  literal-verdict contract. This record does not alter G18's technical scope.
+  GitHub PR remains open, but the independent Checker published `blocked`:
+  G18 is not yet registered in `main`, and its Acceptance Contract had been
+  absent. G19 now supplies that contract without altering G18's technical
+  scope; G18 remains `BLOCKED` until G19 is merged with authorization and G18
+  receives a new compliant Checker review.
 - G19 supersedes the incompatible merge-gate designs in PRs #27 and #33. The
   canonical design keeps a complete, exact one-word Checker verdict and binds
   it to the queried current `headRefOid` by requiring the latest valid verdict

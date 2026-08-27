@@ -121,8 +121,8 @@ if not (root / 'G13-RECONCILIATION.md').is_file():
 if any(next((goal.get('status') for goal in goals if goal.get('id') == goal_id), None) != 'DONE' for goal_id in ('G14', 'G15', 'G16', 'G17')):
     failures.append('catalog must record G14-G17 as DONE')
 g18 = next((goal for goal in goals if goal.get('id') == 'G18'), {})
-if g18.get('file') != '18-pppoe-credential-operational-knowledge.md' or g18.get('pullRequest') != 35 or g18.get('status') != 'CHECKER_REVIEW':
-    failures.append('catalog must record G18 as the open PR #35 awaiting formal Checker approval')
+if g18.get('file') != '18-pppoe-credential-operational-knowledge.md' or g18.get('pullRequest') != 35 or g18.get('status') != 'BLOCKED' or g18.get('checkerStatus') != 'BLOCKED':
+    failures.append('catalog must record G18 and its observed blocked Checker verdict')
 g19 = next((goal for goal in goals if goal.get('id') == 'G19'), {})
 if g19.get('file') != '19-merge-gate-collision-reconciliation.md' or g19.get('pullRequest') != 37 or g19.get('status') != 'BLOCKED':
     failures.append('catalog must record G19 and its observed blocked Checker verdict')
