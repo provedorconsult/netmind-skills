@@ -1,6 +1,7 @@
 # DOKPLOY-VPS-G01 — Diagnostic baseline
 
-**Execution status:** `BLOCKED`
+**Initial execution status:** `BLOCKED` — superseded by successful authorized
+resumption on 2026-08-28.
 
 ## Scope and authorization
 
@@ -32,6 +33,15 @@ other production mutation was attempted.
 unreachable. The single permitted post-failure objective check was completed;
 no repeated authentication, address discovery, alternate-target selection, or
 network change was attempted.
+
+## Authorized resumption
+
+After the management path was restored/confirmed by the task owner, a fresh
+preflight succeeded: SSH marker authentication as the authorized account and
+`sudo` elevation both passed. G02–G12 then proceeded under `READ_ONLY` and are
+documented in `VPS-DIAGNOSTIC-REPORT.md`, `G09-ROOT-CAUSE.md`, and
+`G10-G12-REMEDIATION-RETROFIT.md`. The initial transport failure remains
+preserved as historical evidence; it is not a current blocker.
 
 ## Required external resolution
 
