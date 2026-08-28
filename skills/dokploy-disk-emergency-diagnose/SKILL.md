@@ -14,7 +14,9 @@ Classify `DISK_FULL`, `DISK_CRITICAL`, `INODE_PRESSURE`,
 
 Collect `df`/inodes; narrow one filesystem at a time; inspect Docker root
 classes and JSON log metadata; compare visible bytes with allocation; check
-deleted-open files, journal and cache. Every broad query has scope and timeout.
+deleted-open files, journal and cache. Record the largest log and compare two
+safe observations when a growth rate is available; check whether rotation is
+missing or unverified. Every broad query has scope and timeout.
 
 ## Decision, safety, validation
 

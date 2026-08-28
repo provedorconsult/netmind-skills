@@ -18,6 +18,16 @@ existing-container behavior. Preserve sanitized pre-change evidence. A daemon
 default may apply only to newly created containers; do not claim existing
 containers inherit it without verification.
 
+## Diagnostic versus remediation versus persistent configuration
+
+- **Diagnostic:** read the driver, current policy, `daemon.json`, aggregate
+  allocation, and existing-container options. It changes nothing.
+- **Emergency remediation:** a separately authorized, target-specific action
+  may reduce confirmed log pressure; it does not configure future retention.
+- **Persistent configuration:** changing daemon defaults or recreating
+  containers is a separate authorized change with compatibility, downtime,
+  rollback, and new-versus-existing verification.
+
 ## Authorized procedure
 
 1. Read and parse existing `daemon.json`; never overwrite unrelated keys.
@@ -35,3 +45,4 @@ configuration only when authorized.
 
 No blind `daemon.json` overwrite, prune, log deletion, restart, or recreation.
 Output `POLICY_PROPOSED`, `APPLIED_AND_VALIDATED`, or `BLOCKED` with evidence.
+Current VPS state must be stated as `NOT YET APPLIED` until behavior is proven.
