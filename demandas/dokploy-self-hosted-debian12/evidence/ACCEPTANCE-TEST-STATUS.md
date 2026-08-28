@@ -23,6 +23,13 @@ incident coverage are evidenced above. Install, deploy, DNS/TLS, backup,
 restore, upgrade/rollback, and failure-injection execution remain `BLOCKED`;
 they must not be marked PASS without a controlled host and evidence.
 
+## Repository validation evidence
+
+PR #39 CI passed both `Validate docs, indexes and links` and `Validate all
+Skills` at the implementation HEAD on 2026-08-28. This supplies the complete
+repository validator with its CI-pinned PyYAML dependency; local structural
+checks and Harness validation also passed.
+
 ## Promotion result
 
 **BLOCKED.** The documented capability is reviewable, but AC08 and AC13 lack
