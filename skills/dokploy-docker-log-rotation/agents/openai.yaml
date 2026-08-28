@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Docker Log Rotation"
+  short_description: "Controla retenção Docker com rollback"
+  default_prompt: "Use $dokploy-docker-log-rotation para planejar ou aplicar retenção Docker autorizada."
