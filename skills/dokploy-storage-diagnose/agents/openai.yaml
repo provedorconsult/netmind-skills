@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Storage Diagnose"
+  short_description: "Diagnostica disco e volumes sem limpeza"
+  default_prompt: "Use $dokploy-storage-diagnose para investigar storage Dokploy com segurança."

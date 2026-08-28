@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Preflight"
+  short_description: "Valida host Debian 12 sem alterar estado"
+  default_prompt: "Use $dokploy-preflight para avaliar um host autorizado antes da instalação Dokploy."

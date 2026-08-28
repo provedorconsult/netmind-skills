@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Instance Diagnose"
+  short_description: "Localiza falhas da instância Dokploy"
+  default_prompt: "Use $dokploy-instance-diagnose para investigar a instância Dokploy antes de corrigir."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Read-only Audit"
+  short_description: "Coleta evidência sanitizada de Dokploy"
+  default_prompt: "Use $dokploy-audit-readonly para auditar um host Dokploy autorizado sem alterar estado."
