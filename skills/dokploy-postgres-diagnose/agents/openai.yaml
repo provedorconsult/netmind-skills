@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy PostgreSQL Diagnose"
+  short_description: "Diagnostica PostgreSQL preservando dados"
+  default_prompt: "Use $dokploy-postgres-diagnose para investigar PostgreSQL no Dokploy sem mutações."

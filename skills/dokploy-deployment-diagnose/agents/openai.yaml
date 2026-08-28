@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Deployment Diagnose"
+  short_description: "Diagnostica build e deploy sem redeploy"
+  default_prompt: "Use $dokploy-deployment-diagnose para investigar falha de deployment Dokploy."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Swarm Diagnose"
+  short_description: "Diagnostica Swarm sem alterar cluster"
+  default_prompt: "Use $dokploy-swarm-diagnose para investigar o Swarm antes de qualquer ação."

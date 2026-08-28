@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Traefik Diagnose"
+  short_description: "Diagnostica 404 e 502 sem mudanças"
+  default_prompt: "Use $dokploy-traefik-diagnose para investigar tráfego Dokploy com evidência."

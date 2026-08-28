@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Domain Diagnose"
+  short_description: "Diagnostica DNS e TLS somente leitura"
+  default_prompt: "Use $dokploy-domain-diagnose para investigar DNS ou TLS de um domínio Dokploy autorizado."

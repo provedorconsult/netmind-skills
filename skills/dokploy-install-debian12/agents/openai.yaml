@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Debian 12 Install"
+  short_description: "Instala Dokploy com gates de segurança"
+  default_prompt: "Use $dokploy-install-debian12 para instalar Dokploy somente em um host controlado aprovado."

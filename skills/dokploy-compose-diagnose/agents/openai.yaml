@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Compose Diagnose"
+  short_description: "Diagnostica contratos Compose com segurança"
+  default_prompt: "Use $dokploy-compose-diagnose para investigar Compose Dokploy sem expor segredos."
