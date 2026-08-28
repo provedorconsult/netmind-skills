@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dokploy Disk Emergency"
+  short_description: "Diagnostica disco crítico sem limpeza"
+  default_prompt: "Use $dokploy-disk-emergency-diagnose para investigar pressão crítica de disco Dokploy."
