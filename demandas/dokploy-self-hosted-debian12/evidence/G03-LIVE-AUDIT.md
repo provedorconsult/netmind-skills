@@ -22,6 +22,10 @@
 
 - The root filesystem capacity condition is immediately actionable only after
   separate authorization: remediation may delete data or interrupt workloads.
+- A bounded follow-up collection on 2026-08-28 did not obtain a Docker-data
+  size aggregate within 20 seconds; the journal aggregate was also unreadable
+  in that collection. These are collection limitations, not evidence that
+  either source caused the capacity condition.
 - The audit did not collect raw logs, container environments, service names,
   domains, certificates, or backup configuration. Those are **UNKNOWN** rather
   than healthy/absent.
