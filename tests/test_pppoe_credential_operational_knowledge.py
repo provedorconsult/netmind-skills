@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from validate_operational_safety import (  # noqa: E402
     PPPOE_CREDENTIAL_CONTRACT,
+    extract_markdown_section,
     validate_pppoe_credential_contract,
 )
 
@@ -93,10 +94,13 @@ class PPPoECredentialOperationalKnowledgeTests(unittest.TestCase):
     def test_removing_each_atomic_rule_is_detected_independently(self):
         documents = self.documents()
         for relative, expected_rules in EXPECTED_RULES.items():
+            heading = PPPOE_CREDENTIAL_CONTRACT[relative]["heading"]
             for rule, required_fragment in expected_rules.items():
                 with self.subTest(document=relative, rule=rule):
                     mutated = dict(documents)
-                    mutated[relative] = documents[relative].replace(required_fragment, "", 1)
+                    section = extract_markdown_section(documents[relative], heading)
+                    mutated_section = section.replace(required_fragment, "", 1)
+                    mutated[relative] = documents[relative].replace(section, mutated_section, 1)
                     failures = validate_pppoe_credential_contract(mutated)
                     self.assertIn(
                         f"{relative}: missing PPPoE credential rule [{rule}]",
