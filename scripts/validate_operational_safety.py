@@ -39,34 +39,69 @@ CGNAT_GUARDRAILS = {
     ),
 }
 
-PPPOE_CREDENTIAL_GUARDRAILS = {
-    "ACCESS-GUARDRAILS.md": (
-        "A senha PPPoE é uma **credencial operacional**",
-        "Source of Truth autorizado do\nprojeto consumidor",
-        "não deduzi-la, procurá-la em fontes não autorizadas,\ngerar uma nova nem tratar conhecimento histórico como credencial atual",
-        "O\nrepositório não armazena senhas PPPoE; a senha real nunca entra em evidência,\nfixtures, exemplos, Skills, Git, PRs, comentários ou logs.",
-        "não concede `WRITE`, `PERSIST` ou\n`HIGH-IMPACT`",
-        "PPPoE password: PRESENT / AVAILABLE_FROM_SOT",
-        "O valor da senha não é evidência sanitizada. A presença pode ser reportada sem\nrevelar o segredo",
-    ),
-    "skills/13-ma5800-pppoe-access/SKILL.md": (
-        "## Credencial PPPoE no diagnóstico",
-        "deve vir exclusivamente do Source of Truth autorizado do sistema consumidor",
-        "esta Skill não armazena, deduz, gera ou recupera a senha.",
-        "registrar `UNKNOWN`: a senha PPPoE\natual não foi fornecida pelo Source of Truth.",
-        "registrar `CONFIRMADO` apenas para a disponibilidade",
-        "sem incluí-la na evidência sanitizada.",
-        "não autoriza alteração na OLT, AAA, BNG ou BRAS",
-    ),
-    "skills/cisco-asr1001x/24-pppoe-troubleshooting/SKILL.md": (
-        "## Credencial PPPoE no diagnóstico",
-        "fornecida exclusivamente pelo Source of Truth autorizado do sistema\nconsumidor",
-        "esta Skill não a armazena, deduz, gera nem recupera.",
-        "marcar a limitação como `UNKNOWN` e não inferir\nnem gerar credencial.",
-        "tratar apenas a disponibilidade como `CONFIRMADO`",
-        "nunca registrá-la em\nevidência sanitizada.",
-        "não autoriza `WRITE`, `PERSIST` ou\n`HIGH-IMPACT`",
-    ),
+PPPOE_CREDENTIAL_CONTRACT = {
+    "ACCESS-GUARDRAILS.md": {
+        "heading": "## Credencial PPPoE para diagnóstico",
+        "rules": {
+            "authorized-source": "Source of Truth autorizado",
+            "no-unauthorized-source": "fontes não autorizadas",
+            "no-historical-credential": "conhecimento histórico como credencial atual",
+            "no-inference": "não deduzi-la",
+            "no-generation": "gerar uma nova",
+            "no-repository-storage": "repositório não armazena senhas PPPoE",
+            "no-secret-in-evidence": "senha real nunca entra em evidência",
+            "no-secret-in-fixtures": "fixtures",
+            "no-secret-in-examples": "exemplos",
+            "no-secret-in-skills": "Skills",
+            "no-secret-in-git": "Git",
+            "no-secret-in-prs": "PRs",
+            "no-secret-in-comments": "comentários",
+            "no-secret-in-logs": "logs",
+            "sanitized-marker": "PPPoE password: PRESENT / AVAILABLE_FROM_SOT",
+            "availability-does-not-reveal-value": "O valor da senha não é evidência sanitizada",
+            "no-authority-write": "`WRITE`",
+            "no-authority-persist": "`PERSIST`",
+            "no-authority-high-impact": "`HIGH-IMPACT`",
+        },
+    },
+    "skills/13-ma5800-pppoe-access/SKILL.md": {
+        "heading": "## Credencial PPPoE no diagnóstico",
+        "rules": {
+            "authorized-source": "exclusivamente do Source of Truth autorizado",
+            "no-alternative-retrieval": "consultar somente a fonte autorizada",
+            "no-storage": "não armazena",
+            "no-inference": "inferir a senha",
+            "no-generation": "nem gerar uma\nnova",
+            "no-alternative-recovery": "ou recupera a senha",
+            "unknown-for-missing-source": "registrar `UNKNOWN`",
+            "unknown-means-not-supplied": "não foi fornecida pelo Source of Truth",
+            "confirmed-is-availability-only": "`CONFIRMADO` apenas para a disponibilidade",
+            "confirmed-does-not-reveal-value": "sem incluí-la na evidência sanitizada",
+            "no-authority-olt": "alteração na OLT",
+            "no-authority-aaa": "OLT, AAA",
+            "no-authority-bng": "AAA, BNG",
+            "no-authority-bras": "BNG ou BRAS",
+        },
+    },
+    "skills/cisco-asr1001x/24-pppoe-troubleshooting/SKILL.md": {
+        "heading": "## Credencial PPPoE no diagnóstico",
+        "rules": {
+            "authorized-source": "exclusivamente pelo Source of Truth autorizado",
+            "no-storage": "não a armazena",
+            "no-inference": "não inferir",
+            "no-generation": "nem gerar credencial",
+            "no-alternative-recovery": "nem recupera",
+            "unknown-for-missing-source": "limitação como `UNKNOWN`",
+            "confirmed-is-availability-only": "apenas a disponibilidade como `CONFIRMADO`",
+            "confirmed-does-not-reveal-value": "nunca registrá-la em\nevidência sanitizada",
+            "no-authority-write": "`WRITE`",
+            "no-authority-persist": "`PERSIST`",
+            "no-authority-high-impact": "`HIGH-IMPACT`",
+            "no-authority-aaa": "em AAA",
+            "no-authority-bng": "AAA, BNG",
+            "no-authority-bras": "BNG, BRAS",
+        },
+    },
 }
 
 
@@ -189,20 +224,42 @@ def validate_cgnat_guardrails(failures):
     print(f"Validated CGNAT guardrails in {checked} skill(s)")
 
 
-def validate_pppoe_credential_guardrails(failures):
-    """Keep PPPoE diagnostic-credential rules explicit and sanitizable."""
-    checked = 0
-    for relative, required_phrases in PPPOE_CREDENTIAL_GUARDRAILS.items():
-        path = ROOT / relative
-        if not path.exists():
-            failures.append(f"{relative}: missing PPPoE credential contract")
+def extract_markdown_section(content, heading):
+    """Return one level-two Markdown section without coupling to its punctuation."""
+    start = content.find(heading)
+    if start < 0:
+        return ""
+    end = content.find("\n## ", start + len(heading))
+    return content[start:] if end < 0 else content[start:end]
+
+
+def validate_pppoe_credential_contract(documents):
+    """Return one named failure for each independently required G18 rule."""
+    failures = []
+    for relative, contract in PPPOE_CREDENTIAL_CONTRACT.items():
+        content = documents.get(relative)
+        if content is None:
+            failures.append(f"{relative}: missing PPPoE credential contract document")
             continue
-        content = path.read_text(encoding="utf-8")
-        for phrase in required_phrases:
-            if phrase not in content:
-                failures.append(f"{relative}: missing PPPoE credential guardrail '{phrase}'")
-        checked += 1
-    print(f"Validated PPPoE credential guardrails in {checked} document(s)")
+        section = extract_markdown_section(content, contract["heading"])
+        if not section:
+            failures.append(f"{relative}: missing PPPoE credential contract section")
+            continue
+        for rule, required_fragment in contract["rules"].items():
+            if required_fragment not in section:
+                failures.append(f"{relative}: missing PPPoE credential rule [{rule}]")
+    return failures
+
+
+def validate_pppoe_credential_guardrails(failures):
+    """Keep each PPPoE diagnostic-credential rule explicit and sanitizable."""
+    documents = {}
+    for relative in PPPOE_CREDENTIAL_CONTRACT:
+        path = ROOT / relative
+        if path.exists():
+            documents[relative] = path.read_text(encoding="utf-8")
+    failures.extend(validate_pppoe_credential_contract(documents))
+    print(f"Validated PPPoE credential guardrails in {len(documents)} document(s)")
 
 
 def validate_operational_safety(failures):
