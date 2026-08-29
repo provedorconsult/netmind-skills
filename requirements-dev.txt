@@ -1,0 +1,2 @@
+# Static repository validators; keep aligned with the GitHub Actions workflows.
+PyYAML==6.0.3

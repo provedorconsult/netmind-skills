@@ -28,11 +28,23 @@
   `c9f179dba55a66c7c7a854e572987809625b3a02`, merge commit
   `c9af13214a02ad93ad3f8d78a0b8446471d2e17b`, predecessor G17.
 
+## Canonical lifecycle representation
+
+- `completedGoal` and `completedGoals` record only the sequential lifecycle.
+  G18 has `sequenceRole: SEQUENTIAL` and is therefore the last sequential
+  completed Goal.
+- A merged reconciliation that does not advance the sequence is recorded in
+  `retrospectiveCompletedGoals`, with `sequenceRole: RETROSPECTIVE`. G19 is
+  the sole current instance and mirrors its catalog merge evidence there.
+- A retrospective entry cannot change `completedGoal`, `activeGoal` or
+  `nextGoal`, and it cannot promote a successor to `READY`.
+
 ## Active Goal
 
-Nenhum Goal está ativo. G18 foi concluído após o gate GitHub confirmar
-`MERGE AUTHORIZED`; `nextGoal` permanece `null` até decisão posterior do
-Harness/Checker.
+Nenhum Goal está ativo no estado do Harness. G18 foi concluído após o gate
+GitHub confirmar `MERGE AUTHORIZED`; G19 está registrado como reconciliação
+retrospectiva. G20 permanece `PLANNED`, sem promoção para `READY`, e
+`nextGoal` permanece `null` até decisão posterior formal do Harness/Checker.
 
 ## G18 and G19 reconciliation
 
@@ -63,4 +75,6 @@ Harness/Checker.
 - GitHub PR facts are authoritative; local state is a mirror.
 - Only an exact Checker PR comment of `approve` can authorize a merge.
 - `request-changes` returns control to the Maker; `blocked` stops the goal.
+- G18 permanece o último Goal sequencial; G19 é apenas retrospectivo e deve
+  espelhar o catálogo em `retrospectiveCompletedGoals`.
 - Nenhum Goal posterior a G18 está autorizado até nova promoção formal.

@@ -15,8 +15,8 @@ assert chain['stateTransitions']['CHANGES_REQUESTED'] == 'MAKER_RUNNING'
 # Case 6: Checker blocked terminates execution.
 assert chain['stateTransitions']['CHECKER_REVIEW'][1] == 'BLOCKED'
 assert 'BLOCKED' in chain['terminalStates']
-# Cases 7 and 8: legacy backlog remains blocked, G13 through G19 are complete,
-# and no successor is promoted without a formal decision.
+# Cases 7 and 8: legacy backlog remains blocked; G19 is retrospective, G18
+# remains the last sequential completion, and no successor is promoted.
 first, second = catalog['goals'][:2]
 g13 = next(goal for goal in catalog['goals'] if goal['id'] == 'G13')
 g14 = next(goal for goal in catalog['goals'] if goal['id'] == 'G14')
@@ -74,17 +74,21 @@ assert g18['status'] == 'DONE' and g18['mergeStatus'] == 'MERGED'
 assert g18['pullRequest'] == 35
 assert g18['mergeCommit'] == 'd8d21818f3cd599eb5d8233da99d0e25cede789a'
 assert g18['approvedHead'] == '0804adab41e50aafc9e5470cf3078577a45d7592'
+assert g18['sequenceRole'] == 'SEQUENTIAL'
 assert g18_completed == {key: value for key, value in g18.items() if key not in {'file', 'githubState', 'checkerStatus'}}
 assert g19['predecessor'] == 'G17'
 assert g19['status'] == 'DONE' and g19['mergeStatus'] == 'MERGED'
 assert g19['pullRequest'] == 37
 assert g19['mergeCommit'] == 'c9af13214a02ad93ad3f8d78a0b8446471d2e17b'
 assert g19['approvedHead'] == 'c9f179dba55a66c7c7a854e572987809625b3a02'
+assert g19['sequenceRole'] == 'RETROSPECTIVE'
 assert g19_completed == {key: value for key, value in g19.items() if key not in {'file', 'githubState', 'checkerStatus'}}
 assert current['goal'] is None and current['goalFile'] is None
 assert current['status'] == 'COMPLETE' and current['completedGoal'] == 'G18'
 assert current['predecessor'] is None and current['nextGoal'] is None
 assert 'merge' not in current
+assert current['retrospectiveCompletedGoals'] == [g19_completed]
+assert 'G19' not in {goal['id'] for goal in current['completedGoals']}
 assert current['checker'] == {'status': 'completed', 'verdict': 'approve', 'comment': 'approve', 'login': 'clovisjr', 'approvedHead': '0804adab41e50aafc9e5470cf3078577a45d7592'}
 assert {goal['id']: goal for goal in current['completedGoals']}['G14'] == g14_completed
 assert {goal['id']: goal for goal in current['completedGoals']}['G15'] == g15_completed
