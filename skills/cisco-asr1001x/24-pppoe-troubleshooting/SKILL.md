@@ -33,6 +33,20 @@ Seguir:
 
 Parar na primeira falha objetiva.
 
+## Credencial PPPoE no diagnóstico
+
+Na fase `Authentication → AAA/RADIUS`, `pppoe_username` e `pppoe_password`
+podem ser necessários para correlacionar o serviço com a autenticação. A senha
+atual é fornecida exclusivamente pelo Source of Truth autorizado do sistema
+consumidor; esta Skill não a armazena, deduz, gera nem recupera.
+
+Sem a senha atual fornecida, marcar a limitação como `UNKNOWN` e não inferir
+nem gerar credencial. Quando a fonte autorizada disponibilizá-la no contexto
+da tarefa, tratar apenas a disponibilidade como `CONFIRMADO`, usar a
+credencial somente dentro do escopo autorizado e nunca registrá-la em
+evidência sanitizada. Sua posse não autoriza `WRITE`, `PERSIST` ou
+`HIGH-IMPACT` em AAA, BNG, BRAS ou equipamento.
+
 ## Regra para PPPoE UP
 
 Se sessão estiver UP e houver IP:
