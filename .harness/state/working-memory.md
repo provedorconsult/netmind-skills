@@ -21,21 +21,38 @@
 - G17: `DONE / MERGED` in PR #31, approved head
   `1ddc124ed2c7aa05caf0d5de7c3df019bd12a30e`, merge commit
   `4117de936136dce7cfdff0a851829c4fc6a3f7c1`, predecessor G16.
+- G18: `DONE / MERGED` in PR #35, approved head
+  `0804adab41e50aafc9e5470cf3078577a45d7592`, merge commit
+  `d8d21818f3cd599eb5d8233da99d0e25cede789a`, predecessor G17.
+- G19: `DONE / MERGED` in PR #37, approved head
+  `c9f179dba55a66c7c7a854e572987809625b3a02`, merge commit
+  `c9af13214a02ad93ad3f8d78a0b8446471d2e17b`, predecessor G17.
+
+## Canonical lifecycle representation
+
+- `completedGoal` and `completedGoals` record only the sequential lifecycle.
+  G18 has `sequenceRole: SEQUENTIAL` and is therefore the last sequential
+  completed Goal.
+- A merged reconciliation that does not advance the sequence is recorded in
+  `retrospectiveCompletedGoals`, with `sequenceRole: RETROSPECTIVE`. G19 is
+  the sole current instance and mirrors its catalog merge evidence there.
+- A retrospective entry cannot change `completedGoal`, `activeGoal` or
+  `nextGoal`, and it cannot promote a successor to `READY`.
 
 ## Active Goal
 
-Nenhum Goal está ativo. G17 foi concluído e não há próximo Goal formalmente
-promovido; `nextGoal` permanece `null` até decisão posterior do
-Harness/Checker.
+Nenhum Goal está ativo no estado do Harness. G18 foi concluído após o gate
+GitHub confirmar `MERGE AUTHORIZED`; G19 está registrado como reconciliação
+retrospectiva. G20 permanece `PLANNED`, sem promoção para `READY`, e
+`nextGoal` permanece `null` até decisão posterior formal do Harness/Checker.
 
 ## G18 and G19 reconciliation
 
-- G18 is formally cataloged with predecessor G17 and PR #35. Its observable
-  GitHub PR remains open, but the independent Checker published `blocked`:
-  G18 is not yet registered in `main`, and its Acceptance Contract had been
-  absent. G19 now supplies that contract without altering G18's technical
-  scope; G18 remains `BLOCKED` until G19 is merged with authorization and G18
-  receives a new compliant Checker review.
+- G18 is formally cataloged with predecessor G17 and PR #35. GitHub confirmed
+  the native `APPROVED` review by `clovisjr` on
+  `0804adab41e50aafc9e5470cf3078577a45d7592`, followed by the exact `approve`
+  comment. The merge gate returned `MERGE AUTHORIZED`; GitHub then confirmed
+  merge commit `d8d21818f3cd599eb5d8233da99d0e25cede789a` on `main`.
 - G19 supersedes the incompatible merge-gate designs in PRs #27 and #33. The
   canonical design keeps a complete, exact one-word Checker verdict and binds
   it to the queried current `headRefOid` through a native GitHub `APPROVED`
@@ -45,14 +62,9 @@ Harness/Checker.
   retained because it violates the exact-entire-comment invariant.
 - G19 preserves PR #36's authority separation: the Checker never merges; the
   Maker may merge only after a fresh GitHub-backed `MERGE_AUTHORIZED` result.
-- The Checker published `blocked` for PR #37 at
-  `2be0f599d2ab929dd2c212b5c0738bc1317af001` because the formal G19 source
-  file was absent. That evidence and the subsequent missing
-  `--checker-login` command argument were corrected. The latest
-  `request-changes` identified that `approve.createdAt > committedDate` did
-  not prove the approved SHA was the PR HEAD. The corrective implementation
-  now requires the same Checker to submit a native `APPROVED` review whose
-  commit OID equals current `headRefOid`; the new HEAD awaits re-review.
+- PR #37 was merged earlier as commit
+  `c9af13214a02ad93ad3f8d78a0b8446471d2e17b`; its canonical gate design was
+  the policy used for G18's GitHub-backed authorization.
 - G10 remains `BLOCKED`: it is a legacy release gate whose predecessor chain
   was superseded during G13 reconciliation. It has no GitHub-confirmed
   successor promotion and cannot be advanced by parallel PR activity.
@@ -63,4 +75,6 @@ Harness/Checker.
 - GitHub PR facts are authoritative; local state is a mirror.
 - Only an exact Checker PR comment of `approve` can authorize a merge.
 - `request-changes` returns control to the Maker; `blocked` stops the goal.
-- Nenhum Goal posterior a G17 está autorizado até nova promoção formal.
+- G18 permanece o último Goal sequencial; G19 é apenas retrospectivo e deve
+  espelhar o catálogo em `retrospectiveCompletedGoals`.
+- Nenhum Goal posterior a G18 está autorizado até nova promoção formal.

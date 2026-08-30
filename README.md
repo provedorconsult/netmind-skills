@@ -146,6 +146,31 @@ Os próximos passos arquiteturais — registries de compatibilidade, capability 
 4. Leia a Skill e seus limites de evidência antes de formar qualquer comando.
 5. Para acesso autorizado, siga os [guardrails de acesso](ACCESS-GUARDRAILS.md); para mudanças, obtenha a classe operacional apropriada e aplique o procedimento seguro.
 
+## Validação estática local
+
+Os validadores usam somente a dependência de desenvolvimento fixada em
+[`requirements-dev.txt`](requirements-dev.txt), na mesma versão da CI. Prepare
+um ambiente descartável fora do runtime do projeto e execute as verificações
+estáticas:
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install --disable-pip-version-check -r requirements-dev.txt
+
+python scripts/validate_frontmatter.py docs
+python scripts/validate_equipment_registry.py
+python scripts/build_indexes.py --check
+python scripts/lint_markdown.py .
+python scripts/validate_markdown_links.py .
+python scripts/validate_repository.py
+bash scripts/harness-validate.sh
+```
+
+Não execute localmente suítes de teste, containers, deploys, migrações ou
+acesso a equipamentos. As suítes dinâmicas, incluindo o merge gate do Harness,
+permanecem sob responsabilidade da CI/VPS.
+
 ## Documentação complementar
 
 - [Arquitetura canônica](ARCHITECTURE.md)

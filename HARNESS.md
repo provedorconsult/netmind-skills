@@ -31,3 +31,17 @@ python3 scripts/harness-merge-gate.py --repo provedorconsult/netmind-skills --pr
 The command denies authorization if GitHub cannot supply the PR evidence. The test fixtures are in `tests/harness/`; CI runs them with `bash scripts/test-harness-gates.sh`.
 
 Each execution records the fields in [the evidence template](.harness/templates/evidence-template.md) and appends structured events to `.harness/state/iteration-log.jsonl`.
+
+## Estado sequencial e reconciliações retrospectivas
+
+`completedGoal` e `completedGoals` em `.harness/state/current.json` representam
+somente a sequência que pode promover o próximo Goal. Uma reconciliação já
+integrada, mas que não avança essa sequência, deve ter `sequenceRole` igual a
+`RETROSPECTIVE` no catálogo e espelhar sua evidência de merge em
+`retrospectiveCompletedGoals` no estado corrente. Ela não pode alterar
+`completedGoal`, `activeGoal` ou `nextGoal`.
+
+G18 é o último Goal sequencial concluído (`SEQUENTIAL`). G19 é uma
+reconciliação retrospectiva de predecessor G17 e, embora concluída, não
+promove sucessor. `bash scripts/harness-validate.sh` e
+`python3 scripts/harness-state-fixtures.py` verificam essa regra.

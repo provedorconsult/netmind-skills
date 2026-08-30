@@ -19,11 +19,19 @@ G01–G10 são preservados como backlog legado bloqueado; não constituem a
 sequência ativa após G12. A classificação formal está em
 [G13-RECONCILIATION.md](G13-RECONCILIATION.md).
 
-## Último Goal concluído
+## Último Goal sequencial concluído
 
-1. `13-backlog-goals-and-legacy-prs-reconciliation.md` — G13, predecessor G12, concluído via PR #22.
+1. `18-pppoe-credential-operational-knowledge.md` — G18, predecessor G17,
+   concluído via PR #35.
 
-Não há próximo Goal formalmente definido neste catálogo.
+G19 é uma reconciliação retrospectiva do merge gate, também concluída, e não
+promoveu um Goal operacional sucessor.
+
+## Próxima demanda formal planejada
+
+1. [`20-auditoria-repositorio-remediacao.md`](20-auditoria-repositorio-remediacao.md)
+   — G20, remediação de governança do Harness e reprodutibilidade de
+   validações locais. A demanda ainda não está promovida para `READY`.
 
 ## Protocolo
 

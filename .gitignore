@@ -8,6 +8,8 @@
 *.key
 __pycache__/
 *.py[cod]
+.venv/
+.vscode/
 
 # Artefatos locais preexistentes fora do pacote; não versionar nem usar como fonte genérica.
 asr1001x

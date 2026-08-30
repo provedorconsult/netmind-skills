@@ -96,11 +96,11 @@ if len(merge_steps) != 1 or merge_steps[0].get('owner') != 'maker' or merge_step
 catalog = data.get('.harness/sprints/current.json', {})
 goals = catalog.get('goals', [])
 legacy_expected = [f'G{i:02d}' for i in range(1, 11)]
-expected = legacy_expected + ['G13', 'G14', 'G15', 'G16', 'G17', 'G18', 'G19']
+expected = legacy_expected + ['G13', 'G14', 'G15', 'G16', 'G17', 'G18', 'G19', 'G20']
 if [goal.get('id') for goal in goals] != expected:
-    failures.append('goal catalog must retain G01-G10 and record G13-G19 in order')
+    failures.append('goal catalog must retain G01-G10 and record G13-G20 in order')
 predecessors = {**{goal: (None if goal == 'G01' else f'G{i-1:02d}') for i, goal in enumerate(legacy_expected, start=1)},
-               'G13': 'G12', 'G14': 'G13', 'G15': 'G14', 'G16': 'G15', 'G17': 'G16', 'G18': 'G17', 'G19': 'G17'}
+               'G13': 'G12', 'G14': 'G13', 'G15': 'G14', 'G16': 'G15', 'G17': 'G16', 'G18': 'G17', 'G19': 'G17', 'G20': 'G18'}
 for goal in goals:
     goal_id = goal.get('id')
     goal_file = goal.get('file')
@@ -119,14 +119,21 @@ if classifications.get('G08') != 'SUPERSEDED' or classifications.get('G09') != '
     failures.append('legacy G08-G10 classifications are inconsistent')
 if not (root / 'G13-RECONCILIATION.md').is_file():
     failures.append('G13 reconciliation report is missing')
-if any(next((goal.get('status') for goal in goals if goal.get('id') == goal_id), None) != 'DONE' for goal_id in ('G14', 'G15', 'G16', 'G17')):
-    failures.append('catalog must record G14-G17 as DONE')
+if any(next((goal.get('status') for goal in goals if goal.get('id') == goal_id), None) != 'DONE' for goal_id in ('G14', 'G15', 'G16', 'G17', 'G18', 'G19')):
+    failures.append('catalog must record G14-G19 as DONE')
 g18 = next((goal for goal in goals if goal.get('id') == 'G18'), {})
-if g18.get('file') != '18-pppoe-credential-operational-knowledge.md' or g18.get('pullRequest') != 35 or g18.get('status') != 'BLOCKED' or g18.get('checkerStatus') != 'BLOCKED':
-    failures.append('catalog must record G18 and its observed blocked Checker verdict')
+if g18.get('file') != '18-pppoe-credential-operational-knowledge.md' or g18.get('pullRequest') != 35 or g18.get('status') != 'DONE' or g18.get('mergeStatus') != 'MERGED' or g18.get('mergeCommit') != 'd8d21818f3cd599eb5d8233da99d0e25cede789a' or g18.get('approvedHead') != '0804adab41e50aafc9e5470cf3078577a45d7592' or g18.get('checkerStatus') != 'APPROVED':
+    failures.append('catalog must record G18 as DONE/MERGED with GitHub approval evidence')
+if g18.get('sequenceRole') != 'SEQUENTIAL':
+    failures.append('G18 must remain the last sequential completed Goal')
 g19 = next((goal for goal in goals if goal.get('id') == 'G19'), {})
-if g19.get('file') != '19-merge-gate-collision-reconciliation.md' or g19.get('pullRequest') != 37 or g19.get('status') != 'CHANGES_REQUESTED' or g19.get('checkerStatus') != 'REQUEST_CHANGES':
-    failures.append('catalog must record G19 and its observed request-changes Checker verdict')
+if g19.get('file') != '19-merge-gate-collision-reconciliation.md' or g19.get('pullRequest') != 37 or g19.get('status') != 'DONE' or g19.get('mergeStatus') != 'MERGED' or g19.get('mergeCommit') != 'c9af13214a02ad93ad3f8d78a0b8446471d2e17b' or g19.get('approvedHead') != 'c9f179dba55a66c7c7a854e572987809625b3a02' or g19.get('checkerStatus') != 'APPROVED':
+    failures.append('catalog must record G19 as DONE/MERGED with GitHub approval evidence')
+if g19.get('sequenceRole') != 'RETROSPECTIVE':
+    failures.append('G19 must remain a retrospective reconciliation')
+g20 = next((goal for goal in goals if goal.get('id') == 'G20'), {})
+if g20.get('file') != '20-auditoria-repositorio-remediacao.md' or g20.get('status') != 'PLANNED' or g20.get('sequenceRole') != 'SEQUENTIAL':
+    failures.append('G20 must remain a planned sequential goal')
 completed = {goal.get('id'): goal for goal in catalog.get('completedGoals', [])}
 g12 = completed.get('G12', {})
 if g12.get('status') != 'DONE' or g12.get('mergeStatus') != 'MERGED' or g12.get('pullRequest') != 20 or g12.get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
@@ -143,10 +150,16 @@ if g16.get('status') != 'DONE' or g16.get('mergeStatus') != 'MERGED' or g16.get(
 g17 = completed.get('G17', {})
 if g17.get('status') != 'DONE' or g17.get('mergeStatus') != 'MERGED' or g17.get('pullRequest') != 31 or g17.get('mergeCommit') != '4117de936136dce7cfdff0a851829c4fc6a3f7c1' or g17.get('approvedHead') != '1ddc124ed2c7aa05caf0d5de7c3df019bd12a30e' or g17.get('predecessor') != 'G16':
     failures.append('catalog must record G17 as DONE/MERGED with PR #31 merge evidence')
+g18_completed = completed.get('G18', {})
+if g18_completed != {key: value for key, value in g18.items() if key not in {'file', 'githubState', 'checkerStatus'}}:
+    failures.append('completed goals must mirror G18 merge evidence')
+g19_completed = completed.get('G19', {})
+if g19_completed != {key: value for key, value in g19.items() if key not in {'file', 'githubState', 'checkerStatus'}}:
+    failures.append('completed goals must mirror G19 merge evidence')
 
 current = data.get('.harness/state/current.json', {})
-if current.get('goal') is not None or current.get('goalFile') is not None or current.get('status') != 'COMPLETE' or current.get('predecessor') is not None or current.get('completedGoal') != 'G17' or current.get('nextGoal') is not None:
-    failures.append('current state must complete G17 without promoting a successor')
+if current.get('goal') is not None or current.get('goalFile') is not None or current.get('status') != 'COMPLETE' or current.get('predecessor') is not None or current.get('completedGoal') != 'G18' or current.get('nextGoal') is not None:
+    failures.append('current state must complete G18 without promoting a successor')
 current_completed = {goal.get('id'): goal for goal in current.get('completedGoals', [])}
 if current_completed.get('G12', {}).get('mergeCommit') != 'ed3b157c048c0480a01398c7abdf7821148d830f':
     failures.append('current state must retain G12 merge evidence')
@@ -158,8 +171,14 @@ if current_completed.get('G16', {}) != g16:
     failures.append('current state must mirror completed G16 evidence')
 if current_completed.get('G17', {}) != g17:
     failures.append('current state must mirror completed G17 evidence')
-if current.get('checker') != {'status': 'completed', 'verdict': 'approve', 'comment': 'approve'}:
-    failures.append('current state must record G17 Checker approval')
+if current_completed.get('G18', {}) != g18_completed:
+    failures.append('current state must mirror completed G18 evidence')
+if current.get('retrospectiveCompletedGoals') != [g19_completed]:
+    failures.append('current state must mirror G19 only as retrospective merge evidence')
+if 'G19' in current_completed:
+    failures.append('G19 must not replace G18 in the sequential current state')
+if current.get('checker') != {'status': 'completed', 'verdict': 'approve', 'comment': 'approve', 'login': 'clovisjr', 'approvedHead': '0804adab41e50aafc9e5470cf3078577a45d7592'}:
+    failures.append('current state must record G18 Checker approval')
 
 if failures:
     print('\n'.join(f'ERROR: {failure}' for failure in failures))
