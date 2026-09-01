@@ -1,0 +1,4 @@
+interface:
+  display_name: "Buzz Community Membership"
+  short_description: "Audita e altera memberships de Community com guardrails"
+  default_prompt: "Use $buzz-community-membership para diagnosticar ou alterar com segurança a membership pública de um agente Buzz."
