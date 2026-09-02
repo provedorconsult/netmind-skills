@@ -1,0 +1,4 @@
+interface:
+  display_name: "Buzz Pairing Relay Deployment"
+  short_description: "Authorized remediation for Buzz NIP-AB pairing relay routing"
+  default_prompt: "Use $buzz-pairing-relay-deployment to apply an authorized fix for a confirmed Buzz pairing-relay problem."

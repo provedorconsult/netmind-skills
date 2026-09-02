@@ -1,0 +1,4 @@
+interface:
+  display_name: "Buzz Mobile Pairing Diagnosis"
+  short_description: "Read-only diagnosis for Buzz NIP-AB pairing failures"
+  default_prompt: "Use $buzz-mobile-pairing-diagnosis to investigate this Buzz Desktop mobile-pairing failure safely."
