@@ -1,0 +1,4 @@
+interface:
+  display_name: "Buzz Mobile Pairing Validation"
+  short_description: "End-to-end acceptance validation for Buzz NIP-AB pairing"
+  default_prompt: "Use $buzz-mobile-pairing-validation to verify Buzz Desktop and mobile pairing end to end."
