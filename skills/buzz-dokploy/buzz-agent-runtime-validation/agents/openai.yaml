@@ -1,0 +1,4 @@
+interface:
+  display_name: "Buzz Agent Runtime Validation"
+  short_description: "Diagnóstico por gates de agente Buzz"
+  default_prompt: "Use $buzz-agent-runtime-validation para identificar o primeiro gate bloqueado no runtime de um agente Buzz, mantendo READ como padrão."
