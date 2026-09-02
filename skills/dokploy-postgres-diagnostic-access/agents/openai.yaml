@@ -1,4 +1,0 @@
-interface:
-  display_name: "Dokploy PostgreSQL Diagnostic Access"
-  short_description: "Recupera e valida acesso diagnóstico seguro ao PostgreSQL"
-  default_prompt: "Use $dokploy-postgres-diagnostic-access para diagnosticar acesso SSH, Dokploy e PostgreSQL sem expor segredos."

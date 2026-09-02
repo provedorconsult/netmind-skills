@@ -1,4 +1,0 @@
-interface:
-  display_name: "Buzz Agent Runtime Validation"
-  short_description: "Diagnostica o pipeline de runtime, relay e resposta"
-  default_prompt: "Use $buzz-agent-runtime-validation para validar ou diagnosticar a cadeia funcional de um agente Buzz."
