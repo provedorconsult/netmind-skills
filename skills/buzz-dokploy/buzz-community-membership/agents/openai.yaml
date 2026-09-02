@@ -1,4 +1,0 @@
-interface:
-  display_name: "Buzz Community Membership"
-  short_description: "Membership de agente com guardrails de escrita"
-  default_prompt: "Use $buzz-community-membership para diagnosticar a membership de uma pubkey de agente na Community Buzz; só altere com WRITE explícito."

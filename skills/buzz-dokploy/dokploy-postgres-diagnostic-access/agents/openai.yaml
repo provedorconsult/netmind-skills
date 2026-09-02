@@ -1,4 +1,0 @@
-interface:
-  display_name: "Buzz Dokploy PostgreSQL Diagnostics"
-  short_description: "Acesso PostgreSQL somente leitura e sanitizado"
-  default_prompt: "Use $dokploy-postgres-diagnostic-access para localizar um bloqueio de acesso ao PostgreSQL do Buzz em Dokploy sem expor segredos ou alterar o ambiente."
